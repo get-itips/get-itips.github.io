@@ -1,1 +1,0 @@
-# get-itips.github.io

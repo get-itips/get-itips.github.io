@@ -1,8 +1,0 @@
-#recipe Blog
-
-// Customize your settings and add new ones here
-Settings[Keys.Host] = "get-itips.github.io";
-Settings[BlogKeys.Title] = "Get-ITips - IT Blog of Andres Gorzelany";
-Settings[BlogKeys.Description] = "Tips from An IT Guy";
-Settings[BlogKeys.RssPath] = "feed.xml";
-// Add any pipeline customizations here
