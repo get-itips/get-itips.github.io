@@ -1,5 +1,0 @@
-#recipe Blog
-Settings[Keys.Host] = "get-itips.github.io";
-Settings[BlogKeys.RssPath] = "feed.xml";
-Settings[BlogKeys.Title] = "Get-ITips Blog";
-Settings[BlogKeys.Description] = "IT Tips from an IT Guy";

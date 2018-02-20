@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<link rel="self" href="http://get-itips.github.io/" />
+	<id>http://get-itips.github.io/</id>
+	<title>Get-ITips Blog</title>
+	<rights>2018</rights>
+	<updated>2018-02-20T20:27:44Z</updated>
+	<subtitle>IT Tips from an IT Guy</subtitle>
+</feed>
