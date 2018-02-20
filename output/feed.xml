@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+	<channel>
+		<title>Get-ITips - IT Blog of Andres Gorzelany</title>
+		<link>http://get-itips.capazero.net/</link>
+		<description>Tips from An IT Guy</description>
+		<copyright>2018</copyright>
+		<pubDate>Tue, 20 Feb 2018 14:17:16 GMT</pubDate>
+		<lastBuildDate>Tue, 20 Feb 2018 14:17:16 GMT</lastBuildDate>
+		<item>
+			<title>First Post</title>
+			<link>http://get-itips.capazero.net/posts/first-post</link>
+			<description>&lt;p&gt;This is my first post!&lt;/p&gt;</description>
+			<guid>http://get-itips.capazero.net/posts/first-post</guid>
+			<pubDate>Fri, 01 Jan 2016 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;This is my first post!&lt;/p&gt;
+</content:encoded>
+		</item>
+	</channel>
+</rss>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<link rel="self" href="http://get-itips.capazero.net/" />
+	<id>http://get-itips.capazero.net/</id>
+	<title>Get-ITips - IT Blog of Andres Gorzelany</title>
+	<rights>2018</rights>
+	<updated>2018-02-20T14:17:16Z</updated>
+	<subtitle>Tips from An IT Guy</subtitle>
+	<entry>
+		<link href="http://get-itips.capazero.net/posts/first-post" />
+		<id>http://get-itips.capazero.net/posts/first-post</id>
+		<title>First Post</title>
+		<updated>2016-01-01T00:00:00Z</updated>
+		<content>&lt;p&gt;This is my first post!&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;This is my first post!&lt;/p&gt;</summary>
+	</entry>
+</feed>
