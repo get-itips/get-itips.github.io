@@ -112,22 +112,7 @@ Published on Wednesday, February 8, 2017<br>    </div>
 <p>Hi,</p>
 <p>Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
 This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs</p>
-<pre><code class="language-powershell">$path = &quot;E:\path\dumpRights.csv&quot;
-$csv = &quot;user,identity,deny,accessrights,extendedrights`r`n&quot;
-
-$connector=&quot;connectorName&quot;
-$perms=Get-adpermission $connector
-
-foreach($perm in $perms){
-    $perm
-    $csv+=$perm.user.RawIdentity+ &quot;,&quot; + $perm.identity.ToString() + &quot;,&quot; + $perm.deny.IsPresent + &quot;,&quot; + $perm.accessrights + &quot;,&quot; + $perm.extendedrights
-    $csv +=&quot;`n&quot;
-}
-
-                        $fso = new-object -comobject scripting.filesystemobject
-                        $file = $fso.CreateTextFile($path,$true)
-                        $file.write($csv)
-                        $file.close() 
+<pre><code class="language-powershell">
 </code></pre>
 
 

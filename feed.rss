@@ -5,8 +5,8 @@
 		<link>https://get-itips.github.io/</link>
 		<description>Andres Gorzelany</description>
 		<copyright>2018</copyright>
-		<pubDate>Wed, 21 Feb 2018 16:00:21 GMT</pubDate>
-		<lastBuildDate>Wed, 21 Feb 2018 16:00:21 GMT</lastBuildDate>
+		<pubDate>Wed, 21 Feb 2018 17:14:01 GMT</pubDate>
+		<lastBuildDate>Wed, 21 Feb 2018 17:14:01 GMT</lastBuildDate>
 		<item>
 			<title>Call failed to establish due to a media connectivity failure when both endpoints are...</title>
 			<link>https://get-itips.github.io/posts/call-failed</link>
@@ -31,6 +31,42 @@ or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
+			<title>Handy SMTP Handshake for testing with Telnet</title>
+			<link>https://get-itips.github.io/posts/handy-handshake</link>
+			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
+			<guid>https://get-itips.github.io/posts/handy-handshake</guid>
+			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
+&lt;p&gt;It's always useful to test SMTP service, using Telnet, so these are the commands needed:&lt;/p&gt;
+&lt;p&gt;First of all, connect through Command Prompt or Powershell&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-cmd"&gt;Telnet x.x.x.x tcpPort
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For Example &lt;code&gt;Telnet 10.0.2.1 25&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;You will get a welcome message from SMTP Server, like this one:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;220 exc02.contoso.com Microsoft ESMTP MAIL Service ready at Wed&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;then write sequentially hitting enter at each line what is coloured in green here (no color lines are server responses)&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-code"&gt;EHLO mailtesting
+AUTH LOGIN
+334 VXNlcm5hbWU6
+Y29udG9zb1xhY2NvdW50
+334 UGFzc3dvcmQ6
+dGhlUGFzc3dvcmQ=
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-code"&gt;MAIL FROM:
+RCPT TO:
+DATA
+Subject: here comes the test 
+This is the email content.
+.
+250 Queued mail for delivery 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;Important notes:&lt;/strong&gt;
+You have to hit enter twice after subject input.
+account name and password are entered Base64 encoded, so first encode that information using for example &lt;a href="https://www.base64encode.org/"&gt;this site.&lt;/a&gt;&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
 			<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
 			<link>https://get-itips.github.io/posts/csv-adPerm</link>
 			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
@@ -39,22 +75,7 @@ or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
 			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
 &lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
 This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
-$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
-
-$connector=&amp;quot;connectorName&amp;quot;
-$perms=Get-adpermission $connector
-
-foreach($perm in $perms){
-    $perm
-    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
-    $csv +=&amp;quot;`n&amp;quot;
-}
-
-                        $fso = new-object -comobject scripting.filesystemobject
-                        $file = $fso.CreateTextFile($path,$true)
-                        $file.write($csv)
-                        $file.close() 
+&lt;pre&gt;&lt;code class="language-powershell"&gt;
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>

@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Get-ITips - ExchangeServer</title>
+        <title>Get-ITips - Handy SMTP Handshake for testing with Telnet</title>
         <meta name="description" content="Andres Gorzelany" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Get-ITips" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Get-ITips - ExchangeServer" />
+        <meta property="og:title" content="Get-ITips - Handy SMTP Handshake for testing with Telnet" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.github.io/tags/ExchangeServer" />
+        <meta property="og:url" content="https://get-itips.github.io/posts/handy-handshake" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -88,9 +88,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>ExchangeServer</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>Handy SMTP Handshake for testing with Telnet</h1>
+    <div class="meta">        
+Published on Wednesday, February 8, 2017<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -99,40 +107,39 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-sm-8 right-border col-sm-height">
-                    <div class="post-list">
-            <a href="/posts/handy-handshake">
-                <h3 class="post-title">Handy SMTP Handshake for testing with Telnet</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, February 8, 2017</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/csv-adPerm">
-                <h3 class="post-title">Powershell Script to CSV all AD Permissions for a particular Receive Connector</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, February 8, 2017</p>      
-        </div>   
+                                        
+
+<p>Hi,</p>
+<p>It's always useful to test SMTP service, using Telnet, so these are the commands needed:</p>
+<p>First of all, connect through Command Prompt or Powershell</p>
+<pre><code class="language-cmd">Telnet x.x.x.x tcpPort
+</code></pre>
+<p>For Example <code>Telnet 10.0.2.1 25</code></p>
+<p>You will get a welcome message from SMTP Server, like this one:</p>
+<p><code>220 exc02.contoso.com Microsoft ESMTP MAIL Service ready at Wed</code></p>
+<p>then write sequentially hitting enter at each line what is coloured in green here (no color lines are server responses)</p>
+<pre><code class="language-code">EHLO mailtesting
+AUTH LOGIN
+334 VXNlcm5hbWU6
+Y29udG9zb1xhY2NvdW50
+334 UGFzc3dvcmQ6
+dGhlUGFzc3dvcmQ=
+</code></pre>
+<pre><code class="language-code">MAIL FROM:
+RCPT TO:
+DATA
+Subject: here comes the test 
+This is the email content.
+.
+250 Queued mail for delivery 
+</code></pre>
+<hr />
+<p><strong>Important notes:</strong>
+You have to hit enter twice after subject input.
+account name and password are entered Base64 encoded, so first encode that information using for example <a href="https://www.base64encode.org/">this site.</a></p>
 
 
-            <nav>
-                <ul class="pager">
-                    <li class="previous">                
-                    </li>
-                    <li class="next">
-                    </li>
-                </ul>
-            </nav>
-            <hr class="visible-xs-block" />
-        </div>
-		
-        <div class="col-sm-4 col-sm-height">
-                <a role="button" href="/tags/ExchangeServer" class="btn btn-primary btn-xs">ExchangeServer (2)</a>
-                <a role="button" href="/tags/Skype4B" class="btn btn-default btn-xs">Skype4B (1)</a>
-        </div>
-    </div>
-</div>
+
                                 </div>
                         </div>
                 </div>
