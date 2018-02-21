@@ -3,3 +3,4 @@ output/
 config.wyam.hash
 config.wyam.dll
 packages.xml
+config.wyam.packages.xml
