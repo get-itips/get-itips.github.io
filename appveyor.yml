@@ -22,19 +22,19 @@ install:
 build_script:
   - ..\Wyam\wyam --output ..\output
 
-  on_success:
-    # Switch branches to gh-pages, clean the folder, copy everything in from the Wyam output, and commit/push
-    # See http://www.appveyor.com/docs/how-to/git-push for more info
-    - git config --global credential.helper store
-    # EDIT your Git email and name
-    - git config --global user.email $env:gh_email
-    - git config --global user.name $env:gh_user
-    - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
-    - git checkout master
-    - git rm -rf .
-    - xcopy ..\output . /E
-    # EDIT the origin of your repository - have to reset it here because AppVeyor pulls from SSH, but GitHub won't accept SSH pushes
-    - git remote set-url origin https://github.com/get-itips/get-itips.github.io.git
-    - git add -A
-    - git commit -a -m "Commit from AppVeyor"
-    - git push
+on_success:
+  # Switch branches to gh-pages, clean the folder, copy everything in from the Wyam output, and commit/push
+  # See http://www.appveyor.com/docs/how-to/git-push for more info
+  - git config --global credential.helper store
+  # EDIT your Git email and name
+  - git config --global user.email $env:gh_email
+  - git config --global user.name $env:gh_user
+  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+  - git checkout master
+  - git rm -rf .
+  - xcopy ..\output . /E
+  # EDIT the origin of your repository - have to reset it here because AppVeyor pulls from SSH, but GitHub won't accept SSH pushes
+  - git remote set-url origin https://github.com/get-itips/get-itips.github.io.git
+  - git add -A
+  - git commit -a -m "Commit from AppVeyor"
+  - git push
