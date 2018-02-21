@@ -5,18 +5,18 @@
 		<link>https://get-itips.github.io/</link>
 		<description>Andres Gorzelany</description>
 		<copyright>2018</copyright>
-		<pubDate>Wed, 21 Feb 2018 15:30:19 GMT</pubDate>
-		<lastBuildDate>Wed, 21 Feb 2018 15:30:19 GMT</lastBuildDate>
+		<pubDate>Wed, 21 Feb 2018 16:00:21 GMT</pubDate>
+		<lastBuildDate>Wed, 21 Feb 2018 16:00:21 GMT</lastBuildDate>
 		<item>
 			<title>Call failed to establish due to a media connectivity failure when both endpoints are...</title>
-			<link>https://get-itips.github.io/posts/first-post</link>
-			<description>&lt;p&gt;internal
-external
+			<link>https://get-itips.github.io/posts/call-failed</link>
+			<description>&lt;p&gt;internal&lt;br&gt;
+external&lt;br&gt;
 or one endpoint is internal and the other is federated or remote...&lt;/p&gt;</description>
-			<guid>https://get-itips.github.io/posts/first-post</guid>
+			<guid>https://get-itips.github.io/posts/call-failed</guid>
 			<pubDate>Fri, 21 Jul 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;internal
-external
+			<content:encoded>&lt;p&gt;internal&lt;br /&gt;
+external&lt;br /&gt;
 or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
 &lt;p&gt;any situation will do.&lt;/p&gt;
 &lt;p&gt;This was happening to me on an On-Premise deployment of Skype For Business (Front end and Edge Server) calling to Unified Messaging contact on Exchange Online.&lt;/p&gt;
@@ -28,6 +28,34 @@ or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-cmd"&gt;a=remote-candidates:1 65.55.127.80 54860 2 65.55.127.80 54721
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;and we lived happily ever after.&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
+			<link>https://get-itips.github.io/posts/csv-adPerm</link>
+			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
+			<guid>https://get-itips.github.io/posts/csv-adPerm</guid>
+			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
+&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
+This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
+$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
+
+$connector=&amp;quot;connectorName&amp;quot;
+$perms=Get-adpermission $connector
+
+foreach($perm in $perms){
+    $perm
+    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
+    $csv +=&amp;quot;`n&amp;quot;
+}
+
+                        $fso = new-object -comobject scripting.filesystemobject
+                        $file = $fso.CreateTextFile($path,$true)
+                        $file.write($csv)
+                        $file.close() 
+&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
 	</channel>

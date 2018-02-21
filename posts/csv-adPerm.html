@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Get-ITips - Archive</title>
+        <title>Get-ITips - Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
         <meta name="description" content="Andres Gorzelany" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Get-ITips" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Get-ITips - Archive" />
+        <meta property="og:title" content="Get-ITips - Powershell Script to CSV all AD Permissions for a particular Receive Connector" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.github.io/posts" />
+        <meta property="og:url" content="https://get-itips.github.io/posts/csv-adPerm" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -88,9 +88,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>Archive</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>Powershell Script to CSV all AD Permissions for a particular Receive Connector</h1>
+    <div class="meta">        
+Published on Wednesday, February 8, 2017<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -100,26 +108,29 @@
                         <div class="row">
                                 <div id="content" class="col-md-12">
                                         
-        <h1>2017</h1>
-        <hr />
-        <div class="post-list">
-            <a href="/posts/call-failed">
-                <h3 class="post-title">Call failed to establish due to a media connectivity failure when both endpoints are...</h3>
-            </a>
-            <p class="post-meta">Posted on Friday, July 21, 2017</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/csv-adPerm">
-                <h3 class="post-title">Powershell Script to CSV all AD Permissions for a particular Receive Connector</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, February 8, 2017</p>      
-        </div>   
-    <ul class="pager">
-        <li class="previous">                
-        </li>
-        <li class="next">
-        </li>
-    </ul>
+
+<p>Hi,</p>
+<p>Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
+This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs</p>
+<pre><code class="language-powershell">$path = &quot;E:\path\dumpRights.csv&quot;
+$csv = &quot;user,identity,deny,accessrights,extendedrights`r`n&quot;
+
+$connector=&quot;connectorName&quot;
+$perms=Get-adpermission $connector
+
+foreach($perm in $perms){
+    $perm
+    $csv+=$perm.user.RawIdentity+ &quot;,&quot; + $perm.identity.ToString() + &quot;,&quot; + $perm.deny.IsPresent + &quot;,&quot; + $perm.accessrights + &quot;,&quot; + $perm.extendedrights
+    $csv +=&quot;`n&quot;
+}
+
+                        $fso = new-object -comobject scripting.filesystemobject
+                        $file = $fso.CreateTextFile($path,$true)
+                        $file.write($csv)
+                        $file.close() 
+</code></pre>
+
+
 
                                 </div>
                         </div>
