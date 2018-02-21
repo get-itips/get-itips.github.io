@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 	<link rel="self" href="https://get-itips.github.io/" />
 	<id>https://get-itips.github.io/</id>
-	<title>Get-ITips</title>
+	<title>PS &gt; Get-ITips</title>
 	<rights>2018</rights>
-	<updated>2018-02-21T17:14:01Z</updated>
-	<subtitle>Andres Gorzelany</subtitle>
+	<updated>2018-02-21T17:52:59Z</updated>
+	<subtitle>Tips from an IT Guy</subtitle>
 	<entry>
 		<link href="https://get-itips.github.io/posts/call-failed" />
 		<id>https://get-itips.github.io/posts/call-failed</id>

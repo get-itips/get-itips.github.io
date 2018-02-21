@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
 	<channel>
-		<title>Get-ITips</title>
+		<title>PS &gt; Get-ITips</title>
 		<link>https://get-itips.github.io/</link>
-		<description>Andres Gorzelany</description>
+		<description>Tips from an IT Guy</description>
 		<copyright>2018</copyright>
-		<pubDate>Wed, 21 Feb 2018 17:14:01 GMT</pubDate>
-		<lastBuildDate>Wed, 21 Feb 2018 17:14:01 GMT</lastBuildDate>
+		<pubDate>Wed, 21 Feb 2018 17:52:59 GMT</pubDate>
+		<lastBuildDate>Wed, 21 Feb 2018 17:52:59 GMT</lastBuildDate>
 		<item>
 			<title>Call failed to establish due to a media connectivity failure when both endpoints are...</title>
 			<link>https://get-itips.github.io/posts/call-failed</link>
