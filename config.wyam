@@ -1,0 +1,9 @@
+#recipe Blog
+#n Wyam.Markdown
+#t CleanBlog
+Settings[BlogKeys.Title] = "Get-ITips";
+
+Settings[Keys.Host] = "get-itips.github.io";
+Settings[BlogKeys.Description] = "Andres Gorzelany";
+Settings[Keys.LinksUseHttps] = true;
+Settings[BlogKeys.Intro] = "Exchange/Sharepoint/S4B/PS and a little Dev Stuff from a Computer Science Engineer";
