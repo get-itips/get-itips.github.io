@@ -21,3 +21,5 @@ The firewall, a Fortigate one, had a NAT button enabled on the rule, you would s
 a=remote-candidates:1 65.55.127.80 54860 2 65.55.127.80 54721
 
 and we lived happily ever after.
+
+This is a test post
