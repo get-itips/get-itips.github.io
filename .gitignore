@@ -1,2 +1,5 @@
 output/
 .vscode/
+config.wyam.hash
+config.wyam.dll
+packages.xml
