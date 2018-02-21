@@ -1,4 +1,4 @@
-Title: Powershell Script : CSV all AD Permissions for a particular Receive Connector
+Title: Powershell Script to CSV all AD Permissions for a particular Receive Connector
 Published: 2/8/2017
 Tags: ExchangeServer
 ---
