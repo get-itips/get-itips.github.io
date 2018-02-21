@@ -1,5 +1,5 @@
 Title: Call failed to establish due to a media connectivity failure when both endpoints are...
-Published: 21/7/2017
+Published: 7/21/2017
 Tags: Skype4B
 ---
 internal
