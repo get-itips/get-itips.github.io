@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>PS &gt; Get-ITips - All Tags</title>
+        <title>PS &gt; Get-ITips - How to succesfully import Root CA to Trend IWSVA</title>
         <meta name="description" content="Tips from an IT Guy" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="PS &gt; Get-ITips" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="PS &gt; Get-ITips - All Tags" />
+        <meta property="og:title" content="PS &gt; Get-ITips - How to succesfully import Root CA to Trend IWSVA" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.github.io/_Tags.cshtml" />
+        <meta property="og:url" content="https://get-itips.github.io/posts/import-ca-trend-iwsva" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -88,9 +88,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>All Tags</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>How to succesfully import Root CA to Trend IWSVA</h1>
+    <div class="meta">        
+Published on Tuesday, December 13, 2016<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/SSL" class="btn btn-default btn-xs">SSL</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -99,15 +107,55 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">		
-        <div class="col-sm-12 col-sm-height">            
-                <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-sm"> ExchangeServer (2)</a>
-                <a role="button" href="/tags/Skype4B" class="btn btn-default btn-sm"> Skype4B (1)</a>
-                <a role="button" href="/tags/SSL" class="btn btn-default btn-sm"> SSL (1)</a>
-        </div>
-    </div>
-</div>
+                                        
+
+<p>Customer reached me to get help importing Root CA certificate to InterScan Web Security Virtual Appliance,<br />
+from Trend Micro documentation:</p>
+<blockquote class="blockquote">
+<p>&quot;By default, IWSVA acts as a private Certificate Authority (CA) and dynamically generates digital certificates<br />
+that are sent to client browsers to complete a secure passage for HTTPS connections. However, the default CA
+is not signed by a well-known (trusted) CA on the Internet.Client browsers always display a certificate
+warning every time users access an HTTPS Web site.
+Although users can safely ignore the certificate warning, Trend Micro recommends using a signed root certificate for IWSVA.&quot;</p>
+</blockquote>
+<p>So, if you want your users not to receive a warning from their browsers you have to use, typical,an internal Certification Authority that all client computers trust, for example an Enterprise Windows CA like this was the case.</p>
+<p>So, first of all, I had to export the CA Root Certificate including the Private Key,<br />
+go on and logon the Certification Authority computer:</p>
+<ol>
+<li>Go to 'Start' -&gt; 'Run' -&gt; mmc.exe</li>
+<li>Click on 'File' -&gt; 'Add / Remove Snap-in'</li>
+<li>Click the 'Add...' button</li>
+<li>Select 'Certificates' then click 'Add'</li>
+<li>Select 'Computer Account' -&gt; 'Next' -&gt; 'Local Computer' -&gt; 'Finish'</li>
+<li>click 'Close' -&gt; 'OK'</li>
+<li>Expand Certificates -&gt; and click on 'Personal' -&gt; 'Certificates'</li>
+<li>Right click the CA cert and choose 'All Tasks' -&gt; 'Export'</li>
+<li>Click 'Next' -&gt; Select 'Yes, Export the private key' -&gt; 'Next'</li>
+<li>Uncheck all of the options here. PKCS 12 should be the only option available. Click 'Next'</li>
+<li>Give the private key a password of your choice</li>
+<li>Give a filename to save as and click 'Next', then 'Finish'</li>
+</ol>
+<p>Now that you have a .pfx file we will need to use the excellent tool called OpenSSL, as I was using Windows, I used OpenSSL for Windows binaries that you can get here <a href="http://gnuwin32.sourceforge.net/packages/openssl.htm">http://gnuwin32.sourceforge.net/packages/openssl.htm</a></p>
+<p>Install it and copy the pfx to your computer.</p>
+<p>start a command prompt or PowerShell and run:</p>
+<pre><code class="language-cmd">openssl pkcs12 -in -clcerts -nokeys -out certificate.cer
+</code></pre>
+<p>then</p>
+<pre><code class="language-cmd">openssl pkcs12 -in -nocerts -out pkey-encrypted.key 
+</code></pre>
+<p>You will end up with two files: certificate.cer and pkey-encrypted.key</p>
+<p>If you import them right into IWSVA console it will fail saying &quot;Root Certificate file is invalid. Try Again&quot;</p>
+<p>This drove me nuts, documentation is not so good, it only says you need to provide a PEM file format,  base54 encoded and RSA based encrypted key, and I was sure I was providing just that...  but wait... after many tries and errors, I read that some systems do not accept anything below this line in public certificate key file:</p>
+<pre><code class="language-code">-----BEGIN CERTIFICATE-----
+</code></pre>
+<p>and this line for the private key file</p>
+<pre><code class="language-code">-----BEGIN PRIVATE KEY-----
+</code></pre>
+<p>so I tried and deleted everything below that lines on both lines... and it worked! Apparently IWSVA can not handle well ignoring the information that comes there.</p>
+<p>Hope is useful for someone else.</p>
+
+
+
                                 </div>
                         </div>
                 </div>
