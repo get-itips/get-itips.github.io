@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+	<channel>
+		<title>Get-ITips</title>
+		<link>https://get-itips.github.io/</link>
+		<description>Andres Gorzelany</description>
+		<copyright>2018</copyright>
+		<pubDate>Wed, 21 Feb 2018 14:58:30 GMT</pubDate>
+		<lastBuildDate>Wed, 21 Feb 2018 14:58:30 GMT</lastBuildDate>
+		<item>
+			<title>Call failed to establish due to a media connectivity failure when both endpoints are...</title>
+			<link>https://get-itips.github.io/posts/first-post</link>
+			<description>&lt;p&gt;internal
+external
+or one endpoint is internal and the other is federated or remote...&lt;/p&gt;</description>
+			<guid>https://get-itips.github.io/posts/first-post</guid>
+			<pubDate>Fri, 21 Jul 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;internal
+external
+or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
+&lt;p&gt;any situation will do.&lt;/p&gt;
+&lt;p&gt;This was happening to me on an On-Premise deployment of Skype For Business (Front end and Edge Server) calling to Unified Messaging contact on Exchange Online.&lt;/p&gt;
+&lt;p&gt;ICE Candidate negotiation was happening but eventually no remote-candidates were negotiated.&lt;/p&gt;
+&lt;p&gt;ms-client-diagnostics: 22; reason=&amp;quot;Call failed to establish due to a media connectivity failure when both endpoints are internal&amp;quot;;UserType=&amp;quot;Callee&amp;quot;;MediaType=&amp;quot;audio&amp;quot;;MediaChanBlob=&amp;quot;NetworkErr=no error,ErrTime=0,RTPSeq=0,SeqDelta=0,RTPTime=0,RTCPTime=0,TransptRecvErr=0x0,RecvErrTime=0,TransptSendErr=0x0,SendErrTime=0,InterfacesStall=0x0,InterfacesConnCheck=0x0,MediaTimeout=0,RtcpByeSent=0,RtcpByeRcvd=0,BlobVer=1&amp;quot;;&lt;/p&gt;
+&lt;p&gt;So this must be firewall-related, this is almost always firewall-related, it seems first that the NAT was maybe responding with another external IP from de ISP Pool, but that was ok, the rules were correct, we checked and re-rechecked, and after so many hours of troubleshooting with Snooper and Wireshark, we started to look more deeply on the firewall and tried weird things.&lt;/p&gt;
+&lt;p&gt;The firewall, a Fortigate one, had a NAT button enabled on the rule, you would say, that is obvious that must be activated... but we tried and deactivated that and... Voilá! we saw the face of god at that moment, it worked, the remote-candidates were negotiated at that moment  (so always be sure that this line is present if you want to know that it is working ok)&lt;/p&gt;
+&lt;p&gt;a=remote-candidates:1 65.55.127.80 54860 2 65.55.127.80 54721&lt;/p&gt;
+&lt;p&gt;and we lived happily ever after.&lt;/p&gt;
+&lt;p&gt;This is a test post&lt;/p&gt;
+</content:encoded>
+		</item>
+	</channel>
+</rss>
