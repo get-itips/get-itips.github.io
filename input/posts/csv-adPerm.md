@@ -11,4 +11,5 @@ This will output to a CSV all permissions assigned to a receive connector, pleas
  
 ```powershell
 `table_name`
+$csv = "user,identity,deny,accessrights,extendedrights`r`n"
 ```                        
