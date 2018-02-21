@@ -5,8 +5,8 @@
 		<link>https://get-itips.github.io/</link>
 		<description>Tips from an IT Guy</description>
 		<copyright>2018</copyright>
-		<pubDate>Wed, 21 Feb 2018 20:29:13 GMT</pubDate>
-		<lastBuildDate>Wed, 21 Feb 2018 20:29:13 GMT</lastBuildDate>
+		<pubDate>Wed, 21 Feb 2018 20:33:25 GMT</pubDate>
+		<lastBuildDate>Wed, 21 Feb 2018 20:33:25 GMT</lastBuildDate>
 		<item>
 			<title>Call failed to establish due to a media connectivity failure when both endpoints are...</title>
 			<link>https://get-itips.github.io/posts/call-failed</link>
@@ -38,10 +38,22 @@ or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
 			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
 &lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
-This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;br /&gt;
-&lt;code&gt;`table_name`&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;`table_name`
+This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
 $csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
+$connector=&amp;quot;connectorName&amp;quot;
+$perms=Get-adpermission $connector
+
+foreach($perm in $perms){
+    $perm
+    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
+    $csv +=&amp;quot;`n&amp;quot;
+}
+
+$fso = new-object -comobject scripting.filesystemobject
+$file = $fso.CreateTextFile($path,$true)
+$file.write($csv)
+$file.close()
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
