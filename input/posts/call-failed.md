@@ -2,8 +2,8 @@ Title: Call failed to establish due to a media connectivity failure when both en
 Published: 7/21/2017
 Tags: Skype4B
 ---
-internal
-external
+internal  
+external  
 or one endpoint is internal and the other is federated or remote...
 
 any situation will do.
