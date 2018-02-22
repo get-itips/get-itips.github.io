@@ -5,8 +5,8 @@
 		<link>https://get-itips.github.io/</link>
 		<description>Tips from an IT Guy</description>
 		<copyright>2018</copyright>
-		<pubDate>Wed, 21 Feb 2018 23:41:18 GMT</pubDate>
-		<lastBuildDate>Wed, 21 Feb 2018 23:41:18 GMT</lastBuildDate>
+		<pubDate>Thu, 22 Feb 2018 17:07:56 GMT</pubDate>
+		<lastBuildDate>Thu, 22 Feb 2018 17:07:56 GMT</lastBuildDate>
 		<item>
 			<title>Call failed to establish due to a media connectivity failure when both endpoints are...</title>
 			<link>https://get-itips.github.io/posts/call-failed</link>
@@ -31,30 +31,19 @@ or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
-			<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
-			<link>https://get-itips.github.io/posts/csv-adPerm</link>
-			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
-			<guid>https://get-itips.github.io/posts/csv-adPerm</guid>
-			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
-This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
-$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
-$connector=&amp;quot;connectorName&amp;quot;
-$perms=Get-adpermission $connector
-
-foreach($perm in $perms){
-    $perm
-    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
-    $csv +=&amp;quot;`n&amp;quot;
-}
-
-$fso = new-object -comobject scripting.filesystemobject
-$file = $fso.CreateTextFile($path,$true)
-$file.write($csv)
-$file.close()
-&lt;/code&gt;&lt;/pre&gt;
+			<title>The Open Office Space is a fiasco</title>
+			<link>https://get-itips.github.io/posts/open-office-fiasco</link>
+			<description>&lt;p&gt;This time I took the liberty of talking about something that it is not IT related, but it is work related, here it goes:&lt;/p&gt;</description>
+			<guid>https://get-itips.github.io/posts/open-office-fiasco</guid>
+			<pubDate>Wed, 22 Feb 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;This time I took the liberty of talking about something that it is not IT related, but it is work related, here it goes:&lt;/p&gt;
+&lt;p&gt;Some years now, we saw a new trend in offices, &amp;quot;let's remove the cubicles&amp;quot;, &amp;quot;let's remove the walls&amp;quot;, &amp;quot;this way, we can be more productive&amp;quot;.
+Ok, the intention was good but, as a consultant that visits many companies I observed (and suffered) some things about this.&lt;/p&gt;
+&lt;p&gt;First of all, you feel in a jungle, you hear multiple people talking, even on top of your own voice in your head, you loose focus if you need to concentrate, in this jungle, you will find people that is either yelling to someone on the phone, listening to their favourite music, making jokes to their partner or whatever that does not have anything to do with your job, so you maybe start to use headphones, a thing that is not always possible in every situation or if it is, the people on the office will surely start to think that you have some kind of social relationship problem, &amp;quot;hey, here comes that weird solo-guy&amp;quot;&lt;/p&gt;
+&lt;p&gt;Another thing that happens in this jungle is constant interruption of your work: &amp;quot;hey, didn't send you an email because I saw you that we were in the same floor, please stop what you are doing right now and see my big little problem, come on, I also brought to you my notebook to your desk&amp;quot;&lt;/p&gt;
+&lt;p&gt;Why? why office designers did you have to do this? did you even work in an office before? did you experience your great idea before releasing it to the world? or are you testing the beta version of it?&lt;/p&gt;
+&lt;p&gt;I am not saying that we must return to the cubicle maze, but hey, let's find something in between of that, maybe we can have a more classic area and an open area in the same building so people can choose where they are more productive.&lt;/p&gt;
+&lt;p&gt;My two cents on this. I really want to know what is your opinion&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
@@ -91,6 +80,33 @@ This is the email content.
 &lt;p&gt;&lt;strong&gt;Important notes:&lt;/strong&gt;
 You have to hit enter twice after subject input.
 account name and password are entered Base64 encoded, so first encode that information using for example &lt;a href="https://www.base64encode.org/"&gt;this site.&lt;/a&gt;&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
+			<link>https://get-itips.github.io/posts/csv-adPerm</link>
+			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
+			<guid>https://get-itips.github.io/posts/csv-adPerm</guid>
+			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
+&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
+This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
+$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
+$connector=&amp;quot;connectorName&amp;quot;
+$perms=Get-adpermission $connector
+
+foreach($perm in $perms){
+    $perm
+    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
+    $csv +=&amp;quot;`n&amp;quot;
+}
+
+$fso = new-object -comobject scripting.filesystemobject
+$file = $fso.CreateTextFile($path,$true)
+$file.write($csv)
+$file.close()
+&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
 		<item>
