@@ -5,8 +5,8 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Microsoft Solution Architect</description>
 		<copyright>2018</copyright>
-		<pubDate>Fri, 23 Feb 2018 20:15:59 GMT</pubDate>
-		<lastBuildDate>Fri, 23 Feb 2018 20:15:59 GMT</lastBuildDate>
+		<pubDate>Fri, 23 Feb 2018 20:17:29 GMT</pubDate>
+		<lastBuildDate>Fri, 23 Feb 2018 20:17:29 GMT</lastBuildDate>
 		<item>
 			<title>The Open Office Space is a fiasco</title>
 			<link>https://get-itips.capazero.net/posts/open-office-fiasco</link>
@@ -160,6 +160,18 @@ go on and logon the Certification Authority computer:&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;so I tried and deleted everything below that lines on both lines... and it worked! Apparently IWSVA can not handle well ignoring the information that comes there.&lt;/p&gt;
 &lt;p&gt;Hope is useful for someone else.&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Workflow Manager Re-Registration despite everything seems ok</title>
+			<link>https://get-itips.capazero.net/posts/workflow-manager-error</link>
+			<description>&lt;p&gt;So,&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/workflow-manager-error</guid>
+			<pubDate>Tue, 08 Nov 2016 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;So,&lt;/p&gt;
+&lt;p&gt;If you did the exact steps and you receive the &amp;quot;Workflow is connected&amp;quot; message when you click on Workflow Manager Service Application inside Sharepoint Central Admin, but somehow, something is not working quite right, or maybe you receive this message trying to publish in Sharepoint Designer:&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/workflowmgr_error.png" class="img-fluid" alt="WorkFlow Manager Error" /&gt;&lt;/p&gt;
+&lt;p&gt;Solution: Re-Register the Workflow Service using Register-SPWorkflowService and the -Force Parameter. There is a good chance everything starts working then.&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>

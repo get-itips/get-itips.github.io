@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - ExchangeServer</title>
+        <title>Andr&#xE9;s Gorzelany - Workflow Manager Re-Registration despite everything seems ok</title>
         <meta name="description" content="Microsoft Solution Architect" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - ExchangeServer" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Workflow Manager Re-Registration despite everything seems ok" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/tags/ExchangeServer" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/workflow-manager-error" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -88,9 +88,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>ExchangeServer</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>Workflow Manager Re-Registration despite everything seems ok</h1>
+    <div class="meta">        
+Published on Tuesday, November 8, 2016<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-xs">Sharepoint</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -99,43 +107,15 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-sm-8 right-border col-sm-height">
-                    <div class="post-list">
-            <a href="/posts/handy-handshake">
-                <h3 class="post-title">Handy SMTP Handshake for testing with Telnet</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, February 8, 2017</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/csv-adPerm">
-                <h3 class="post-title">Powershell Script to CSV all AD Permissions for a particular Receive Connector</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, February 8, 2017</p>      
-        </div>   
+                                        
+
+<p>So,</p>
+<p>If you did the exact steps and you receive the &quot;Workflow is connected&quot; message when you click on Workflow Manager Service Application inside Sharepoint Central Admin, but somehow, something is not working quite right, or maybe you receive this message trying to publish in Sharepoint Designer:</p>
+<p><img src="/images/workflowmgr_error.png" class="img-fluid" alt="WorkFlow Manager Error" /></p>
+<p>Solution: Re-Register the Workflow Service using Register-SPWorkflowService and the -Force Parameter. There is a good chance everything starts working then.</p>
 
 
-            <nav>
-                <ul class="pager">
-                    <li class="previous">                
-                    </li>
-                    <li class="next">
-                    </li>
-                </ul>
-            </nav>
-            <hr class="visible-xs-block" />
-        </div>
-		
-        <div class="col-sm-4 col-sm-height">
-                <a role="button" href="/tags/ExchangeServer" class="btn btn-primary btn-xs">ExchangeServer (2)</a>
-                <a role="button" href="/tags/General" class="btn btn-default btn-xs">General (1)</a>
-                <a role="button" href="/tags/Skype4B" class="btn btn-default btn-xs">Skype4B (1)</a>
-                <a role="button" href="/tags/SSL" class="btn btn-default btn-xs">SSL (1)</a>
-                <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-xs">Sharepoint (1)</a>
-        </div>
-    </div>
-</div>
+
                                 </div>
                         </div>
                 </div>
