@@ -1,5 +1,5 @@
 Title: The Open Office Space is a fiasco
-Published: 2/22/2017
+Published: 2/22/2018
 Tags: General
 ---
 This time I took the liberty of talking about something that it is not IT related, but it is work related, here it goes:
