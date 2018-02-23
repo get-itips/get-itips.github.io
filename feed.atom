@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 	<link rel="self" href="https://get-itips.capazero.net/" />
 	<id>https://get-itips.capazero.net/</id>
-	<title>PS &gt; Get-ITips</title>
+	<title>Andrés Gorzelany</title>
 	<rights>2018</rights>
-	<updated>2018-02-23T18:46:42Z</updated>
-	<subtitle>Tips from an IT Guy</subtitle>
+	<updated>2018-02-23T19:45:27Z</updated>
+	<subtitle>Microsoft Solution Architect</subtitle>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/open-office-fiasco" />
 		<id>https://get-itips.capazero.net/posts/open-office-fiasco</id>
