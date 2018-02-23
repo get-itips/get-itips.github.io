@@ -1,9 +1,9 @@
 #recipe Blog
 #n Wyam.Markdown
 #t CleanBlog
-Settings[BlogKeys.Title] = "PS > Get-ITips";
+Settings[BlogKeys.Title] = "Andrés Gorzelany";
 
 Settings[Keys.Host] = "get-itips.capazero.net";
-Settings[BlogKeys.Description] = "Tips from an IT Guy";
+Settings[BlogKeys.Description] = "Microsoft Solution Architect";
 Settings[Keys.LinksUseHttps] = true;
-Settings[BlogKeys.Intro] = "Exchange/Sharepoint/S4B/PS and a little Dev Stuff from me, Andrés Gorzelany, a Computer Science Engineer";
+Settings[BlogKeys.Intro] = "Exchange/Sharepoint/S4B/TFS/PS and a little Dev Stuff from a Computer Science Engineer";
