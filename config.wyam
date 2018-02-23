@@ -3,7 +3,7 @@
 #t CleanBlog
 Settings[BlogKeys.Title] = "PS > Get-ITips";
 
-Settings[Keys.Host] = "get-itips.github.io";
+Settings[Keys.Host] = "get-itips.capazero.net";
 Settings[BlogKeys.Description] = "Tips from an IT Guy";
 Settings[Keys.LinksUseHttps] = true;
 Settings[BlogKeys.Intro] = "Exchange/Sharepoint/S4B/PS and a little Dev Stuff from me, Andrés Gorzelany, a Computer Science Engineer";
