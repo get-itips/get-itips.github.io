@@ -2,16 +2,16 @@
 <rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
 	<channel>
 		<title>PS &gt; Get-ITips</title>
-		<link>https://get-itips.github.io/</link>
+		<link>https://get-itips.capazero.net/</link>
 		<description>Tips from an IT Guy</description>
 		<copyright>2018</copyright>
-		<pubDate>Fri, 23 Feb 2018 18:44:47 GMT</pubDate>
-		<lastBuildDate>Fri, 23 Feb 2018 18:44:47 GMT</lastBuildDate>
+		<pubDate>Fri, 23 Feb 2018 18:46:42 GMT</pubDate>
+		<lastBuildDate>Fri, 23 Feb 2018 18:46:42 GMT</lastBuildDate>
 		<item>
 			<title>The Open Office Space is a fiasco</title>
-			<link>https://get-itips.github.io/posts/open-office-fiasco</link>
+			<link>https://get-itips.capazero.net/posts/open-office-fiasco</link>
 			<description>&lt;p&gt;This time I took the liberty of talking about something that it is not IT related, but it is work related, here it goes:&lt;/p&gt;</description>
-			<guid>https://get-itips.github.io/posts/open-office-fiasco</guid>
+			<guid>https://get-itips.capazero.net/posts/open-office-fiasco</guid>
 			<pubDate>Thu, 22 Feb 2018 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;This time I took the liberty of talking about something that it is not IT related, but it is work related, here it goes:&lt;/p&gt;
 &lt;p&gt;Some years now, we saw a new trend in offices, &amp;quot;let's remove the cubicles&amp;quot;, &amp;quot;let's remove the walls&amp;quot;, &amp;quot;this way, we can be more productive&amp;quot;.
@@ -25,11 +25,11 @@ Ok, the intention was good but, as a consultant that visits many companies I obs
 		</item>
 		<item>
 			<title>Call failed to establish due to a media connectivity failure when both endpoints are...</title>
-			<link>https://get-itips.github.io/posts/call-failed</link>
+			<link>https://get-itips.capazero.net/posts/call-failed</link>
 			<description>&lt;p&gt;internal&lt;br&gt;
 external&lt;br&gt;
 or one endpoint is internal and the other is federated or remote...&lt;/p&gt;</description>
-			<guid>https://get-itips.github.io/posts/call-failed</guid>
+			<guid>https://get-itips.capazero.net/posts/call-failed</guid>
 			<pubDate>Fri, 21 Jul 2017 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;internal&lt;br /&gt;
 external&lt;br /&gt;
@@ -48,9 +48,9 @@ or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
 		</item>
 		<item>
 			<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
-			<link>https://get-itips.github.io/posts/csv-adPerm</link>
+			<link>https://get-itips.capazero.net/posts/csv-adPerm</link>
 			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
-			<guid>https://get-itips.github.io/posts/csv-adPerm</guid>
+			<guid>https://get-itips.capazero.net/posts/csv-adPerm</guid>
 			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
 &lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
@@ -75,9 +75,9 @@ $file.close()
 		</item>
 		<item>
 			<title>Handy SMTP Handshake for testing with Telnet</title>
-			<link>https://get-itips.github.io/posts/handy-handshake</link>
+			<link>https://get-itips.capazero.net/posts/handy-handshake</link>
 			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
-			<guid>https://get-itips.github.io/posts/handy-handshake</guid>
+			<guid>https://get-itips.capazero.net/posts/handy-handshake</guid>
 			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
 &lt;p&gt;It's always useful to test SMTP service, using Telnet, so these are the commands needed:&lt;/p&gt;
@@ -111,10 +111,10 @@ account name and password are entered Base64 encoded, so first encode that infor
 		</item>
 		<item>
 			<title>How to succesfully import Root CA to Trend IWSVA</title>
-			<link>https://get-itips.github.io/posts/import-ca-trend-iwsva</link>
+			<link>https://get-itips.capazero.net/posts/import-ca-trend-iwsva</link>
 			<description>&lt;p&gt;Customer reached me to get help importing Root CA certificate to InterScan Web Security Virtual Appliance,&lt;br&gt;
 from Trend Micro documentation:&lt;/p&gt;</description>
-			<guid>https://get-itips.github.io/posts/import-ca-trend-iwsva</guid>
+			<guid>https://get-itips.capazero.net/posts/import-ca-trend-iwsva</guid>
 			<pubDate>Tue, 13 Dec 2016 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;Customer reached me to get help importing Root CA certificate to InterScan Web Security Virtual Appliance,&lt;br /&gt;
 from Trend Micro documentation:&lt;/p&gt;
