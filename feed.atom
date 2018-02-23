@@ -4,8 +4,24 @@
 	<id>https://get-itips.github.io/</id>
 	<title>PS &gt; Get-ITips</title>
 	<rights>2018</rights>
-	<updated>2018-02-22T17:07:56Z</updated>
+	<updated>2018-02-23T11:29:23Z</updated>
 	<subtitle>Tips from an IT Guy</subtitle>
+	<entry>
+		<link href="https://get-itips.github.io/posts/open-office-fiasco" />
+		<id>https://get-itips.github.io/posts/open-office-fiasco</id>
+		<title>The Open Office Space is a fiasco</title>
+		<updated>2018-02-22T00:00:00Z</updated>
+		<content>&lt;p&gt;This time I took the liberty of talking about something that it is not IT related, but it is work related, here it goes:&lt;/p&gt;
+&lt;p&gt;Some years now, we saw a new trend in offices, &amp;quot;let's remove the cubicles&amp;quot;, &amp;quot;let's remove the walls&amp;quot;, &amp;quot;this way, we can be more productive&amp;quot;.
+Ok, the intention was good but, as a consultant that visits many companies I observed (and suffered) some things about this.&lt;/p&gt;
+&lt;p&gt;First of all, you feel in a jungle, you hear multiple people talking, even on top of your own voice in your head, you loose focus if you need to concentrate, in this jungle, you will find people that is either yelling to someone on the phone, listening to their favourite music, making jokes to their partner or whatever that does not have anything to do with your job, so you maybe start to use headphones, a thing that is not always possible in every situation or if it is, the people on the office will surely start to think that you have some kind of social relationship problem, &amp;quot;hey, here comes that weird solo-guy&amp;quot;&lt;/p&gt;
+&lt;p&gt;Another thing that happens in this jungle is constant interruption of your work: &amp;quot;hey, didn't send you an email because I saw you that we were in the same floor, please stop what you are doing right now and see my big little problem, come on, I also brought to you my notebook to your desk&amp;quot;&lt;/p&gt;
+&lt;p&gt;Why? why office designers did you have to do this? did you even work in an office before? did you experience your great idea before releasing it to the world? or are you testing the beta version of it?&lt;/p&gt;
+&lt;p&gt;I am not saying that we must return to the cubicle maze, but hey, let's find something in between of that, maybe we can have a more classic area and an open area in the same building so people can choose where they are more productive.&lt;/p&gt;
+&lt;p&gt;My two cents on this. I really want to know what is your opinion&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;This time I took the liberty of talking about something that it is not IT related, but it is work related, here it goes:&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.github.io/posts/call-failed" />
 		<id>https://get-itips.github.io/posts/call-failed</id>
@@ -28,22 +44,6 @@ or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
 		<summary>&lt;p&gt;internal&lt;br&gt;
 external&lt;br&gt;
 or one endpoint is internal and the other is federated or remote...&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.github.io/posts/open-office-fiasco" />
-		<id>https://get-itips.github.io/posts/open-office-fiasco</id>
-		<title>The Open Office Space is a fiasco</title>
-		<updated>2017-02-22T00:00:00Z</updated>
-		<content>&lt;p&gt;This time I took the liberty of talking about something that it is not IT related, but it is work related, here it goes:&lt;/p&gt;
-&lt;p&gt;Some years now, we saw a new trend in offices, &amp;quot;let's remove the cubicles&amp;quot;, &amp;quot;let's remove the walls&amp;quot;, &amp;quot;this way, we can be more productive&amp;quot;.
-Ok, the intention was good but, as a consultant that visits many companies I observed (and suffered) some things about this.&lt;/p&gt;
-&lt;p&gt;First of all, you feel in a jungle, you hear multiple people talking, even on top of your own voice in your head, you loose focus if you need to concentrate, in this jungle, you will find people that is either yelling to someone on the phone, listening to their favourite music, making jokes to their partner or whatever that does not have anything to do with your job, so you maybe start to use headphones, a thing that is not always possible in every situation or if it is, the people on the office will surely start to think that you have some kind of social relationship problem, &amp;quot;hey, here comes that weird solo-guy&amp;quot;&lt;/p&gt;
-&lt;p&gt;Another thing that happens in this jungle is constant interruption of your work: &amp;quot;hey, didn't send you an email because I saw you that we were in the same floor, please stop what you are doing right now and see my big little problem, come on, I also brought to you my notebook to your desk&amp;quot;&lt;/p&gt;
-&lt;p&gt;Why? why office designers did you have to do this? did you even work in an office before? did you experience your great idea before releasing it to the world? or are you testing the beta version of it?&lt;/p&gt;
-&lt;p&gt;I am not saying that we must return to the cubicle maze, but hey, let's find something in between of that, maybe we can have a more classic area and an open area in the same building so people can choose where they are more productive.&lt;/p&gt;
-&lt;p&gt;My two cents on this. I really want to know what is your opinion&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;This time I took the liberty of talking about something that it is not IT related, but it is work related, here it goes:&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<link href="https://get-itips.github.io/posts/handy-handshake" />
