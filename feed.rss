@@ -5,8 +5,8 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Microsoft Solution Architect</description>
 		<copyright>2018</copyright>
-		<pubDate>Tue, 27 Feb 2018 20:26:10 GMT</pubDate>
-		<lastBuildDate>Tue, 27 Feb 2018 20:26:10 GMT</lastBuildDate>
+		<pubDate>Tue, 27 Feb 2018 20:36:05 GMT</pubDate>
+		<lastBuildDate>Tue, 27 Feb 2018 20:36:05 GMT</lastBuildDate>
 		<item>
 			<title>The Open Office Space is a fiasco</title>
 			<link>https://get-itips.capazero.net/posts/open-office-fiasco</link>
@@ -188,6 +188,27 @@ go on and logon the Certification Authority computer:&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-powershell"&gt;Start-Process -FilePath .\youtube-dl.exe -ArgumentList &amp;quot;-o &amp;quot;&amp;quot;$vidFullFile&amp;quot;&amp;quot;&amp;quot;,&amp;quot;--limit-rate 30K&amp;quot; , $url -NoNewWindow -Wait
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;customize the --limit-rate argument to suit your preferences and voila!&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>IGNITE 2016 IS GONE… LONG LIVE THE KING!</title>
+			<link>https://get-itips.capazero.net/posts/ignite-2016</link>
+			<description>&lt;p&gt;Ignite 2016 has finished and it was an intensive, useful great experience.&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/ignite-2016</guid>
+			<pubDate>Tue, 04 Oct 2016 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Ignite 2016 has finished and it was an intensive, useful great experience.&lt;/p&gt;
+&lt;p&gt;If you experienced the same as us, you can not get to all the sessions, the conference center was big enough to &lt;strong&gt;walk an average of 12 kilometers a day&lt;/strong&gt; (nearly 8 miles) and, I am not joking, it’s true, Google Fit told me everyday, so, the first day you get a little frustrated walking fast to go from one place to another, but the second or third day you realize the truth, and start to watch some sessions from hangouts or just sit anywhere and get the streaming using some headphones.&lt;/p&gt;
+&lt;p&gt;But, wait, what about if you couldn’t make it to Atlanta this year? no problem, or at least, you can get the juice of the sessions and slide decks using &lt;a href="http://tomtalks.uk/2015/05/download-all-the-skype-for-business-ignite-sessions/"&gt;this Powershell Script&lt;/a&gt;  to download them all (or maybe download the ones you are interested in), you can select the quality of the sessions too!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Lessons learned&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;As I told, you can not get to all the sessions, do not try, but, you have other options.&lt;/li&gt;
+&lt;li&gt;Try to avoid sessions on Expo, is a little difficult to hear the speaker as people walks by around you&lt;/li&gt;
+&lt;li&gt;Partner lead sessions are good to have real life situations&lt;/li&gt;
+&lt;li&gt;Sessions lead by Microsoft Gurus like Jeffrey Snover and Mark Russinovich are a must-attend&lt;/li&gt;
+&lt;li&gt;Use sneakers, you will have to walk A LOT&lt;/li&gt;
+&lt;li&gt;Do Networking, do it, talk to people, they do the same things as you do, they work on IT, it’s an excellent opportunity to share experiences and maybe to do business!&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;When Ignite ends, your work starts, you will have to review what you have learned in the sessions, get deep on them and apply to your everyday work to grow your ITPro knowledge, maybe it’s a chosen certification path, maybe new solutions to offer to your customers, in other words, capitalize the trip and money spent on it.&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>
