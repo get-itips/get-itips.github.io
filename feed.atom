@@ -4,7 +4,7 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2018</rights>
-	<updated>2018-02-23T21:03:58Z</updated>
+	<updated>2018-02-27T20:26:10Z</updated>
 	<subtitle>Microsoft Solution Architect</subtitle>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/open-office-fiasco" />
@@ -46,6 +46,33 @@ external&lt;br&gt;
 or one endpoint is internal and the other is federated or remote...&lt;/p&gt;</summary>
 	</entry>
 	<entry>
+		<link href="https://get-itips.capazero.net/posts/csv-adPerm" />
+		<id>https://get-itips.capazero.net/posts/csv-adPerm</id>
+		<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
+		<updated>2017-02-08T00:00:00Z</updated>
+		<content>&lt;p&gt;Hi,&lt;/p&gt;
+&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
+This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
+$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
+$connector=&amp;quot;connectorName&amp;quot;
+$perms=Get-adpermission $connector
+
+foreach($perm in $perms){
+    $perm
+    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
+    $csv +=&amp;quot;`n&amp;quot;
+}
+
+$fso = new-object -comobject scripting.filesystemobject
+$file = $fso.CreateTextFile($path,$true)
+$file.write($csv)
+$file.close()
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;Hi,&lt;/p&gt;</summary>
+	</entry>
+	<entry>
 		<link href="https://get-itips.capazero.net/posts/handy-handshake" />
 		<id>https://get-itips.capazero.net/posts/handy-handshake</id>
 		<title>Handy SMTP Handshake for testing with Telnet</title>
@@ -78,33 +105,6 @@ This is the email content.
 &lt;p&gt;&lt;strong&gt;Important notes:&lt;/strong&gt;
 You have to hit enter twice after subject input.
 account name and password are entered Base64 encoded, so first encode that information using for example &lt;a href="https://www.base64encode.org/"&gt;this site.&lt;/a&gt;&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;Hi,&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.capazero.net/posts/csv-adPerm" />
-		<id>https://get-itips.capazero.net/posts/csv-adPerm</id>
-		<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
-		<updated>2017-02-08T00:00:00Z</updated>
-		<content>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
-This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
-$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
-$connector=&amp;quot;connectorName&amp;quot;
-$perms=Get-adpermission $connector
-
-foreach($perm in $perms){
-    $perm
-    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
-    $csv +=&amp;quot;`n&amp;quot;
-}
-
-$fso = new-object -comobject scripting.filesystemobject
-$file = $fso.CreateTextFile($path,$true)
-$file.write($csv)
-$file.close()
-&lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;Hi,&lt;/p&gt;</summary>
 	</entry>
@@ -172,5 +172,21 @@ from Trend Micro documentation:&lt;/p&gt;</summary>
 &lt;p&gt;Solution: Re-Register the Workflow Service using Register-SPWorkflowService and the -Force Parameter. There is a good chance everything starts working then.&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;So,&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/limit-dw-ignite-videos" />
+		<id>https://get-itips.capazero.net/posts/limit-dw-ignite-videos</id>
+		<title>How to limit download rate on Ignite Videos</title>
+		<updated>2016-10-06T00:00:00Z</updated>
+		<content>&lt;p&gt;If you are using &lt;a href="http://tomtalks.uk/2015/05/download-all-the-skype-for-business-ignite-sessions/"&gt;THE powershell&lt;/a&gt; script to download Ignite 2016 Videos and Slide Decks you probably noticed that it will try to use all your bandwidth available and maybe kill all your connections, so, if this happened to you, you will find this useful&lt;/p&gt;
+&lt;p&gt;Hack into the ps file, go to line 156:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;Start-Process -FilePath .\youtube-dl.exe -ArgumentList &amp;quot;-o &amp;quot;&amp;quot;$vidFullFile&amp;quot;&amp;quot;&amp;quot;, $url -NoNewWindow -Wait
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and replace with this&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;Start-Process -FilePath .\youtube-dl.exe -ArgumentList &amp;quot;-o &amp;quot;&amp;quot;$vidFullFile&amp;quot;&amp;quot;&amp;quot;,&amp;quot;--limit-rate 30K&amp;quot; , $url -NoNewWindow -Wait
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;customize the --limit-rate argument to suit your preferences and voila!&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;If you are using &lt;a href="http://tomtalks.uk/2015/05/download-all-the-skype-for-business-ignite-sessions/"&gt;THE powershell&lt;/a&gt; script to download Ignite 2016 Videos and Slide Decks you probably noticed that it will try to use all your bandwidth available and maybe kill all your connections, so, if this happened to you, you will find this useful&lt;/p&gt;</summary>
 	</entry>
 </feed>

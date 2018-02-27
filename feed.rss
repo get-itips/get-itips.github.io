@@ -5,8 +5,8 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Microsoft Solution Architect</description>
 		<copyright>2018</copyright>
-		<pubDate>Fri, 23 Feb 2018 21:03:58 GMT</pubDate>
-		<lastBuildDate>Fri, 23 Feb 2018 21:03:58 GMT</lastBuildDate>
+		<pubDate>Tue, 27 Feb 2018 20:26:10 GMT</pubDate>
+		<lastBuildDate>Tue, 27 Feb 2018 20:26:10 GMT</lastBuildDate>
 		<item>
 			<title>The Open Office Space is a fiasco</title>
 			<link>https://get-itips.capazero.net/posts/open-office-fiasco</link>
@@ -47,6 +47,33 @@ or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
+			<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
+			<link>https://get-itips.capazero.net/posts/csv-adPerm</link>
+			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/csv-adPerm</guid>
+			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
+&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
+This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
+$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
+$connector=&amp;quot;connectorName&amp;quot;
+$perms=Get-adpermission $connector
+
+foreach($perm in $perms){
+    $perm
+    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
+    $csv +=&amp;quot;`n&amp;quot;
+}
+
+$fso = new-object -comobject scripting.filesystemobject
+$file = $fso.CreateTextFile($path,$true)
+$file.write($csv)
+$file.close()
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+		</item>
+		<item>
 			<title>Handy SMTP Handshake for testing with Telnet</title>
 			<link>https://get-itips.capazero.net/posts/handy-handshake</link>
 			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
@@ -80,33 +107,6 @@ This is the email content.
 &lt;p&gt;&lt;strong&gt;Important notes:&lt;/strong&gt;
 You have to hit enter twice after subject input.
 account name and password are entered Base64 encoded, so first encode that information using for example &lt;a href="https://www.base64encode.org/"&gt;this site.&lt;/a&gt;&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
-			<link>https://get-itips.capazero.net/posts/csv-adPerm</link>
-			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/csv-adPerm</guid>
-			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
-This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
-$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
-$connector=&amp;quot;connectorName&amp;quot;
-$perms=Get-adpermission $connector
-
-foreach($perm in $perms){
-    $perm
-    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
-    $csv +=&amp;quot;`n&amp;quot;
-}
-
-$fso = new-object -comobject scripting.filesystemobject
-$file = $fso.CreateTextFile($path,$true)
-$file.write($csv)
-$file.close()
-&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
 		<item>
@@ -172,6 +172,22 @@ go on and logon the Certification Authority computer:&lt;/p&gt;
 &lt;p&gt;If you did the exact steps and you receive the &amp;quot;Workflow is connected&amp;quot; message when you click on Workflow Manager Service Application inside Sharepoint Central Admin, but somehow, something is not working quite right, or maybe you receive this message trying to publish in Sharepoint Designer:&lt;/p&gt;
 &lt;p&gt;&lt;img src="/images/workflowmgr_error.png" class="img-fluid" alt="WorkFlow Manager Error" /&gt;&lt;/p&gt;
 &lt;p&gt;Solution: Re-Register the Workflow Service using Register-SPWorkflowService and the -Force Parameter. There is a good chance everything starts working then.&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>How to limit download rate on Ignite Videos</title>
+			<link>https://get-itips.capazero.net/posts/limit-dw-ignite-videos</link>
+			<description>&lt;p&gt;If you are using &lt;a href="http://tomtalks.uk/2015/05/download-all-the-skype-for-business-ignite-sessions/"&gt;THE powershell&lt;/a&gt; script to download Ignite 2016 Videos and Slide Decks you probably noticed that it will try to use all your bandwidth available and maybe kill all your connections, so, if this happened to you, you will find this useful&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/limit-dw-ignite-videos</guid>
+			<pubDate>Thu, 06 Oct 2016 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;If you are using &lt;a href="http://tomtalks.uk/2015/05/download-all-the-skype-for-business-ignite-sessions/"&gt;THE powershell&lt;/a&gt; script to download Ignite 2016 Videos and Slide Decks you probably noticed that it will try to use all your bandwidth available and maybe kill all your connections, so, if this happened to you, you will find this useful&lt;/p&gt;
+&lt;p&gt;Hack into the ps file, go to line 156:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;Start-Process -FilePath .\youtube-dl.exe -ArgumentList &amp;quot;-o &amp;quot;&amp;quot;$vidFullFile&amp;quot;&amp;quot;&amp;quot;, $url -NoNewWindow -Wait
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and replace with this&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;Start-Process -FilePath .\youtube-dl.exe -ArgumentList &amp;quot;-o &amp;quot;&amp;quot;$vidFullFile&amp;quot;&amp;quot;&amp;quot;,&amp;quot;--limit-rate 30K&amp;quot; , $url -NoNewWindow -Wait
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;customize the --limit-rate argument to suit your preferences and voila!&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>
