@@ -5,8 +5,8 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Microsoft Solution Architect</description>
 		<copyright>2018</copyright>
-		<pubDate>Tue, 08 May 2018 17:38:19 GMT</pubDate>
-		<lastBuildDate>Tue, 08 May 2018 17:38:19 GMT</lastBuildDate>
+		<pubDate>Tue, 08 May 2018 17:45:14 GMT</pubDate>
+		<lastBuildDate>Tue, 08 May 2018 17:45:14 GMT</lastBuildDate>
 		<item>
 			<title>Script to call POSH-LTM-Rest cmdlets to enable or disable Pool Members on a F5 LTM Load Balancer</title>
 			<link>https://get-itips.capazero.net/posts/ScriptPoshLTM</link>
@@ -266,6 +266,36 @@ go on and logon the Certification Authority computer:&lt;/p&gt;
 &lt;li&gt;Do Networking, do it, talk to people, they do the same things as you do, they work on IT, it’s an excellent opportunity to share experiences and maybe to do business!&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;When Ignite ends, your work starts, you will have to review what you have learned in the sessions, get deep on them and apply to your everyday work to grow your ITPro knowledge, maybe it’s a chosen certification path, maybe new solutions to offer to your customers, in other words, capitalize the trip and money spent on it.&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>The transaction log for database 'Sharepoint_Config is full due to 'LOG_BACKUP'</title>
+			<link>https://get-itips.capazero.net/posts/fullLogBackup</link>
+			<description>&lt;p&gt;Well, if you or your customer doesn't have a good maintenance plan for your Sharepoint DB (Content &amp;amp; Configuration) you will someday face a situation where Sharepoint_Config transaction log grows tremendously or even fills your transaction log disk, so what to do?&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/fullLogBackup</guid>
+			<pubDate>Thu, 04 Aug 2016 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Well, if you or your customer doesn't have a good maintenance plan for your Sharepoint DB (Content &amp;amp; Configuration) you will someday face a situation where Sharepoint_Config transaction log grows tremendously or even fills your transaction log disk, so what to do?&lt;/p&gt;
+&lt;p&gt;Note: if you can't do any operation on the RDBMS (SQL Server) because the disk is full, you need either delete something on the disk (maybe a non important testing database) or expand the disk (if you are working on a virtual machine this is relatively easy).&lt;/p&gt;
+&lt;p&gt;Once you free enough space on the disk, you must to this in order:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Set Recovery Mode for the Sharepoint_Config database to SIMPLE&lt;/li&gt;
+&lt;li&gt;Shrink the Transaction Log FILES of the db&lt;/li&gt;
+&lt;li&gt;Set Recovery Mode for the Sharepoint_Config database to FULL&lt;/li&gt;
+&lt;li&gt;Take a Full Database Backup!&lt;/li&gt;
+&lt;li&gt;How to do the first 3 steps using T-SQL?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class="language-sql"&gt;USE master;
+ALTER DATABASE SharePoint_Config SET RECOVERY SIMPLE;
+GO
+
+USE [SharePoint_Config]
+GO
+DBCC SHRINKFILE (N'SharePoint_Config_log' , 1)
+GO
+
+USE master;ALTER DATABASE SharePoint_Config SET RECOVERY FULL;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once you do this, you will see that Sharepoint Config database will shrink to a better reasonable size, but, it will grow again eventually so, my advice, create a maintenance job to do this before taking a full database backup.&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>
