@@ -1,5 +1,5 @@
 Title: The transaction log for database 'Sharepoint_Config is full due to 'LOG_BACKUP'
-Published: 8/4/2018
+Published: 8/4/2016
 Tags: Sharepoint
 ---
 
