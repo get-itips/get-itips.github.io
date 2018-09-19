@@ -22,7 +22,16 @@ So, I saw something, as you can see in the extracted log, there is ABZ-Branch an
 TFS, at least 2017 update 3 is not preventing you from creating branches with the same name but different case.
 
 The Git install where the Build agents are, is not making difference of this, so it is not case sensitive, (as digging into Agent's work folder at for example
-E:\Agents\Agent01\_work\2\s\.git\config file you can see there that ignorecase = true
+
+```
+E:\Agents\Agent01\_work\2\s\.git\config
+```
+
+you can see there that 
+
+```
+ignorecase = true
+```
 
 so it is processing the git fetch as if ABZ-Branch and Abz-Branch were the same! leading  to the error saying that it is expecting other digest.
 
