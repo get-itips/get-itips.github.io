@@ -5,8 +5,31 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Microsoft Solution Architect</description>
 		<copyright>2018</copyright>
-		<pubDate>Wed, 19 Sep 2018 17:49:23 GMT</pubDate>
-		<lastBuildDate>Wed, 19 Sep 2018 17:49:23 GMT</lastBuildDate>
+		<pubDate>Wed, 19 Sep 2018 17:53:11 GMT</pubDate>
+		<lastBuildDate>Wed, 19 Sep 2018 17:53:11 GMT</lastBuildDate>
+		<item>
+			<title>Error cannot lock ref Git fetch failed with exit code 1 unable to update local ref</title>
+			<link>https://get-itips.capazero.net/posts/cannot-lock</link>
+			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/cannot-lock</guid>
+			<pubDate>Wed, 19 Sep 2018 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
+&lt;p&gt;Had to troubleshoot this error on one of my customers and wanted to share so if anyone encounter this can use this solution.
+Basically, when executing a Build using TFS Build Agents, we were seeing this error&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;2018-09-17T19:10:10.9599867Z  * [new branch]        ABZ-Branch -&amp;gt; origin/ABZ-Branch
+2018-09-17T19:10:10.9599867Z error: cannot lock ref 'refs/remotes/origin/Abz-Branch': is at 551a179d8451f1154e0b38b85993a439d8c39af2 but expected e887cf2f4e449bd480560b8aee827bf140faf65a
+2018-09-17T19:10:10.9599867Z  ! e887cf2f..087dcca9  Abz-Branch -&amp;gt; origin/Abz-Branch  (unable to update local ref)
+2018-09-17T19:10:11.0381160Z ##[error]Git fetch failed with exit code: 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Strange huh? if you do a search you won't find exactly this error, on similar situations we can recommendations to do a git prune, but I did this with no luck.&lt;/p&gt;
+&lt;p&gt;So, I saw something, as you can see in the extracted log, there is ABZ-Branch and Abz-Branch, they might seem the same branch but they are different in case!!&lt;/p&gt;
+&lt;p&gt;TFS, at least 2017 update 3 is not preventing you from creating branches with the same name but different case.&lt;/p&gt;
+&lt;p&gt;The Git install where the Build agents are, is not making difference of this, so it is not case sensitive, (as digging into Agent's work folder at for example
+E:\Agents\Agent01_work\2\s.git\config file you can see there that ignorecase = true&lt;/p&gt;
+&lt;p&gt;so it is processing the git fetch as if ABZ-Branch and Abz-Branch were the same! leading  to the error saying that it is expecting other digest.&lt;/p&gt;
+&lt;p&gt;So if you encounter exactly this, check if you have two branches with the same name but different case.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Script to call POSH-LTM-Rest cmdlets to enable or disable Pool Members on a F5 LTM Load Balancer</title>
 			<link>https://get-itips.capazero.net/posts/ScriptPoshLTM</link>
@@ -62,29 +85,6 @@ if($session -ne $null){
 &lt;p&gt;-LTMName $(LTMName) -Partition $(Partition) -PoolName $(PoolName) -MemberName $(MemberName) -F5Username $(Username) -F5Password $(Password)&lt;/p&gt;
 &lt;p&gt;Remember to create this variables in the release definition.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Test it. always test it on your environment.&lt;/strong&gt;&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Error cannot lock ref Git fetch failed with exit code 1 unable to update local ref</title>
-			<link>https://get-itips.capazero.net/posts/cannot-lock</link>
-			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/cannot-lock</guid>
-			<pubDate>Mon, 19 Mar 2018 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;Had to troubleshoot this error on one of my customers and wanted to share so if anyone encounter this can use this solution.
-Basically, when executing a Build using TFS Build Agents, we were seeing this error&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;2018-09-17T19:10:10.9599867Z  * [new branch]        ABZ-Branch -&amp;gt; origin/ABZ-Branch
-2018-09-17T19:10:10.9599867Z error: cannot lock ref 'refs/remotes/origin/Abz-Branch': is at 551a179d8451f1154e0b38b85993a439d8c39af2 but expected e887cf2f4e449bd480560b8aee827bf140faf65a
-2018-09-17T19:10:10.9599867Z  ! e887cf2f..087dcca9  Abz-Branch -&amp;gt; origin/Abz-Branch  (unable to update local ref)
-2018-09-17T19:10:11.0381160Z ##[error]Git fetch failed with exit code: 1
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Strange huh? if you do a search you won't find exactly this error, on similar situations we can recommendations to do a git prune, but I did this with no luck.&lt;/p&gt;
-&lt;p&gt;So, I saw something, as you can see in the extracted log, there is ABZ-Branch and Abz-Branch, they might seem the same branch but they are different in case!!&lt;/p&gt;
-&lt;p&gt;TFS, at least 2017 update 3 is not preventing you from creating branches with the same name but different case.&lt;/p&gt;
-&lt;p&gt;The Git install where the Build agents are, is not making difference of this, so it is not case sensitive, (as digging into Agent's work folder at for example
-E:\Agents\Agent01_work\2\s.git\config file you can see there that ignorecase = true&lt;/p&gt;
-&lt;p&gt;so it is processing the git fetch as if ABZ-Branch and Abz-Branch were the same! leading  to the error saying that it is expecting other digest.&lt;/p&gt;
-&lt;p&gt;So if you encounter exactly this, check if you have two branches with the same name but different case.&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
