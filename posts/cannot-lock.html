@@ -120,8 +120,12 @@ Basically, when executing a Build using TFS Build Agents, we were seeing this er
 <p>Strange huh? if you do a search you won't find exactly this error, on similar situations we can recommendations to do a git prune, but I did this with no luck.</p>
 <p>So, I saw something, as you can see in the extracted log, there is ABZ-Branch and Abz-Branch, they might seem the same branch but they are different in case!!</p>
 <p>TFS, at least 2017 update 3 is not preventing you from creating branches with the same name but different case.</p>
-<p>The Git install where the Build agents are, is not making difference of this, so it is not case sensitive, (as digging into Agent's work folder at for example
-E:\Agents\Agent01_work\2\s.git\config file you can see there that ignorecase = true</p>
+<p>The Git install where the Build agents are, is not making difference of this, so it is not case sensitive, (as digging into Agent's work folder at for example</p>
+<pre><code>E:\Agents\Agent01\_work\2\s\.git\config
+</code></pre>
+<p>you can see there that</p>
+<pre><code>ignorecase = true
+</code></pre>
 <p>so it is processing the git fetch as if ABZ-Branch and Abz-Branch were the same! leading  to the error saying that it is expecting other digest.</p>
 <p>So if you encounter exactly this, check if you have two branches with the same name but different case.</p>
 

@@ -4,7 +4,7 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2018</rights>
-	<updated>2018-09-19T17:53:11Z</updated>
+	<updated>2018-09-19T17:57:01Z</updated>
 	<subtitle>Microsoft Solution Architect</subtitle>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/cannot-lock" />
@@ -22,8 +22,12 @@ Basically, when executing a Build using TFS Build Agents, we were seeing this er
 &lt;p&gt;Strange huh? if you do a search you won't find exactly this error, on similar situations we can recommendations to do a git prune, but I did this with no luck.&lt;/p&gt;
 &lt;p&gt;So, I saw something, as you can see in the extracted log, there is ABZ-Branch and Abz-Branch, they might seem the same branch but they are different in case!!&lt;/p&gt;
 &lt;p&gt;TFS, at least 2017 update 3 is not preventing you from creating branches with the same name but different case.&lt;/p&gt;
-&lt;p&gt;The Git install where the Build agents are, is not making difference of this, so it is not case sensitive, (as digging into Agent's work folder at for example
-E:\Agents\Agent01_work\2\s.git\config file you can see there that ignorecase = true&lt;/p&gt;
+&lt;p&gt;The Git install where the Build agents are, is not making difference of this, so it is not case sensitive, (as digging into Agent's work folder at for example&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;E:\Agents\Agent01\_work\2\s\.git\config
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;you can see there that&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ignorecase = true
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;so it is processing the git fetch as if ABZ-Branch and Abz-Branch were the same! leading  to the error saying that it is expecting other digest.&lt;/p&gt;
 &lt;p&gt;So if you encounter exactly this, check if you have two branches with the same name but different case.&lt;/p&gt;
 </content>
