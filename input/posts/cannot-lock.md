@@ -1,5 +1,5 @@
 Title: Error cannot lock ref Git fetch failed with exit code 1 unable to update local ref
-Published: 3/19/2018
+Published: 9/19/2018
 Tags: TeamFoundationServer
 ---
 
