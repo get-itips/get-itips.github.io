@@ -12,8 +12,9 @@ install:
   - mkdir ..\Wyam
   - mkdir ..\output
   # Fetch the latest version of Wyam 
-  - "curl -s https://raw.githubusercontent.com/Wyamio/Wyam/master/RELEASE -o ..\\Wyam\\wyamversion.txt"
-  - set /P WYAMVERSION=< ..\Wyam\wyamversion.txt
+  #- "curl -s https://raw.githubusercontent.com/Wyamio/Wyam/master/RELEASE -o ..\\Wyam\\wyamversion.txt"
+  #- set /P WYAMVERSION=< ..\Wyam\wyamversion.txt
+  - set /P WYAMVERSION=<v.1.6.0
   - echo %WYAMVERSION%
   # Get and unzip the latest version of Wyam
   - ps: Start-FileDownload "https://github.com/Wyamio/Wyam/releases/download/$env:WYAMVERSION/Wyam-$env:WYAMVERSION.zip" -FileName "..\Wyam\Wyam.zip"
