@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - Script to call POSH-LTM-Rest cmdlets to enable or disable Pool Members on a F5 LTM Load Balancer</title>
+        <title>Andr&#xE9;s Gorzelany - It&#x27;s like SysInternals, but for Git-Hub!</title>
         <meta name="description" content="Microsoft Solution Architect" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Script to call POSH-LTM-Rest cmdlets to enable or disable Pool Members on a F5 LTM Load Balancer" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - It&#x27;s like SysInternals, but for Git-Hub!" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/posts/ScriptPoshLTM" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/PwshGitHubTools" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -91,11 +91,11 @@
 
     
 <div class="post-heading">
-    <h1>Script to call POSH-LTM-Rest cmdlets to enable or disable Pool Members on a F5 LTM Load Balancer</h1>
+    <h1>It&#x27;s like SysInternals, but for Git-Hub!</h1>
     <div class="meta">        
-Published on Wednesday, March 21, 2018<br>    </div>
+Published on Saturday, March 2, 2019<br>    </div>
         <div class="tags">
-                    <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-xs">TeamFoundationServer</a>
+                    <a role="button" href="/tags/GitHub" class="btn btn-default btn-xs">GitHub</a>
         </div>     
 </div>
                                         </div>
@@ -109,63 +109,27 @@ Published on Wednesday, March 21, 2018<br>    </div>
                                 <div id="content" class="col-md-12">
                                         
 
-<p>Hi,</p>
-<p>Had to do this PS Script for a customer, they use TFS and wanted to control F5 LTM (Load Balancer) to disable or enable nodes in a release definition,
-so they can disable a node, update the binaries on it, and enable it again.
-So, I found this excellent <a href="https://github.com/joel74/POSH-LTM-Rest">Powershell modules</a> from <a href="https://github.com/joel74">Joel74</a> that include the needed functions.
-First of all, you have to install the POSH-LTM modules as the creator says on his github page on the computer that will be used to run the PS Script,
-then, save this PS Script on the same computer.</p>
-<pre><code class="language-powershell"> param (
-    [Parameter(Mandatory=$true)][string]$LTMName,
-    [Parameter(Mandatory=$true)][string]$Partition,
-    [Parameter(Mandatory=$true)][string]$PoolName,
-    [Parameter(Mandatory=$true)][string]$MemberName,
-    [switch]$disable = $false,
-    [Parameter(Mandatory=$true)][string]$F5Username,
-    [Parameter(Mandatory=$true)][string]$F5Password
-)
-
-$passwd = $F5Password
-$user=$F5Username
-
-$secpasswd = ConvertTo-SecureString $passwd -AsPlainText -Force
-$ltmCreds = New-Object System.Management.Automation.PSCredential ($user, $secpasswd)
-
-
-#Se solicita una sesion al F5 BIG-IP
-$session = $null
-$session = New-F5Session -LTMCredentials $ltmCreds -LTMName $LTMName -PassThrough
-
-if($session -ne $null){
-    if($Disable){
-    Write-Verbose &quot;Trying to disable $LTMName|$Partition|$PoolName|$MemberName&quot;
-    Disable-PoolMember -F5Session $session -PoolName $PoolName -Partition $Partition -Name $MemberName
-
-    }else{
-    Write-Verbose &quot;Trying to enable $LTMName|$Partition|$PoolName|$MemberName&quot;
-    Enable-PoolMember -F5Session $session -PoolName $PoolName -Partition $Partition -Name $MemberName
-    }
-}
+<p>Hi!
+(Well... If the great Mark Russinovich allows me... obviously)
+I am back! It's been a busy year, hopefully, I'll write more often.
+Last year I started contributing in GitHub, more specifically as a Collaborator for docs.microsoft.com creating Pull Requests to improve the documentation based on user feedback.</p>
+<p>Let me tell you that is an activity I really enjoy to do! I think Microsoft has made the right choice open-sourcing the documentation of their solutions.</p>
+<p>So as I am a PowerShell guy (now a PowerShell Core guy) I created a small script to check the status of Issues.</p>
+<p>The name of this Script is Get-GitHubIssuesState.ps1</p>
+<p>Example Use</p>
+<pre><code class="language-powershell">PS &gt; .\Get-GitHubIssuesState.ps1 -Owner MicrosoftDocs -Repo officedocs-SkypeForBusiness -Issues 834,817,803,779,777,772,771,774,663 -OAuthtoken x02ab2e5xxx34ef25fea707cfb02542e9d7xxx
 </code></pre>
-<p>Go to the release definition of your project of choice, and add a &quot;Powershell on target Machines&quot; task, fill the fields as follows:</p>
-<ul>
-<li>Machines: fill with the hostname or IP of the computer with the PS Module and PS Script saved in the last step.</li>
-<li>Admin Login / Password: Credentials to connect to this computer</li>
-<li>Protocol: HTTP or HTTPS</li>
-<li>Powershell Script: Full path to the PS Script saved in the last step, for example C:\Scripts\F5Manage-TeamMember.ps1</li>
-<li>Script Arguments: Arguments needed by my script, for example, using release variables:</li>
-</ul>
-<p>-LTMName $(LTMName) -Partition $(Partition) -PoolName $(PoolName) -MemberName $(MemberName) -F5Username $(Username) -F5Password $(Password)</p>
-<p>Remember to create this variables in the release definition.</p>
-<p><strong>Test it. always test it on your environment.</strong></p>
+<p><strong>The reason behind needing OAuthToken is because of a limit in requests per hour that an anonymous user can make.</strong></p>
+<p>The repo is located <a href="https://github.com/get-itips/PwshGitHubTools">here</a> and I expect to create other small tools to do things with GitHub through PowerShell.</p>
+<p>Remember, PowerShell makes you PowerFULL</p>
 
 
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'get-itips';
-    var disqus_identifier = 'ScriptPoshLTM';
-    var disqus_title = 'Script to call POSH-LTM-Rest cmdlets to enable or disable Pool Members on a F5 LTM Load Balancer';
-    var disqus_url = 'https://get-itips.capazero.net/posts/ScriptPoshLTM';
+    var disqus_identifier = 'PwshGitHubTools';
+    var disqus_title = 'It&#x27;s like SysInternals, but for Git-Hub!';
+    var disqus_url = 'https://get-itips.capazero.net/posts/PwshGitHubTools';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

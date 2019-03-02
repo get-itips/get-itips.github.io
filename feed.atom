@@ -3,9 +3,33 @@
 	<link rel="self" href="https://get-itips.capazero.net/" />
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
-	<rights>2018</rights>
-	<updated>2018-09-19T17:57:01Z</updated>
+	<rights>2019</rights>
+	<updated>2019-03-02T13:31:39Z</updated>
 	<subtitle>Microsoft Solution Architect</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/PwshGitHubTools" />
+		<id>https://get-itips.capazero.net/posts/PwshGitHubTools</id>
+		<title>It's like SysInternals, but for Git-Hub!</title>
+		<updated>2019-03-02T00:00:00Z</updated>
+		<content>&lt;p&gt;Hi!
+(Well... If the great Mark Russinovich allows me... obviously)
+I am back! It's been a busy year, hopefully, I'll write more often.
+Last year I started contributing in GitHub, more specifically as a Collaborator for docs.microsoft.com creating Pull Requests to improve the documentation based on user feedback.&lt;/p&gt;
+&lt;p&gt;Let me tell you that is an activity I really enjoy to do! I think Microsoft has made the right choice open-sourcing the documentation of their solutions.&lt;/p&gt;
+&lt;p&gt;So as I am a PowerShell guy (now a PowerShell Core guy) I created a small script to check the status of Issues.&lt;/p&gt;
+&lt;p&gt;The name of this Script is Get-GitHubIssuesState.ps1&lt;/p&gt;
+&lt;p&gt;Example Use&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;PS &amp;gt; .\Get-GitHubIssuesState.ps1 -Owner MicrosoftDocs -Repo officedocs-SkypeForBusiness -Issues 834,817,803,779,777,772,771,774,663 -OAuthtoken x02ab2e5xxx34ef25fea707cfb02542e9d7xxx
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;The reason behind needing OAuthToken is because of a limit in requests per hour that an anonymous user can make.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The repo is located &lt;a href="https://github.com/get-itips/PwshGitHubTools"&gt;here&lt;/a&gt; and I expect to create other small tools to do things with GitHub through PowerShell.&lt;/p&gt;
+&lt;p&gt;Remember, PowerShell makes you PowerFULL&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;Hi!
+(Well... If the great Mark Russinovich allows me... obviously)
+I am back! It's been a busy year, hopefully, I'll write more often.
+Last year I started contributing in GitHub, more specifically as a Collaborator for docs.microsoft.com creating Pull Requests to improve the documentation based on user feedback.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/cannot-lock" />
 		<id>https://get-itips.capazero.net/posts/cannot-lock</id>

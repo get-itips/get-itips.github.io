@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - Script to call POSH-LTM-Rest cmdlets to enable or disable Pool Members on a F5 LTM Load Balancer</title>
+        <title>Andr&#xE9;s Gorzelany - GitHub</title>
         <meta name="description" content="Microsoft Solution Architect" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Script to call POSH-LTM-Rest cmdlets to enable or disable Pool Members on a F5 LTM Load Balancer" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - GitHub" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/posts/ScriptPoshLTM" />
+        <meta property="og:url" content="https://get-itips.capazero.net/tags/GitHub" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -88,17 +88,9 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-
-    
-<div class="post-heading">
-    <h1>Script to call POSH-LTM-Rest cmdlets to enable or disable Pool Members on a F5 LTM Load Balancer</h1>
-    <div class="meta">        
-Published on Wednesday, March 21, 2018<br>    </div>
-        <div class="tags">
-                    <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-xs">TeamFoundationServer</a>
-        </div>     
-</div>
-                                        </div>
+<div class="site-heading">
+    <h1>GitHub</h1>
+</div>                                            </div>
                                 </div>
                         </div>
                 </header>
@@ -107,83 +99,40 @@ Published on Wednesday, March 21, 2018<br>    </div>
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        
-
-<p>Hi,</p>
-<p>Had to do this PS Script for a customer, they use TFS and wanted to control F5 LTM (Load Balancer) to disable or enable nodes in a release definition,
-so they can disable a node, update the binaries on it, and enable it again.
-So, I found this excellent <a href="https://github.com/joel74/POSH-LTM-Rest">Powershell modules</a> from <a href="https://github.com/joel74">Joel74</a> that include the needed functions.
-First of all, you have to install the POSH-LTM modules as the creator says on his github page on the computer that will be used to run the PS Script,
-then, save this PS Script on the same computer.</p>
-<pre><code class="language-powershell"> param (
-    [Parameter(Mandatory=$true)][string]$LTMName,
-    [Parameter(Mandatory=$true)][string]$Partition,
-    [Parameter(Mandatory=$true)][string]$PoolName,
-    [Parameter(Mandatory=$true)][string]$MemberName,
-    [switch]$disable = $false,
-    [Parameter(Mandatory=$true)][string]$F5Username,
-    [Parameter(Mandatory=$true)][string]$F5Password
-)
-
-$passwd = $F5Password
-$user=$F5Username
-
-$secpasswd = ConvertTo-SecureString $passwd -AsPlainText -Force
-$ltmCreds = New-Object System.Management.Automation.PSCredential ($user, $secpasswd)
+                                        <div class="container-sm-height">
+    <div class="row row-sm-height">
+        <div class="col-sm-8 right-border col-sm-height">
+                    <div class="post-list">
+            <a href="/posts/PwshGitHubTools">
+                <h3 class="post-title">It&#x27;s like SysInternals, but for Git-Hub!</h3>
+            </a>
+            <p class="post-meta">Posted on Saturday, March 2, 2019</p>      
+        </div>   
 
 
-#Se solicita una sesion al F5 BIG-IP
-$session = $null
-$session = New-F5Session -LTMCredentials $ltmCreds -LTMName $LTMName -PassThrough
-
-if($session -ne $null){
-    if($Disable){
-    Write-Verbose &quot;Trying to disable $LTMName|$Partition|$PoolName|$MemberName&quot;
-    Disable-PoolMember -F5Session $session -PoolName $PoolName -Partition $Partition -Name $MemberName
-
-    }else{
-    Write-Verbose &quot;Trying to enable $LTMName|$Partition|$PoolName|$MemberName&quot;
-    Enable-PoolMember -F5Session $session -PoolName $PoolName -Partition $Partition -Name $MemberName
-    }
-}
-</code></pre>
-<p>Go to the release definition of your project of choice, and add a &quot;Powershell on target Machines&quot; task, fill the fields as follows:</p>
-<ul>
-<li>Machines: fill with the hostname or IP of the computer with the PS Module and PS Script saved in the last step.</li>
-<li>Admin Login / Password: Credentials to connect to this computer</li>
-<li>Protocol: HTTP or HTTPS</li>
-<li>Powershell Script: Full path to the PS Script saved in the last step, for example C:\Scripts\F5Manage-TeamMember.ps1</li>
-<li>Script Arguments: Arguments needed by my script, for example, using release variables:</li>
-</ul>
-<p>-LTMName $(LTMName) -Partition $(Partition) -PoolName $(PoolName) -MemberName $(MemberName) -F5Username $(Username) -F5Password $(Password)</p>
-<p>Remember to create this variables in the release definition.</p>
-<p><strong>Test it. always test it on your environment.</strong></p>
-
-
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_shortname = 'get-itips';
-    var disqus_identifier = 'ScriptPoshLTM';
-    var disqus_title = 'Script to call POSH-LTM-Rest cmdlets to enable or disable Pool Members on a F5 LTM Load Balancer';
-    var disqus_url = 'https://get-itips.capazero.net/posts/ScriptPoshLTM';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
+            <nav>
+                <ul class="pager">
+                    <li class="previous">                
+                    </li>
+                    <li class="next">
+                    </li>
+                </ul>
+            </nav>
+            <hr class="visible-xs-block" />
+        </div>
+		
+        <div class="col-sm-4 col-sm-height">
+                <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-xs">TeamFoundationServer (2)</a>
+                <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer (2)</a>
+                <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-xs">Sharepoint (2)</a>
+                <a role="button" href="/tags/Ignite" class="btn btn-default btn-xs">Ignite (2)</a>
+                <a role="button" href="/tags/GitHub" class="btn btn-primary btn-xs">GitHub (1)</a>
+                <a role="button" href="/tags/General" class="btn btn-default btn-xs">General (1)</a>
+                <a role="button" href="/tags/Skype4B" class="btn btn-default btn-xs">Skype4B (1)</a>
+                <a role="button" href="/tags/SSL" class="btn btn-default btn-xs">SSL (1)</a>
+        </div>
+    </div>
+</div>
                                 </div>
                         </div>
                 </div>
