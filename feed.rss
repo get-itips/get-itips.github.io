@@ -5,8 +5,8 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Microsoft Solution Architect</description>
 		<copyright>2019</copyright>
-		<pubDate>Sun, 05 May 2019 14:06:27 GMT</pubDate>
-		<lastBuildDate>Sun, 05 May 2019 14:06:27 GMT</lastBuildDate>
+		<pubDate>Sun, 05 May 2019 14:10:04 GMT</pubDate>
+		<lastBuildDate>Sun, 05 May 2019 14:10:04 GMT</lastBuildDate>
 		<item>
 			<title>SfB On-Prem decommission and InterpretedUserType</title>
 			<link>https://get-itips.capazero.net/posts/sfbonprem-interpretedusertype</link>
@@ -108,7 +108,7 @@ PureOnlineSfBUser
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;(I recommend running this cmdlet against the same Domain Controller using the -Server parameter)&lt;/p&gt;
 &lt;p&gt;That's it, we waited some hours and started to see the expected value for the users (DirSyncSfBUser), then, we followed the guide and removed the last servers and ran Disable-CsAdDomain and Disable-CsAdForest.&lt;/p&gt;
-&lt;p&gt;Hope this post helps anyone that stumble upon the same scenario as Dario and me.get&lt;/p&gt;
+&lt;p&gt;Hope this post helps anyone that stumble upon the same scenario as Dario and me got.&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>

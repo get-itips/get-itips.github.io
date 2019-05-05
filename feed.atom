@@ -4,7 +4,7 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2019</rights>
-	<updated>2019-05-05T14:06:27Z</updated>
+	<updated>2019-05-05T14:10:04Z</updated>
 	<subtitle>Microsoft Solution Architect</subtitle>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/sfbonprem-interpretedusertype" />
@@ -106,7 +106,7 @@ PureOnlineSfBUser
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;(I recommend running this cmdlet against the same Domain Controller using the -Server parameter)&lt;/p&gt;
 &lt;p&gt;That's it, we waited some hours and started to see the expected value for the users (DirSyncSfBUser), then, we followed the guide and removed the last servers and ran Disable-CsAdDomain and Disable-CsAdForest.&lt;/p&gt;
-&lt;p&gt;Hope this post helps anyone that stumble upon the same scenario as Dario and me.get&lt;/p&gt;
+&lt;p&gt;Hope this post helps anyone that stumble upon the same scenario as Dario and me got.&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;&lt;img src="/images/DeploymentLocator.png" class="img-fluid" alt="msRTCSip-DeploymentLocator"&gt;&lt;/p&gt;</summary>
 	</entry>
