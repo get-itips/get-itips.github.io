@@ -4,8 +4,112 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2019</rights>
-	<updated>2019-05-05T13:58:09Z</updated>
+	<updated>2019-05-05T14:02:55Z</updated>
 	<subtitle>Microsoft Solution Architect</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/sfbonprem-interpretedusertype" />
+		<id>https://get-itips.capazero.net/posts/sfbonprem-interpretedusertype</id>
+		<title>SfB On-Prem decommission and InterpretedUserType</title>
+		<updated>2019-05-05T00:00:00Z</updated>
+		<content>&lt;p&gt;&lt;img src="/images/DeploymentLocator.png" class="img-fluid" alt="msRTCSip-DeploymentLocator" /&gt;&lt;/p&gt;
+&lt;p&gt;Hi!
+I was involved in a project with my colleage &lt;a href="https://twitter.com/dariomws"&gt;Dario Woitasen&lt;/a&gt; to remove Skype for Business from an hybrid deployment with SfB Online and experienced some odd things that we had to deal with.
+I want to share them if anyone experiences the same as we did.&lt;/p&gt;
+&lt;p&gt;As a start, we followed this excellent guide &lt;a href="https://blogs.technet.microsoft.com/fasttracktips/2017/06/27/decommissioning-skypelync-on-premises/"&gt;Decommissioning Skype/Lync on-premises&lt;/a&gt; but, as usual, as we progressed we saw that there were more things to take into account.&lt;/p&gt;
+&lt;p&gt;One of the steps includes running this cmdlet for all users&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Disable-CsUser&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Well, this cmdlet should:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Clear all msRTCSip- attributes of every enabled user.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;But actually:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Did not fully clear the msRTCSip- attributes, specially msRTCSip-DeploymentLocator, more info on this attrib &lt;a href="https://docs.microsoft.com/en-us/skypeforbusiness/schema-reference/active-directory-schema-extensions-classes-and-attributes/schema-attributes-and-descriptions"&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Removed sip:user&amp;#64;contoso.com from proxyAddresses attribute!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This lead to two things:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Single sign-on stopped working for the SfB client&lt;/strong&gt;, later, we identified that this was caused by the sip:user&amp;#64;contoso.com entry not being present in proxyAddresses (remember that Disable-CsUser deleted this?), so we created a script to fix this in local AD domain:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;$csv=import-csv &amp;quot;D:\Users.csv&amp;quot;
+
+foreach($user in $csv){
+        $userUpn=$user.SipAddress.Replace(&amp;quot;sip:&amp;quot;,&amp;quot;&amp;quot;)
+        #Do not add proxyAddress if it is present already
+        $proxies=Get-ADUser -Filter &amp;quot;UserPrincipalName -eq '$userupn'&amp;quot; -properties * | Select-Object &amp;#64;{Name=“proxyAddresses”;Expression={$_.proxyAddresses}}
+
+
+        if(($null -eq $proxies) -or ($proxies.proxyAddresses -join ' ' -notmatch &amp;quot;sip:&amp;quot;)) #empty list of ProxyAddresses
+        {
+            write-host &amp;quot;Adding sip&amp;quot;
+            Get-ADUser -Filter &amp;quot;UserPrincipalName -eq '$userupn'&amp;quot; | Set-ADUser -Add &amp;#64;{&amp;quot;proxyAddresses&amp;quot;=$user.SipAddress}
+        }
+        else
+        {
+            write-host &amp;quot;No need to Add sip&amp;quot;
+        }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Look that this is a portion of the real script, that is reading a csv file with the output of users that need to be treated, csv has a column for the User's Sip Address exported from SfB Online Powershell, like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-c"&gt;&amp;quot;SipAddress&amp;quot;
+&amp;quot;sip:debrab&amp;#64;contoso.com&amp;quot;
+&amp;quot;sip:johnd&amp;#64;contoso.com&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once we added this attribute to the local AD, &lt;em&gt;single sign-on worked again&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Where were we? oh yes... the presence of values in msRTCSip-DeploymentLocator attribute in the local Active Directory lead to the SfB Online deployment (after Azure AD Sync) to &amp;quot;think&amp;quot; or &amp;quot;interpret&amp;quot; that the users were still hybrid or OnPrem and this prevented (or at least we feared) to remove the last on-prem servers.
+We concluded this looking at the InterpretedUserType of the users and in the process, we identified all of these possible values for  an SfB Online user account:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-c"&gt;DirSyncDisabledDisabledUser
+DirSyncDisabledNoService
+DirSyncDisabledSfBUser
+DirSyncDisabledUser
+DirSyncNoService
+DirSyncSfBUser
+DirSyncSfBUserNeedsProvisioning
+HybridOnlineDisabledUser
+HybridOnlineDisabledUserNeedsProvisioning
+HybridOnlineDisabledUserWithDeletedLicenses
+HybridOnlineSfBUser
+HybridOnlineSfBUserWithDeletedLicenses
+HybridOnpremDisabledUser
+HybridOnpremSfBUser
+PureOnlineNoService
+PureOnlineNoServiceWithDeletedLicenses
+PureOnlineSfBUser
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We are not sure of the complete enumeration of this type of data, but as you may see, the list is big, this excellent post tries to explain some of them &lt;a href="http://www.be-com.eu/?p=3286"&gt;InterpretedUserType to the rescue for Hybrid Deployments&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="interpretedusertype"&gt;InterpretedUserType&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;We could not find official documentation about the exact meaning of every value, so I will try to match them to other values I observed, so please use this at your own risk, if I found out that some of this values is incorrect or get any official documentation I will update this&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;DirSyncDisabledDisabledUser&lt;/strong&gt;: User account disabled in SfB online and disabled in local AD, has a sipAddress attribute online, RegistrarPool has a value&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DirSyncDisabledNoService&lt;/strong&gt;: User account disabled in SfB online and does not have a sipAddress attribute online, RegistrarPool empty, OnPremHostingProvider shows sipfed.online.lync.com&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DirSyncDisabledSfBUser&lt;/strong&gt;: User account disabled in SfB online and has a sipAddress attribute online, also, has a RegistrarPool value and OnPremHostingProvider is empty&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DirSyncDisabledUser&lt;/strong&gt;: User account disabled in SfB online and disabled in local AD, does not have a RegistrarPool value.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DirSyncNoService&lt;/strong&gt;: To this day, I still do not know exactly what that means.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DirSyncSfBUser&lt;/strong&gt;: Enabled in SfB Online, has a SipAddress and has a RegistrarPool, this is the best value we can get.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DirSyncSfBUserNeedsProvisioning&lt;/strong&gt;: This appears to be a temporal state before DirSyncSfBUser&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HybridOnlineDisabledUser&lt;/strong&gt;: User account disabled in SfB online, has a SipAddress attribute online and OnPremHostingProvider is not empty.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HybridOnlineDisabledUserNeedsProvisioning&lt;/strong&gt;: User account disabled in SfB online, hasn't a SipAddress attribute online and OnPremHostingProvider is not empty.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HybridOnlineDisabledUserWithDeletedLicenses&lt;/strong&gt;: It's like HybridOnlineDisabledUser but, it seems that license is not assigned.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HybridOnlineSfBUser&lt;/strong&gt;: User account enabled and DirSynched, has a SipAddress and a OnPremHostingProvider and RegistrarPool.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HybridOnlineSfBUserWithDeletedLicenses&lt;/strong&gt;: Same as HybridOnlineSfBUser but judging by the name, it seems that license is not present.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HybridOnpremDisabledUser&lt;/strong&gt;: User account disabled in SfB OnPrem, OnPremHostingProvider has &amp;quot;SRV:&amp;quot; value and RegistrarPool is empty.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HybridOnpremSfBUser&lt;/strong&gt;: According to Johan Delimon's Blog, the account is created at Customer AD, DirSynched and uses SfB OnPrem, we can judge this by the presence of OnPremHostingProvider&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PureOnlineNoService&lt;/strong&gt;: I still do not know exactly what that means.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PureOnlineNoServiceWithDeletedLicenses&lt;/strong&gt;: User account created in Office 365, has no local AD account, so is not DirSynched, has no SfB license.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PureOnlineSfBUser&lt;/strong&gt;: User account created in Office 365, has no local AD account, so is not DirSynched, and uses SfB Online.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So, as I said, &lt;em&gt;Disable-CsUser&lt;/em&gt; did not clear the &lt;em&gt;msRTCSIP-DeploymentLocator&lt;/em&gt; value, this lead to having most of the users in an undesired state. OnPremHostingProvider is an Online attribute that is synced with it, for more information, see &lt;a href="http://toregj.blogspot.com/2017/03/skype-online-user-is-disabled-although.html"&gt;Skype Online user is disabled, although Skype Online license assigned!&lt;/a&gt; so we first cleared all the msRTCSIP- attributes in local AD for a user and waited for sync... when synced happened, we observe the attribute InterpretedUserType changing for example from HybridOnlineSfbUser to DirSyncSfBUserNeedsProvisioning until it went to the final state DirSyncSfBUser, but for this, we had to wait hours.&lt;/p&gt;
+&lt;p&gt;So, we created an script to clear all msRTCSIP- for every user in local Active Directory domain:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;#ok lets clear msRTCSIP-* Attributes
+        write-host &amp;quot;Clearing msRTCSIP-* Attributes&amp;quot;
+        Get-ADUser -Filter &amp;quot;UserPrincipalName -eq '$userupn'&amp;quot; | Set-ADUser -clear msRTCSIP-ApplicationOptions,msRTCSIP-DeploymentLocator,msRTCSIP-Line,msRTCSIP-OwnerUrn,msRTCSIP-PrimaryUserAddress,msRTCSIP-UserEnabled,msRTCSIP-OptionFlags
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;(I recommend running this cmdlet against the same Domain Controller using the -Server parameter)&lt;/p&gt;
+&lt;p&gt;That's it, we waited some hours and started to see the expected value for the users (DirSyncSfBUser), then, we followed the guide and removed the last servers and ran Disable-CsAdDomain and Disable-CsAdForest.&lt;/p&gt;
+&lt;p&gt;Hope this post helps anyone that stumble upon the same scenario as Dario and me.get&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;&lt;img src="/images/DeploymentLocator.png" class="img-fluid" alt="msRTCSip-DeploymentLocator"&gt;&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/PwshGitHubTools" />
 		<id>https://get-itips.capazero.net/posts/PwshGitHubTools</id>
