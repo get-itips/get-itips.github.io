@@ -121,4 +121,4 @@ So, we created an script to clear all msRTCSIP- for every user in local Active D
 
 That's it, we waited some hours and started to see the expected value for the users (DirSyncSfBUser), then, we followed the guide and removed the last servers and ran Disable-CsAdDomain and Disable-CsAdForest.
 
-Hope this post helps anyone that stumble upon the same scenario as Dario and me.get
+Hope this post helps anyone that stumble upon the same scenario as Dario and me got.
