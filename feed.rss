@@ -5,8 +5,29 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Microsoft Senior Consultant</description>
 		<copyright>2019</copyright>
-		<pubDate>Thu, 23 May 2019 19:04:36 GMT</pubDate>
-		<lastBuildDate>Thu, 23 May 2019 19:04:36 GMT</lastBuildDate>
+		<pubDate>Thu, 23 May 2019 19:28:19 GMT</pubDate>
+		<lastBuildDate>Thu, 23 May 2019 19:28:19 GMT</lastBuildDate>
+		<item>
+			<title>Export TFS Release Definitions to a CSV file</title>
+			<link>https://get-itips.capazero.net/posts/Export-TFSReleaseDefinitions</link>
+			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/Export-TFSReleaseDefinitions</guid>
+			<pubDate>Thu, 23 May 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
+&lt;p&gt;I created a simple small script in Powershell to query Team Foundation Server to get a list of all Release Definitions per project, the
+output of the script is a csv file with this header&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;quot;Project;ReleaseDefinition&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It uses the REST API to query for this information and if the project does not have release definition it will appear with a NULL value on
+the ReleaseDefinition column, only one time of course.&lt;/p&gt;
+&lt;h3 id="input-parameters"&gt;Input parameters&lt;/h3&gt;
+&lt;p&gt;It asks for FQDN, CollectionName and Path for the CSV file.&lt;/p&gt;
+&lt;h3 id="current-limitations"&gt;Current limitations&lt;/h3&gt;
+&lt;p&gt;It was only tested against Team Foundation Server 2017, I expect to improve it including more versions.
+Have to change the way the FQDN is asked, as http is currently hard-coded.&lt;/p&gt;
+&lt;p&gt;Full script can be found here &lt;a href="https://github.com/get-itips/AzureDevopsTools/blob/master/azuredevopstools-ps/Export-TFSReleaseDefinitions.ps1"&gt;Export-TFSReleaseDefinitions.ps1&lt;/a&gt;&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>SfB On-Prem decommission and InterpretedUserType</title>
 			<link>https://get-itips.capazero.net/posts/sfbonprem-interpretedusertype</link>
@@ -259,33 +280,6 @@ or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
-			<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
-			<link>https://get-itips.capazero.net/posts/csv-adPerm</link>
-			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/csv-adPerm</guid>
-			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
-This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
-$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
-$connector=&amp;quot;connectorName&amp;quot;
-$perms=Get-adpermission $connector
-
-foreach($perm in $perms){
-    $perm
-    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
-    $csv +=&amp;quot;`n&amp;quot;
-}
-
-$fso = new-object -comobject scripting.filesystemobject
-$file = $fso.CreateTextFile($path,$true)
-$file.write($csv)
-$file.close()
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-		</item>
-		<item>
 			<title>Handy SMTP Handshake for testing with Telnet</title>
 			<link>https://get-itips.capazero.net/posts/handy-handshake</link>
 			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
@@ -319,6 +313,33 @@ This is the email content.
 &lt;p&gt;&lt;strong&gt;Important notes:&lt;/strong&gt;
 You have to hit enter twice after subject input.
 account name and password are entered Base64 encoded, so first encode that information using for example &lt;a href="https://www.base64encode.org/"&gt;this site.&lt;/a&gt;&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
+			<link>https://get-itips.capazero.net/posts/csv-adPerm</link>
+			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/csv-adPerm</guid>
+			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
+&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
+This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
+$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
+$connector=&amp;quot;connectorName&amp;quot;
+$perms=Get-adpermission $connector
+
+foreach($perm in $perms){
+    $perm
+    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
+    $csv +=&amp;quot;`n&amp;quot;
+}
+
+$fso = new-object -comobject scripting.filesystemobject
+$file = $fso.CreateTextFile($path,$true)
+$file.write($csv)
+$file.close()
+&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
 		<item>
