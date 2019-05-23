@@ -4,6 +4,6 @@
 Settings[BlogKeys.Title] = "Andrés Gorzelany";
 
 Settings[Keys.Host] = "get-itips.capazero.net";
-Settings[BlogKeys.Description] = "Microsoft Solution Architect";
+Settings[BlogKeys.Description] = "Microsoft Senior Consultant";
 Settings[Keys.LinksUseHttps] = true;
-Settings[BlogKeys.Intro] = "Exchange/Sharepoint/S4B/TFS/PS and a little Dev Stuff from a Computer Science Engineer";
+Settings[BlogKeys.Intro] = "Exchange/Sharepoint/SfB/TFS/AzureDevops/PS and a little Dev Stuff from a Computer Science Engineer";
