@@ -4,8 +4,32 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2019</rights>
-	<updated>2019-05-23T19:28:19Z</updated>
+	<updated>2019-07-17T20:08:49Z</updated>
 	<subtitle>Microsoft Senior Consultant</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/spmt-module" />
+		<id>https://get-itips.capazero.net/posts/spmt-module</id>
+		<title>The specified module 'Microsoft.SharePoint.MigrationTool.PowerShell' was not loaded because no valid module file was found in any module directory</title>
+		<updated>2019-07-17T00:00:00Z</updated>
+		<content>&lt;p&gt;Hi,&lt;/p&gt;
+&lt;p&gt;Hopefully, this is only useful temporarily until it is fixed in the installation package, but currently, if you install the &lt;a href="https://docs.microsoft.com/en-us/sharepointmigration/introducing-the-sharepoint-migration-tool"&gt;Sharepoint Migration Tool&lt;/a&gt;
+module files will be copied to &lt;code&gt;$env:UserProfile\Documents\WindowsPowerShell\Modules\Microsoft.SharePoint.MigrationTool.PowerShell&lt;/code&gt; as the &lt;a href="https://docs.microsoft.com/en-us/sharepointmigration/overview-spmt-ps-cmdlets"&gt;documentation&lt;/a&gt; says.&lt;/p&gt;
+&lt;p&gt;But if you try to import the module, you will receive an error:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;PS C:\Users\user\Documents\WindowsPowerShell\Modules\Microsoft.SharePoint.MigrationTool.PowerShell&amp;gt; Import-Module Mi
+crosoft.SharePoint.MigrationTool.PowerShell
+Import-Module : The specified module 'Microsoft.SharePoint.MigrationTool.PowerShell' was not loaded because no
+valid module file was found in any module directory.
+At line:1 char:1
++ Import-Module Microsoft.SharePoint.MigrationTool.PowerShell
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (Microsoft.Share...Tool.PowerShell:String) [Import-Module], File
+   NotFoundException
+    + FullyQualifiedErrorId : Modules_ModuleNotFound,Microsoft.PowerShell.Commands.ImportModuleCommand
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Simply copy the &lt;code&gt;Microsoft.SharePoint.MigrationTool.PowerShell&lt;/code&gt; folder in &lt;code&gt;C:\Program Files\WindowsPowerShell\Modules&lt;/code&gt; and you will be able to import it.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;Hi,&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/Export-TFSReleaseDefinitions" />
 		<id>https://get-itips.capazero.net/posts/Export-TFSReleaseDefinitions</id>
@@ -279,6 +303,33 @@ external&lt;br&gt;
 or one endpoint is internal and the other is federated or remote...&lt;/p&gt;</summary>
 	</entry>
 	<entry>
+		<link href="https://get-itips.capazero.net/posts/csv-adPerm" />
+		<id>https://get-itips.capazero.net/posts/csv-adPerm</id>
+		<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
+		<updated>2017-02-08T00:00:00Z</updated>
+		<content>&lt;p&gt;Hi,&lt;/p&gt;
+&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
+This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
+$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
+$connector=&amp;quot;connectorName&amp;quot;
+$perms=Get-adpermission $connector
+
+foreach($perm in $perms){
+    $perm
+    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
+    $csv +=&amp;quot;`n&amp;quot;
+}
+
+$fso = new-object -comobject scripting.filesystemobject
+$file = $fso.CreateTextFile($path,$true)
+$file.write($csv)
+$file.close()
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;Hi,&lt;/p&gt;</summary>
+	</entry>
+	<entry>
 		<link href="https://get-itips.capazero.net/posts/handy-handshake" />
 		<id>https://get-itips.capazero.net/posts/handy-handshake</id>
 		<title>Handy SMTP Handshake for testing with Telnet</title>
@@ -311,33 +362,6 @@ This is the email content.
 &lt;p&gt;&lt;strong&gt;Important notes:&lt;/strong&gt;
 You have to hit enter twice after subject input.
 account name and password are entered Base64 encoded, so first encode that information using for example &lt;a href="https://www.base64encode.org/"&gt;this site.&lt;/a&gt;&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;Hi,&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.capazero.net/posts/csv-adPerm" />
-		<id>https://get-itips.capazero.net/posts/csv-adPerm</id>
-		<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
-		<updated>2017-02-08T00:00:00Z</updated>
-		<content>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
-This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
-$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
-$connector=&amp;quot;connectorName&amp;quot;
-$perms=Get-adpermission $connector
-
-foreach($perm in $perms){
-    $perm
-    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
-    $csv +=&amp;quot;`n&amp;quot;
-}
-
-$fso = new-object -comobject scripting.filesystemobject
-$file = $fso.CreateTextFile($path,$true)
-$file.write($csv)
-$file.close()
-&lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;Hi,&lt;/p&gt;</summary>
 	</entry>
