@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - Skype4B</title>
+        <title>Andr&#xE9;s Gorzelany - New-RetentionCompliancePolicy and Teams</title>
         <meta name="description" content="Microsoft Senior Consultant" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Skype4B" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - New-RetentionCompliancePolicy and Teams" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/tags/Skype4B" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/teams-retention-policies" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -88,9 +88,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>Skype4B</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>New-RetentionCompliancePolicy and Teams</h1>
+    <div class="meta">        
+Published on Wednesday, August 21, 2019<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -99,47 +107,88 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-sm-8 right-border col-sm-height">
-                    <div class="post-list">
-            <a href="/posts/sfbonprem-interpretedusertype">
-                <h3 class="post-title">SfB On-Prem decommission and InterpretedUserType</h3>
-            </a>
-            <p class="post-meta">Posted on Sunday, May 5, 2019</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/call-failed">
-                <h3 class="post-title">Call failed to establish due to a media connectivity failure when both endpoints are...</h3>
-            </a>
-            <p class="post-meta">Posted on Friday, July 21, 2017</p>      
-        </div>   
+                                        
+
+<p><img src="/images/mugatu.PNG" class="img-fluid" alt="teamsSoHot" /></p>
+<p>There is a nice post <a href="https://techcommunity.microsoft.com/t5/Microsoft-Teams-Blog/Retention-policies-for-Microsoft-Teams/ba-p/178011">here</a>
+explaining how Retention policies for Microsoft Teams work, the intention of this blog post is not to talk about that but is kinda a
+quick cheat sheet if you happen to use the New-RetentionCompliancePolicy cmdlet for Teams.</p>
+<p>New-RetentionCompliancePolicy includes four parameters related to Teams:</p>
+<p><code>TeamsChannelLocation</code></p>
+<p><em>The TeamsChannelLocation parameter is used to target specific Teams to include in the policy</em></p>
+<p><code>TeamsChannelLocationException</code></p>
+<p><em>This parameter specifies the Teams to exclude when you use the value All for the TeamsChannelLocation parameter</em></p>
+<p><code>TeamsChatLocation</code></p>
+<p><em>The TeamsChatLocation parameter is used to target specific Teams users to include in the policy</em></p>
+<p><code>TeamsChatLocationException</code></p>
+<p><em>This parameter specifies the Teams users to exclude when you use the value All for the TeamsChatLocation parameter</em></p>
+<h2 id="now-some-examples">Now, some examples:</h2>
+<h3 id="example-1">Example 1</h3>
+<pre><code class="language-powershell">New-RetentionCompliancePolicy -Name &quot;Example1&quot; -TeamsChannelLocation &quot;All&quot; -TeamsChannelLocationException &quot;32996b0b-67f6-4159-b4bf-f738d12a5f86&quot;
+</code></pre>
+<p>In this example the Retention applies to all Teams except the Team with GUID 32996b0b-67f6-4159-b4bf-f738d12a5f86, we can only specify an
+Exception when &quot;All&quot; is used for the location parameter.</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="language-powershell">New-RetentionCompliancePolicy -Name &quot;Example2&quot; -TeamsChannelLocation &quot;operations&#64;M365x71714.onmicrosoft.com&quot;,&quot;systems&#64;M365x71714.onmicrosoft.com&quot;
+</code></pre>
+<p>In this example the Retention applies to the Teams operations and systems, as you can see, we are specifying the Teams with email address.</p>
+<h3 id="example-3">Example 3</h3>
+<pre><code class="language-powershell">New-RetentionCompliancePolicy -Name &quot;Example3&quot; -TeamsChatLocation &quot;All&quot; -TeamsChatLocationException
+ &quot;Allan Deyoung&quot;,&quot;Cameron White&quot;
+</code></pre>
+<p>In this example the Retention applies to all users except Allan and Cameron, see that we are specifying them with their Name.</p>
+<h3 id="example-4">Example 4</h3>
+<pre><code class="language-powershell">New-RetentionCompliancePolicy -Name &quot;Example4&quot; -TeamsChatLocation &quot;41f18a1c-2e21-4c6c-bca9-3b51a8d18a80&quot;
+</code></pre>
+<p>In this example the Retention applies only to user with id 41f18a1c-2e21-4c6c-bca9-3b51a8d18a80, see that we are specifying them with their id
+we can get this id thru Azure AD.</p>
+<p>We can specify Teams with their name, email, guid and users with their name, email, DN and guid.</p>
+<h2 id="one-more-thing">One more thing...</h2>
+<p>One thing I noticed, is that, policies created using Powershell can't be edited later using the Office 365 Security &amp; Compliance portal, hope
+Microsoft fix this soon.
+Also, if you use <a href="https://docs.microsoft.com/en-us/powershell/module/exchange/policy-and-compliance-retention/get-retentioncompliancepolicy?view=exchange-ps">Get-RetentionCompliancePolicy</a>
+to retrieve the newly created policies, you will notice that these attributes will be empty:</p>
+<pre><code class="language-powershell">TeamsChatLocation             : {}
+
+TeamsChatLocationException    : {}
+
+TeamsChannelLocation          : {}
+
+TeamsChannelLocationException : {}
+</code></pre>
+<p>Reason for that is that you need to use the -DistributionDetail parameter with it:</p>
+<pre><code class="language-powershell">TeamsChatLocation             : {Debra Berger, Allan Deyoung}
+TeamsChatLocationException    : {}
+TeamsChannelLocation          : {}
+TeamsChannelLocationException : {}
+</code></pre>
+<p>Hope this is useful for somebody.</p>
 
 
-            <nav>
-                <ul class="pager">
-                    <li class="previous">                
-                    </li>
-                    <li class="next">
-                    </li>
-                </ul>
-            </nav>
-            <hr class="visible-xs-block" />
-        </div>
-		
-        <div class="col-sm-4 col-sm-height">
-                <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-xs">Sharepoint (3)</a>
-                <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-xs">TeamFoundationServer (3)</a>
-                <a role="button" href="/tags/Skype4B" class="btn btn-primary btn-xs">Skype4B (2)</a>
-                <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer (2)</a>
-                <a role="button" href="/tags/Ignite" class="btn btn-default btn-xs">Ignite (2)</a>
-                <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams (1)</a>
-                <a role="button" href="/tags/GitHub" class="btn btn-default btn-xs">GitHub (1)</a>
-                <a role="button" href="/tags/General" class="btn btn-default btn-xs">General (1)</a>
-                <a role="button" href="/tags/SSL" class="btn btn-default btn-xs">SSL (1)</a>
-        </div>
-    </div>
-</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'teams-retention-policies';
+    var disqus_title = 'New-RetentionCompliancePolicy and Teams';
+    var disqus_url = 'https://get-itips.capazero.net/posts/teams-retention-policies';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
                                 </div>
                         </div>
                 </div>

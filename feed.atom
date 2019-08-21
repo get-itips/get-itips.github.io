@@ -4,8 +4,70 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2019</rights>
-	<updated>2019-08-21T13:42:09Z</updated>
+	<updated>2019-08-21T13:45:11Z</updated>
 	<subtitle>Microsoft Senior Consultant</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/teams-retention-policies" />
+		<id>https://get-itips.capazero.net/posts/teams-retention-policies</id>
+		<title>New-RetentionCompliancePolicy and Teams</title>
+		<updated>2019-08-21T00:00:00Z</updated>
+		<content>&lt;p&gt;&lt;img src="/images/mugatu.PNG" class="img-fluid" alt="teamsSoHot" /&gt;&lt;/p&gt;
+&lt;p&gt;There is a nice post &lt;a href="https://techcommunity.microsoft.com/t5/Microsoft-Teams-Blog/Retention-policies-for-Microsoft-Teams/ba-p/178011"&gt;here&lt;/a&gt;
+explaining how Retention policies for Microsoft Teams work, the intention of this blog post is not to talk about that but is kinda a
+quick cheat sheet if you happen to use the New-RetentionCompliancePolicy cmdlet for Teams.&lt;/p&gt;
+&lt;p&gt;New-RetentionCompliancePolicy includes four parameters related to Teams:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;TeamsChannelLocation&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The TeamsChannelLocation parameter is used to target specific Teams to include in the policy&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;TeamsChannelLocationException&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;This parameter specifies the Teams to exclude when you use the value All for the TeamsChannelLocation parameter&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;TeamsChatLocation&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The TeamsChatLocation parameter is used to target specific Teams users to include in the policy&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;TeamsChatLocationException&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;This parameter specifies the Teams users to exclude when you use the value All for the TeamsChatLocation parameter&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="now-some-examples"&gt;Now, some examples:&lt;/h2&gt;
+&lt;h3 id="example-1"&gt;Example 1&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;New-RetentionCompliancePolicy -Name &amp;quot;Example1&amp;quot; -TeamsChannelLocation &amp;quot;All&amp;quot; -TeamsChannelLocationException &amp;quot;32996b0b-67f6-4159-b4bf-f738d12a5f86&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In this example the Retention applies to all Teams except the Team with GUID 32996b0b-67f6-4159-b4bf-f738d12a5f86, we can only specify an
+Exception when &amp;quot;All&amp;quot; is used for the location parameter.&lt;/p&gt;
+&lt;h3 id="example-2"&gt;Example 2&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;New-RetentionCompliancePolicy -Name &amp;quot;Example2&amp;quot; -TeamsChannelLocation &amp;quot;operations&amp;#64;M365x71714.onmicrosoft.com&amp;quot;,&amp;quot;systems&amp;#64;M365x71714.onmicrosoft.com&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In this example the Retention applies to the Teams operations and systems, as you can see, we are specifying the Teams with email address.&lt;/p&gt;
+&lt;h3 id="example-3"&gt;Example 3&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;New-RetentionCompliancePolicy -Name &amp;quot;Example3&amp;quot; -TeamsChatLocation &amp;quot;All&amp;quot; -TeamsChatLocationException
+ &amp;quot;Allan Deyoung&amp;quot;,&amp;quot;Cameron White&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In this example the Retention applies to all users except Allan and Cameron, see that we are specifying them with their Name.&lt;/p&gt;
+&lt;h3 id="example-4"&gt;Example 4&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;New-RetentionCompliancePolicy -Name &amp;quot;Example4&amp;quot; -TeamsChatLocation &amp;quot;41f18a1c-2e21-4c6c-bca9-3b51a8d18a80&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In this example the Retention applies only to user with id 41f18a1c-2e21-4c6c-bca9-3b51a8d18a80, see that we are specifying them with their id
+we can get this id thru Azure AD.&lt;/p&gt;
+&lt;p&gt;We can specify Teams with their name, email, guid and users with their name, email, DN and guid.&lt;/p&gt;
+&lt;h2 id="one-more-thing"&gt;One more thing...&lt;/h2&gt;
+&lt;p&gt;One thing I noticed, is that, policies created using Powershell can't be edited later using the Office 365 Security &amp;amp; Compliance portal, hope
+Microsoft fix this soon.
+Also, if you use &lt;a href="https://docs.microsoft.com/en-us/powershell/module/exchange/policy-and-compliance-retention/get-retentioncompliancepolicy?view=exchange-ps"&gt;Get-RetentionCompliancePolicy&lt;/a&gt;
+to retrieve the newly created policies, you will notice that these attributes will be empty:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;TeamsChatLocation             : {}
+
+TeamsChatLocationException    : {}
+
+TeamsChannelLocation          : {}
+
+TeamsChannelLocationException : {}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Reason for that is that you need to use the -DistributionDetail parameter with it:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;TeamsChatLocation             : {Debra Berger, Allan Deyoung}
+TeamsChatLocationException    : {}
+TeamsChannelLocation          : {}
+TeamsChannelLocationException : {}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Hope this is useful for somebody.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;&lt;img src="/images/mugatu.PNG" class="img-fluid" alt="teamsSoHot"&gt;&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/spmt-module" />
 		<id>https://get-itips.capazero.net/posts/spmt-module</id>
