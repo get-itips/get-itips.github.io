@@ -4,8 +4,133 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2019</rights>
-	<updated>2019-09-25T19:36:32Z</updated>
+	<updated>2019-09-25T19:58:38Z</updated>
 	<subtitle>Microsoft Senior Consultant</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/tfs-release-query" />
+		<id>https://get-itips.capazero.net/posts/tfs-release-query</id>
+		<title>Team Foundation Server SQL Query to get Releases and approvals</title>
+		<updated>2019-09-25T00:00:00Z</updated>
+		<content>&lt;p&gt;&lt;img src="/images/sqltfs.PNG" class="img-fluid" alt="tfssql" /&gt;&lt;/p&gt;
+&lt;p&gt;Hi,&lt;/p&gt;
+&lt;p&gt;I created a SQL query to be run against Team Foundation Server collection database to get a list of all releases per project.
+TFS Collection database is not documented at all, so I had to hack into it to understand the relationship of the tables.&lt;/p&gt;
+&lt;p&gt;Essentially when running this Query you will get this columns:&lt;/p&gt;
+&lt;table class="table"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Column&lt;/th&gt;
+&lt;th&gt;Meaning&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;[Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[Id]&lt;/td&gt;
+&lt;td&gt;Id of the Step inside the environment&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[Tfs_Collection].[dbo].[tbl_Projects].project_name&lt;/td&gt;
+&lt;td&gt;Project that this release belongs to&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[Tfs_Collection].[Release].[tbl_Release].Name&lt;/td&gt;
+&lt;td&gt;Release version name&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[Tfs_Collection].[Release].[tbl_Release].[Description]&lt;/td&gt;
+&lt;td&gt;Description of the Release&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[Tfs_Collection].[dbo].[ADObjects].DisplayName&lt;/td&gt;
+&lt;td&gt;Account that created the release&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[Tfs_Collection].[Release].[tbl_Release].CreatedOn&lt;/td&gt;
+&lt;td&gt;Creation Date&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[Tfs_Collection].[dbo].[ADObjects].DisplayName (A)&lt;/td&gt;
+&lt;td&gt;Group Approver resultant from a join&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[Tfs_Collection].[dbo].[ADObjects].DisplayName (B)&lt;/td&gt;
+&lt;td&gt;Real Approver resultant from a join&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[Tfs_Collection].[Release].[tbl_ReleaseEnvironment].Name&lt;/td&gt;
+&lt;td&gt;Environment Name, for example DEV&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[ApproverComment]&lt;/td&gt;
+&lt;td&gt;Approver comment for the release&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[CreatedOn]&lt;/td&gt;
+&lt;td&gt;Date that the step was started&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;[Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[ModifiedOn]&lt;/td&gt;
+&lt;td&gt;Date that the step was last modified&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="the-query-itself"&gt;The query itself&lt;/h2&gt;
+&lt;pre&gt;&lt;code class="language-sql"&gt;	       SELECT [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[Id]
+             [Tfs_Collection].[dbo].[tbl_Projects].project_name AS 'Project'
+         ,[Tfs_Collection].[Release].[tbl_Release].Name as 'Version'
+         ,replace(replace([Tfs_Collection].[Release].[tbl_Release].[Description],char(10),''),char(13),'') AS 'Description'
+         ,C.DisplayName AS 'Creator'
+         ,[Tfs_Collection].[Release].[tbl_Release].CreatedOn as 'CreationDate'
+      ,A.DisplayName AS 'ApproverGroup'
+      ,B.DisplayName AS 'Approver'
+         ,[Tfs_Collection].[Release].[tbl_ReleaseEnvironment].Name AS 'Environment'
+      ,[ApproverComment] as 'ApproverComment'
+      ,[Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[CreatedOn]  as 'StepCreationDate'
+      ,[Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[ModifiedOn] as 'StepModDate'
+  FROM [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep]
+  INNER JOIN [Tfs_Collection].[dbo].[ADObjects] A
+  ON A.TeamFoundationId = [ApproverId]
+  INNER JOIN [Tfs_Collection].[dbo].[ADObjects] B
+  ON B.TeamFoundationId = [ActualApproverId]
+
+  INNER JOIN [Tfs_Collection].[Release].[tbl_Release]
+  ON [Tfs_Collection].[Release].[tbl_Release].[ID] = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].ReleaseID
+  AND [Tfs_Collection].[Release].[tbl_Release].[PartitionID] = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].PartitionID
+AND [Tfs_Collection].[Release].[tbl_Release].[DataspaceId] = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].DataspaceId
+
+  INNER JOIN [Tfs_Collection].[dbo].[ADObjects] C
+  ON C.TeamFoundationId = [Tfs_Collection].[Release].[tbl_Release].[CreatedBy]
+    
+    INNER JOIN [Tfs_Collection].[Release].[tbl_ReleaseEnvironment]
+  ON [Tfs_Collection].[Release].[tbl_ReleaseEnvironment].Id = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].ReleaseEnvironmentId
+AND [Tfs_Collection].[Release].[tbl_ReleaseEnvironment].DefinitionEnvironmentId = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].DefinitionEnvironmentId
+   AND [Tfs_Collection].[Release].[tbl_ReleaseEnvironment].[PartitionID] = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].PartitionID
+     AND [Tfs_Collection].[Release].[tbl_ReleaseEnvironment].[DataspaceId] = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].DataspaceId
+      AND  [Tfs_Collection].[Release].[tbl_ReleaseEnvironment].[ReleaseId] = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].ReleaseID
+
+   INNER JOIN [Tfs_Collection].[dbo].[tbl_Dataspace]
+  on [Tfs_Collection].[dbo].[tbl_Dataspace].DataspaceId  = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].DataspaceId
+
+   INNER JOIN [Tfs_Collection].[dbo].[tbl_Projects] ON
+    [Tfs_Collection].[dbo].[tbl_Projects].Project_Id = [Tfs_Collection].[dbo].[tbl_Dataspace].DataspaceIdentifier
+
+  
+ and [Tfs_Collection].[Release].[tbl_ReleaseEnvironment].Name  IN ('PROD', 'TEST','DEV')
+
+   where 
+   [Tfs_Collection].[Release].[tbl_Release].CreatedOn &amp;gt; = &amp;#64;FromDate 
+   and
+   [Tfs_Collection].[Release].[tbl_Release].CreatedOn &amp;lt; = &amp;#64;ToDate
+
+
+   order by [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[CreatedOn] 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You will have to pass as parameters the &amp;#64;fromDate and &amp;#64;toDate to tailor the result and please take into account the enviroment names which are
+hard-coded in this query.&lt;/p&gt;
+&lt;p&gt;Hope you find it useful!&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;&lt;img src="/images/sqltfs.PNG" class="img-fluid" alt="tfssql"&gt;&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/teams-retention-policies" />
 		<id>https://get-itips.capazero.net/posts/teams-retention-policies</id>
