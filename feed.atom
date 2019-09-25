@@ -4,14 +4,14 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2019</rights>
-	<updated>2019-09-25T19:58:38Z</updated>
+	<updated>2019-09-25T20:07:17Z</updated>
 	<subtitle>Microsoft Senior Consultant</subtitle>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/tfs-release-query" />
 		<id>https://get-itips.capazero.net/posts/tfs-release-query</id>
 		<title>Team Foundation Server SQL Query to get Releases and approvals</title>
 		<updated>2019-09-25T00:00:00Z</updated>
-		<content>&lt;p&gt;&lt;img src="/images/sqltfs.PNG" class="img-fluid" alt="tfssql" /&gt;&lt;/p&gt;
+		<content>&lt;p&gt;&lt;img src="/images/sqltfs.png" class="img-fluid" alt="tfssql" /&gt;&lt;/p&gt;
 &lt;p&gt;Hi,&lt;/p&gt;
 &lt;p&gt;I created a SQL query to be run against Team Foundation Server collection database to get a list of all releases per project.
 TFS Collection database is not documented at all, so I had to hack into it to understand the relationship of the tables.&lt;/p&gt;
@@ -129,7 +129,7 @@ AND [Tfs_Collection].[Release].[tbl_ReleaseEnvironment].DefinitionEnvironmentId 
 hard-coded in this query.&lt;/p&gt;
 &lt;p&gt;Hope you find it useful!&lt;/p&gt;
 </content>
-		<summary>&lt;p&gt;&lt;img src="/images/sqltfs.PNG" class="img-fluid" alt="tfssql"&gt;&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;&lt;img src="/images/sqltfs.png" class="img-fluid" alt="tfssql"&gt;&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/teams-retention-policies" />
@@ -490,6 +490,33 @@ external&lt;br&gt;
 or one endpoint is internal and the other is federated or remote...&lt;/p&gt;</summary>
 	</entry>
 	<entry>
+		<link href="https://get-itips.capazero.net/posts/csv-adPerm" />
+		<id>https://get-itips.capazero.net/posts/csv-adPerm</id>
+		<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
+		<updated>2017-02-08T00:00:00Z</updated>
+		<content>&lt;p&gt;Hi,&lt;/p&gt;
+&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
+This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
+$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
+$connector=&amp;quot;connectorName&amp;quot;
+$perms=Get-adpermission $connector
+
+foreach($perm in $perms){
+    $perm
+    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
+    $csv +=&amp;quot;`n&amp;quot;
+}
+
+$fso = new-object -comobject scripting.filesystemobject
+$file = $fso.CreateTextFile($path,$true)
+$file.write($csv)
+$file.close()
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;Hi,&lt;/p&gt;</summary>
+	</entry>
+	<entry>
 		<link href="https://get-itips.capazero.net/posts/handy-handshake" />
 		<id>https://get-itips.capazero.net/posts/handy-handshake</id>
 		<title>Handy SMTP Handshake for testing with Telnet</title>
@@ -522,33 +549,6 @@ This is the email content.
 &lt;p&gt;&lt;strong&gt;Important notes:&lt;/strong&gt;
 You have to hit enter twice after subject input.
 account name and password are entered Base64 encoded, so first encode that information using for example &lt;a href="https://www.base64encode.org/"&gt;this site.&lt;/a&gt;&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;Hi,&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.capazero.net/posts/csv-adPerm" />
-		<id>https://get-itips.capazero.net/posts/csv-adPerm</id>
-		<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
-		<updated>2017-02-08T00:00:00Z</updated>
-		<content>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
-This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
-$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
-$connector=&amp;quot;connectorName&amp;quot;
-$perms=Get-adpermission $connector
-
-foreach($perm in $perms){
-    $perm
-    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
-    $csv +=&amp;quot;`n&amp;quot;
-}
-
-$fso = new-object -comobject scripting.filesystemobject
-$file = $fso.CreateTextFile($path,$true)
-$file.write($csv)
-$file.close()
-&lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;Hi,&lt;/p&gt;</summary>
 	</entry>
