@@ -3,7 +3,7 @@ Published: 9/25/2019
 Tags: TeamFoundationServer
 ---
 
-![tfssql](/images/sqltfs.PNG)
+![tfssql](/images/sqltfs.png)
 
 Hi,
 
