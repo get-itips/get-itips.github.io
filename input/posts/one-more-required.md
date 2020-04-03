@@ -1,6 +1,6 @@
 Title: One or more required office components failed to complete successfully - Sharepoint
 Published: 7/03/2016
-Tags: SharePoint
+Tags: Sharepoint
 ---
 
 This happened to me installing a Sharepoint SP1 Language Pack, but I think you can encounter this error with any Sharepoint setup operation.
