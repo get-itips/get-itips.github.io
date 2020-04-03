@@ -5,8 +5,8 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Microsoft Senior Consultant</description>
 		<copyright>2020</copyright>
-		<pubDate>Fri, 03 Apr 2020 18:18:01 GMT</pubDate>
-		<lastBuildDate>Fri, 03 Apr 2020 18:18:01 GMT</lastBuildDate>
+		<pubDate>Fri, 03 Apr 2020 18:23:14 GMT</pubDate>
+		<lastBuildDate>Fri, 03 Apr 2020 18:23:14 GMT</lastBuildDate>
 		<item>
 			<title>What's missing from LinkedIn</title>
 			<link>https://get-itips.capazero.net/posts/what-is-missing-from-linkedin</link>
@@ -510,6 +510,33 @@ or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
+			<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
+			<link>https://get-itips.capazero.net/posts/csv-adPerm</link>
+			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/csv-adPerm</guid>
+			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
+&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
+This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
+$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
+$connector=&amp;quot;connectorName&amp;quot;
+$perms=Get-adpermission $connector
+
+foreach($perm in $perms){
+    $perm
+    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
+    $csv +=&amp;quot;`n&amp;quot;
+}
+
+$fso = new-object -comobject scripting.filesystemobject
+$file = $fso.CreateTextFile($path,$true)
+$file.write($csv)
+$file.close()
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+		</item>
+		<item>
 			<title>Handy SMTP Handshake for testing with Telnet</title>
 			<link>https://get-itips.capazero.net/posts/handy-handshake</link>
 			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
@@ -543,33 +570,6 @@ This is the email content.
 &lt;p&gt;&lt;strong&gt;Important notes:&lt;/strong&gt;
 You have to hit enter twice after subject input.
 account name and password are entered Base64 encoded, so first encode that information using for example &lt;a href="https://www.base64encode.org/"&gt;this site.&lt;/a&gt;&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
-			<link>https://get-itips.capazero.net/posts/csv-adPerm</link>
-			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/csv-adPerm</guid>
-			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
-This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
-$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
-$connector=&amp;quot;connectorName&amp;quot;
-$perms=Get-adpermission $connector
-
-foreach($perm in $perms){
-    $perm
-    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
-    $csv +=&amp;quot;`n&amp;quot;
-}
-
-$fso = new-object -comobject scripting.filesystemobject
-$file = $fso.CreateTextFile($path,$true)
-$file.write($csv)
-$file.close()
-&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
 		<item>
@@ -702,6 +702,22 @@ GO
 USE master;ALTER DATABASE SharePoint_Config SET RECOVERY FULL;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Once you do this, you will see that Sharepoint Config database will shrink to a better reasonable size, but, it will grow again eventually so, my advice, create a maintenance job to do this before taking a full database backup.&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>One or more required office components failed to complete successfully - Sharepoint</title>
+			<link>https://get-itips.capazero.net/posts/one-more-required</link>
+			<description>&lt;p&gt;This happened to me installing a Sharepoint SP1 Language Pack, but I think you can encounter this error with any Sharepoint setup operation.&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/one-more-required</guid>
+			<pubDate>Sun, 03 Jul 2016 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;This happened to me installing a Sharepoint SP1 Language Pack, but I think you can encounter this error with any Sharepoint setup operation.&lt;/p&gt;
+&lt;p&gt;If you face this error, there is a big chance that Setup is waiting for STSADM operations to conclude, but this never happens.
+I checked the log file of the Language Pack installation, and I saw that the last operation was failing, and it was setup trying to run&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-cmd"&gt;STSADM updateproductinfo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;with error &lt;em&gt;failed to return after 300000 seconds&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;So, I started a command prompt and ran stsadm.exe updateproductinfo an let the command run, it lasted like 10 minutes... and it returned the command prompt (meaning no errors).&lt;/p&gt;
+&lt;p&gt;That's the process that was failing so if you recognize this as what is happening to you, you can continue safely.&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>
