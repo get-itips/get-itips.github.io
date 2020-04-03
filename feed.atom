@@ -4,7 +4,7 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2020</rights>
-	<updated>2020-04-03T18:29:56Z</updated>
+	<updated>2020-04-03T19:17:08Z</updated>
 	<subtitle>Microsoft Senior Consultant</subtitle>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/what-is-missing-from-linkedin" />
@@ -718,5 +718,23 @@ I checked the log file of the Language Pack installation, and I saw that the las
 &lt;p&gt;That's the process that was failing so if you recognize this as what is happening to you, you can continue safely.&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;This happened to me installing a Sharepoint SP1 Language Pack, but I think you can encounter this error with any Sharepoint setup operation.&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/connect-sql-posh" />
+		<id>https://get-itips.capazero.net/posts/connect-sql-posh</id>
+		<title>Connect to SQL using Powershell</title>
+		<updated>2016-06-28T00:00:00Z</updated>
+		<content>&lt;p&gt;#QuickTip&lt;/p&gt;
+&lt;p&gt;Often, when I request a database restore on customer, I do not have RDP to SQL Server... and I want to check if they mounted the database and gave me the desired permissions before I try to use that database on, for example, Lync or Sharepoint, so how can I do that without installing Management Studio or sql command line tools? Powershell to the rescue!&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-Powershell"&gt;$conn = New-Object System.Data.SqlClient.SqlConnection
+$conn.ConnectionString = &amp;quot;Data Source=SQL_Hostname;Initial Catalog=DATABASE_NAME;Integrated Security=SSPI;&amp;quot;
+$conn.open()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If $conn.Open() throws a error, bingo, there is no database or permission to access it available.
+But, if no error is thrown, you are connected! remember to disconnect with:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-Powershell"&gt;$conn.Close()
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;#QuickTip&lt;/p&gt;</summary>
 	</entry>
 </feed>

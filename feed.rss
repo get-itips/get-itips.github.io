@@ -5,8 +5,8 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Microsoft Senior Consultant</description>
 		<copyright>2020</copyright>
-		<pubDate>Fri, 03 Apr 2020 18:29:56 GMT</pubDate>
-		<lastBuildDate>Fri, 03 Apr 2020 18:29:56 GMT</lastBuildDate>
+		<pubDate>Fri, 03 Apr 2020 19:17:08 GMT</pubDate>
+		<lastBuildDate>Fri, 03 Apr 2020 19:17:08 GMT</lastBuildDate>
 		<item>
 			<title>What's missing from LinkedIn</title>
 			<link>https://get-itips.capazero.net/posts/what-is-missing-from-linkedin</link>
@@ -718,6 +718,24 @@ I checked the log file of the Language Pack installation, and I saw that the las
 &lt;p&gt;with error &lt;em&gt;failed to return after 300000 seconds&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;So, I started a command prompt and ran stsadm.exe updateproductinfo an let the command run, it lasted like 10 minutes... and it returned the command prompt (meaning no errors).&lt;/p&gt;
 &lt;p&gt;That's the process that was failing so if you recognize this as what is happening to you, you can continue safely.&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Connect to SQL using Powershell</title>
+			<link>https://get-itips.capazero.net/posts/connect-sql-posh</link>
+			<description>&lt;p&gt;#QuickTip&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/connect-sql-posh</guid>
+			<pubDate>Tue, 28 Jun 2016 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;#QuickTip&lt;/p&gt;
+&lt;p&gt;Often, when I request a database restore on customer, I do not have RDP to SQL Server... and I want to check if they mounted the database and gave me the desired permissions before I try to use that database on, for example, Lync or Sharepoint, so how can I do that without installing Management Studio or sql command line tools? Powershell to the rescue!&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-Powershell"&gt;$conn = New-Object System.Data.SqlClient.SqlConnection
+$conn.ConnectionString = &amp;quot;Data Source=SQL_Hostname;Initial Catalog=DATABASE_NAME;Integrated Security=SSPI;&amp;quot;
+$conn.open()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If $conn.Open() throws a error, bingo, there is no database or permission to access it available.
+But, if no error is thrown, you are connected! remember to disconnect with:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-Powershell"&gt;$conn.Close()
+&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
 	</channel>
