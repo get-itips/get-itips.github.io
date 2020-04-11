@@ -3,10 +3,10 @@
 	<channel>
 		<title>Andrés Gorzelany</title>
 		<link>https://get-itips.capazero.net/</link>
-		<description>Microsoft Senior Consultant</description>
+		<description>Get-ITips</description>
 		<copyright>2020</copyright>
-		<pubDate>Fri, 03 Apr 2020 19:21:40 GMT</pubDate>
-		<lastBuildDate>Fri, 03 Apr 2020 19:21:40 GMT</lastBuildDate>
+		<pubDate>Sat, 11 Apr 2020 14:54:25 GMT</pubDate>
+		<lastBuildDate>Sat, 11 Apr 2020 14:54:25 GMT</lastBuildDate>
 		<item>
 			<title>What's missing from LinkedIn</title>
 			<link>https://get-itips.capazero.net/posts/what-is-missing-from-linkedin</link>
@@ -24,6 +24,37 @@
 &lt;p&gt;They do not give you the chance to clearly communicate that you work independent/freelancer or even as a digital nomad. They expect you to work for a company on a fixed location, also, there is not a field to inform your current time zone.&lt;/p&gt;
 &lt;p&gt;Times are changing... no, excuse me, times already changed, I love LinkedIn, but let me tell you that those old structures should not be the only option anymore.&lt;/p&gt;
 &lt;p&gt;I want to end this article with an anecdote, the other day I asked my sister in law (a centennial) if she had a LinkedIn profile and she replied: Link what?&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>MS-700 Managing Microsoft Teams exam Study Guide</title>
+			<link>https://get-itips.capazero.net/posts/ms-700</link>
+			<description>&lt;p&gt;Hello,&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/ms-700</guid>
+			<pubDate>Fri, 13 Dec 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Hello,&lt;/p&gt;
+&lt;p&gt;I have just came back from the Test Center where I took the MS-700 Managing Microsoft Teams (beta) exam, I still do not if I passed it (EDIT: I passed!), because, if you have taken beta exams before you might know that, results are given to you once it becomes official.&lt;/p&gt;
+&lt;p&gt;Besides that, I would like to &lt;em&gt;emphasize on what you should focus&lt;/em&gt; if you want to take this exam:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;All types of policies of Teams, Team Policies, App Setup policies, Messaging policies, Meeting policies, Calling policy and Live Events policies&lt;/li&gt;
+&lt;li&gt;Org-Wide Settings versus specific settings/policies&lt;/li&gt;
+&lt;li&gt;Analytics &amp;amp; Reports / Call Quality Dashboard / Network Planner&lt;/li&gt;
+&lt;li&gt;Guest access&lt;/li&gt;
+&lt;li&gt;Coexistence mode with SfB, Teams Upgrade&lt;/li&gt;
+&lt;li&gt;Retention policies&lt;/li&gt;
+&lt;li&gt;Meeting settings&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To be honest, I expected way more questions &lt;em&gt;about telephony&lt;/em&gt; but only a couple, maybe an specific exam about Phone System/Telephony is coming soon.&lt;/p&gt;
+&lt;p&gt;The format is the usual Microsoft has us used to, questions where we can not go back, scenario questions and classic questions where we can go back, I left some feedback on some questions where I thought that &lt;em&gt;some information was missing&lt;/em&gt; to be able to give an answer, this might be expected on a beta exam ;)&lt;/p&gt;
+&lt;h2 id="study-resources"&gt;Study Resources&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;[Microsoft Ignite 2019] &lt;a href="https://myignite.techcommunity.microsoft.com/sessions/85219?source=sessions"&gt;Exam Prep session&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[Microsoft Learn] &lt;a href="https://docs.microsoft.com/en-us/learn/paths/m365-manage-team-collaboration/"&gt;Manage Team Collaboration with Microsoft Teams&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[Microsoft Learn] &lt;a href="https://docs.microsoft.com/en-us/learn/paths/m365-teams-upgrade/"&gt;Upgrade Microsoft Teams&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[docs] &lt;a href="https://docs.microsoft.com/en-us/MicrosoftTeams/Microsoft-Teams"&gt;Official docs Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Your own demo tenant, play with the features, policies and settings.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Hope this quick guide helps anyone that will give a shot to this beta exam, let me know your thoughts too leaving a message here!&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
@@ -718,24 +749,6 @@ I checked the log file of the Language Pack installation, and I saw that the las
 &lt;p&gt;with error &lt;em&gt;failed to return after 300000 seconds&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;So, I started a command prompt and ran stsadm.exe updateproductinfo an let the command run, it lasted like 10 minutes... and it returned the command prompt (meaning no errors).&lt;/p&gt;
 &lt;p&gt;That's the process that was failing so if you recognize this as what is happening to you, you can continue safely.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Connect to SQL using Powershell</title>
-			<link>https://get-itips.capazero.net/posts/connect-sql-posh</link>
-			<description>&lt;p&gt;#QuickTip&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/connect-sql-posh</guid>
-			<pubDate>Tue, 28 Jun 2016 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;#QuickTip&lt;/p&gt;
-&lt;p&gt;Often, when I request a database restore on customer, I do not have RDP to SQL Server... and I want to check if they mounted the database and gave me the desired permissions before I try to use that database on, for example, Lync or Sharepoint, so how can I do that without installing Management Studio or sql command line tools? Powershell to the rescue!&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-Powershell"&gt;$conn = New-Object System.Data.SqlClient.SqlConnection
-$conn.ConnectionString = &amp;quot;Data Source=SQL_Hostname;Initial Catalog=DATABASE_NAME;Integrated Security=SSPI;&amp;quot;
-$conn.open()
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If $conn.Open() throws a error, bingo, there is no database or permission to access it available.
-But, if no error is thrown, you are connected! remember to disconnect with:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-Powershell"&gt;$conn.Close()
-&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
 	</channel>
