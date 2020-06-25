@@ -4,8 +4,41 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2020</rights>
-	<updated>2020-06-12T12:57:40Z</updated>
+	<updated>2020-06-25T22:25:48Z</updated>
 	<subtitle>Get-ITips</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/teams-ps-for-pscore" />
+		<id>https://get-itips.capazero.net/posts/teams-ps-for-pscore</id>
+		<title>Teams PowerShell module is now compatible with PowerShell Core!</title>
+		<updated>2020-06-25T00:00:00Z</updated>
+		<content>&lt;p&gt;Is it?, well, let's see.&lt;/p&gt;
+&lt;p&gt;Support for PowerShell Core (AKA PowerShell 7) was apparently added silently to Microsoft Teams PowerShell module version since 1.0.6 (at the time of this writing the current stable module version is 1.0.7).&lt;/p&gt;
+&lt;p&gt;This image shows what the PowerShell gallery site says currently&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/teams_pscore_7.png" class="img-fluid" alt="PsGallery_Now" /&gt;&lt;/p&gt;
+&lt;p&gt;and this is what it said for older versions.&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/teams_pscore_6.png" class="img-fluid" alt="PsGallery_Older" /&gt;&lt;/p&gt;
+&lt;p&gt;No big announcements AFAIK.&lt;/p&gt;
+&lt;h1 id="does-it-work"&gt;Does it work?&lt;/h1&gt;
+&lt;h2 id="connect-microsoftteams"&gt;Connect-MicrosoftTeams&lt;/h2&gt;
+&lt;p&gt;I usually use a PSCredential object to connect to every PowerShell module against Microsoft services, so I tried and this is what I got&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/teams_pscore_1.png" class="img-fluid" alt="connectMsTeamsError" /&gt;&lt;/p&gt;
+&lt;p&gt;Essentially, the error is:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Connect-MicrosoftTeams: password_required_for_managed_user: Password is required for managed user
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It does not work when passing a PSCredential object as parameter for -Credential, apparently, this has something to do with Azure AD authentication libraries, more information &lt;a href="https://github.com/AzureAD/azure-activedirectory-library-for-dotnet/issues/1478"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I could report this to the Product Team and now they are aware of this behaviour and working on it, they told me to fallback to Device Auth:&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/teams_pscore_2.png" class="img-fluid" alt="connectMsTeamsDeviceAuth" /&gt;&lt;/p&gt;
+&lt;p&gt;a lot of logging outputted to the console window&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/teams_pscore_3.png" class="img-fluid" alt="connectMsTeamsDeviceAuth" /&gt;&lt;/p&gt;
+&lt;p&gt;but eventually connects&lt;/p&gt;
+&lt;h2 id="other-cmdlets-after-connection"&gt;Other cmdlets after connection&lt;/h2&gt;
+&lt;p&gt;&lt;img src="/images/teams_pscore_4.png" class="img-fluid" alt="connectMsTeamsDeviceAuth" /&gt;&lt;/p&gt;
+&lt;p&gt;again, a lot of logging in the console, but once connected, everything seems to work the same as with Windows Powershell&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/teams_pscore_5.png" class="img-fluid" alt="connectMsTeamsDeviceAuth" /&gt;&lt;/p&gt;
+&lt;p&gt;This is a big step into modernizing Microsoft Teams PowerShell module, it will surely help to integrate the module to newer methods of automatization, from any Operating System, I salute the Product Team for all the hard work done, hopefully, the Credential error will be fixed soon.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;Is it?, well, let's see.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/teams-msi-links" />
 		<id>https://get-itips.capazero.net/posts/teams-msi-links</id>
@@ -725,35 +758,5 @@ from Trend Micro documentation:&lt;/p&gt;</summary>
 &lt;p&gt;When Ignite ends, your work starts, you will have to review what you have learned in the sessions, get deep on them and apply to your everyday work to grow your ITPro knowledge, maybe it’s a chosen certification path, maybe new solutions to offer to your customers, in other words, capitalize the trip and money spent on it.&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;Ignite 2016 has finished and it was an intensive, useful great experience.&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.capazero.net/posts/fullLogBackup" />
-		<id>https://get-itips.capazero.net/posts/fullLogBackup</id>
-		<title>The transaction log for database 'Sharepoint_Config is full due to 'LOG_BACKUP'</title>
-		<updated>2016-08-04T00:00:00Z</updated>
-		<content>&lt;p&gt;Well, if you or your customer doesn't have a good maintenance plan for your Sharepoint DB (Content &amp;amp; Configuration) you will someday face a situation where Sharepoint_Config transaction log grows tremendously or even fills your transaction log disk, so what to do?&lt;/p&gt;
-&lt;p&gt;Note: if you can't do any operation on the RDBMS (SQL Server) because the disk is full, you need either delete something on the disk (maybe a non important testing database) or expand the disk (if you are working on a virtual machine this is relatively easy).&lt;/p&gt;
-&lt;p&gt;Once you free enough space on the disk, you must to this in order:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Set Recovery Mode for the Sharepoint_Config database to SIMPLE&lt;/li&gt;
-&lt;li&gt;Shrink the Transaction Log FILES of the db&lt;/li&gt;
-&lt;li&gt;Set Recovery Mode for the Sharepoint_Config database to FULL&lt;/li&gt;
-&lt;li&gt;Take a Full Database Backup!&lt;/li&gt;
-&lt;li&gt;How to do the first 3 steps using T-SQL?&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class="language-sql"&gt;USE master;
-ALTER DATABASE SharePoint_Config SET RECOVERY SIMPLE;
-GO
-
-USE [SharePoint_Config]
-GO
-DBCC SHRINKFILE (N'SharePoint_Config_log' , 1)
-GO
-
-USE master;ALTER DATABASE SharePoint_Config SET RECOVERY FULL;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Once you do this, you will see that Sharepoint Config database will shrink to a better reasonable size, but, it will grow again eventually so, my advice, create a maintenance job to do this before taking a full database backup.&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;Well, if you or your customer doesn't have a good maintenance plan for your Sharepoint DB (Content &amp;amp; Configuration) you will someday face a situation where Sharepoint_Config transaction log grows tremendously or even fills your transaction log disk, so what to do?&lt;/p&gt;</summary>
 	</entry>
 </feed>
