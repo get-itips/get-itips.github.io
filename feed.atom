@@ -4,8 +4,108 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2020</rights>
-	<updated>2020-06-25T22:27:07Z</updated>
+	<updated>2020-08-13T00:48:08Z</updated>
 	<subtitle>Get-ITips</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/teams-preview-wsl" />
+		<id>https://get-itips.capazero.net/posts/teams-preview-wsl</id>
+		<title>Running Teams PowerShell GA module and Preview module side by side using WSL</title>
+		<updated>2020-08-12T00:00:00Z</updated>
+		<content>&lt;p&gt;&lt;img src="/images/TeamsWSL.png" class="img-fluid" alt="introimage" /&gt;&lt;/p&gt;
+&lt;h1 id="introduction"&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;This is somewhat related to my last post, titled &lt;a href="https://get-itips.capazero.net/posts/teams-ps-for-pscore"&gt;Teams PowerShell module is now compatible with PowerShell Core!&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;As a Docs contributor I have to constantly test a lot of PowerShell modules, specially, the Teams PowerShell module, and, as the line between the General Availability version and the Preview version of the module is a little blurry, users ask questions all the time, which feature, cmdlet or parameter is in which module version.&lt;/p&gt;
+&lt;p&gt;I've been running an Azure VM installed with the Preview version of the PowerShell module, however it takes some time to start it, RDP into it and finally use the module, so I thought how awesome could be to run both versions of this PowerShell module on the same computer, as you can not do that natively in the same Operating System installation, I decided to take advantage of WSL (Windows Subsystem for Linux) to accomplish that.&lt;/p&gt;
+&lt;h1 id="credits"&gt;Credits&lt;/h1&gt;
+&lt;p&gt;I used several blog and Docs articles to get this working so this is mainly a post to summarize them all, I must give the credit to:&lt;/p&gt;
+&lt;p&gt;Official Docs article located here &lt;a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10"&gt;Windows Subsystem for Linux Installation Guide for Windows 10&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Saggie Haim Blog article &lt;a href="https://www.saggiehaim.net/powershell/install-powershell-7-on-wsl-and-ubuntu/"&gt;Install PowerShell 7 On WSL and Ubuntu&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Sebastiaan Dammann Blog article &lt;a href="https://damsteen.nl/blog/2018/08/29/installing-wsl-manually-on-non-system-drive"&gt;How-to: Installing WSL manually on a non-system drive&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Special thanks to &lt;a href="https://twitter.com/unixterminal"&gt;Hayden Barnes&lt;/a&gt; for the Ubuntu 20.04 image link!&lt;/p&gt;
+&lt;h1 id="install-wsl"&gt;Install WSL&lt;/h1&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Restart and set WSL2 as default WSL version&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;wsl --set-default-version 2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;if you receive an error in this step &lt;em&gt;WSL 2 requires an update to its kernel component. For information please visit &lt;a href="https://aka.ms/wsl2kernel"&gt;https://aka.ms/wsl2kernel&lt;/a&gt;&lt;/em&gt; follow the steps outlined in that URL before continuing.&lt;/p&gt;
+&lt;h1 id="install-linux-distribution-for-wsl"&gt;Install Linux Distribution for WSL&lt;/h1&gt;
+&lt;p&gt;I didn't want the Linux installation to be on the System Drive so I created a folder on D: drive and CD into it for the next steps and also I chose Ubuntu 20.04-LTS as the Linux distro however you can choose whatever distro you like that is supported by PowerShell Core.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;Invoke-WebRequest -Uri https://aka.ms/wslubuntu2004 -OutFile D:\wsl\Ubuntu.appx -UseBasicParsing
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This step will take some time to download the Linux distro, once it finishes, let's rename the downloaded image&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;cd D:\wsl\
+Rename-Item .\Ubuntu.appx Ubuntu.zip
+Expand-Archive .\Ubuntu.zip -Verbose
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;now let's install Ubuntu calling the setup binary&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;.\ubuntu2004.exe
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It will ask  you for a UNIX username, a password for it and if everything goes well you should see something like this as the setup will directly get you into the Linux virtual machine&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Welcome to Ubuntu 20.04 LTS (GNU/Linux 4.19.104-microsoft-standard x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Aug 12 19:17:05 -03 2020
+
+  System load:  1.67               Processes:             8
+  Usage of /:   0.4% of 250.98GB   Users logged in:       0
+  Memory usage: 1%                 IPv4 address for eth0: 172.26.225.227
+  Swap usage:   0%
+
+0 updates can be installed immediately.
+0 of these updates are security updates.
+
+yourUser&amp;#64;yourHostname: $
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Do not exit Ubuntu and run the next section inside of it.&lt;/p&gt;
+&lt;h1 id="powershell-core-installation"&gt;PowerShell Core installation&lt;/h1&gt;
+&lt;p&gt;Create a directory for PowerShell install and change to it&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;yourUser&amp;#64;yourHostname: $ sudo mkdir /usr/share/PowerShell
+yourUser&amp;#64;yourHostname: $ cd /usr/share/PowerShell
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let's download the current stable release available (check &lt;a href="https://github.com/PowerShell/PowerShell/releases/"&gt;https://github.com/PowerShell/PowerShell/releases/&lt;/a&gt; for updated versions)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;yourUser&amp;#64;yourHostname: $ sudo wget https://github.com/PowerShell/PowerShell/releases/download/v7.0.3/powershell-7.0.3-linux-x64.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Expand this archive&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;yourUser&amp;#64;yourHostname: $ sudo tar xzvf powershell-7.0.3-linux-x64.tar.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Add the PowerShell directory to the PATH environment variable&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;yourUser&amp;#64;yourHostname: $ cd #HOME
+yourUser&amp;#64;yourHostname: $ nano .profile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;add to the end&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;PATH=&amp;quot;$PATH:/usr/share/PowerShell&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;save it and exit nano (at least it is not VIm!)&lt;/p&gt;
+&lt;p&gt;exit Ubuntu&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;yourUser&amp;#64;yourHostname: $ exit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="microsoft-teams-preview-module-installation"&gt;Microsoft Teams Preview module installation&lt;/h1&gt;
+&lt;p&gt;If you are like me and use Windows Terminal, it will automatically recognize the installation and add it to the available Shell options, in case you do not, fire up the Ubuntu 20-04 LTS WSL running&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;.\ubuntu2004.exe
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;now run&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;yourUser&amp;#64;yourHostname: $ pwsh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;that should get you to PowerShell 7.0.3 on Linux, you should see&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;PowerShell 7.0.3
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+https://aka.ms/powershell
+Type 'help' to get help.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;now, let's install the currently most updated version of the Preview module (1.1.-3 preview at the time of writing this blog post but you can check &lt;a href="https://www.powershellgallery.com/packages/MicrosoftTeams/"&gt;https://www.powershellgallery.com/packages/MicrosoftTeams/&lt;/a&gt; for updates, remember, they have the -preview tag in the name)&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;PS /mnt/c/Users/agorz&amp;gt; Install-Module MicrosoftTeams -AllowPrerelease -RequiredVersion 1.1.3-preview
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Accept the installation from an untrusted repository and if everything goes well, you should be able to use Teams PowerShell Preview as explained &lt;a href="https://get-itips.capazero.net/posts/teams-ps-for-pscore"&gt;here&lt;/a&gt;.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;&lt;img src="/images/TeamsWSL.png" class="img-fluid" alt="introimage"&gt;&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/teams-ps-for-pscore" />
 		<id>https://get-itips.capazero.net/posts/teams-ps-for-pscore</id>
@@ -737,26 +837,5 @@ from Trend Micro documentation:&lt;/p&gt;</summary>
 &lt;p&gt;customize the --limit-rate argument to suit your preferences and voila!&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;If you are using &lt;a href="http://tomtalks.uk/2015/05/download-all-the-skype-for-business-ignite-sessions/"&gt;THE powershell&lt;/a&gt; script to download Ignite 2016 Videos and Slide Decks you probably noticed that it will try to use all your bandwidth available and maybe kill all your connections, so, if this happened to you, you will find this useful&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.capazero.net/posts/ignite-2016" />
-		<id>https://get-itips.capazero.net/posts/ignite-2016</id>
-		<title>IGNITE 2016 IS GONE… LONG LIVE THE KING!</title>
-		<updated>2016-10-04T00:00:00Z</updated>
-		<content>&lt;p&gt;Ignite 2016 has finished and it was an intensive, useful great experience.&lt;/p&gt;
-&lt;p&gt;If you experienced the same as us, you can not get to all the sessions, the conference center was big enough to &lt;strong&gt;walk an average of 12 kilometers a day&lt;/strong&gt; (nearly 8 miles) and, I am not joking, it’s true, Google Fit told me everyday, so, the first day you get a little frustrated walking fast to go from one place to another, but the second or third day you realize the truth, and start to watch some sessions from hangouts or just sit anywhere and get the streaming using some headphones.&lt;/p&gt;
-&lt;p&gt;But, wait, what about if you couldn’t make it to Atlanta this year? no problem, or at least, you can get the juice of the sessions and slide decks using &lt;a href="http://tomtalks.uk/2015/05/download-all-the-skype-for-business-ignite-sessions/"&gt;this Powershell Script&lt;/a&gt;  to download them all (or maybe download the ones you are interested in), you can select the quality of the sessions too!&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Lessons learned&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;As I told, you can not get to all the sessions, do not try, but, you have other options.&lt;/li&gt;
-&lt;li&gt;Try to avoid sessions on Expo, is a little difficult to hear the speaker as people walks by around you&lt;/li&gt;
-&lt;li&gt;Partner lead sessions are good to have real life situations&lt;/li&gt;
-&lt;li&gt;Sessions lead by Microsoft Gurus like Jeffrey Snover and Mark Russinovich are a must-attend&lt;/li&gt;
-&lt;li&gt;Use sneakers, you will have to walk A LOT&lt;/li&gt;
-&lt;li&gt;Do Networking, do it, talk to people, they do the same things as you do, they work on IT, it’s an excellent opportunity to share experiences and maybe to do business!&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;When Ignite ends, your work starts, you will have to review what you have learned in the sessions, get deep on them and apply to your everyday work to grow your ITPro knowledge, maybe it’s a chosen certification path, maybe new solutions to offer to your customers, in other words, capitalize the trip and money spent on it.&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;Ignite 2016 has finished and it was an intensive, useful great experience.&lt;/p&gt;</summary>
 	</entry>
 </feed>
