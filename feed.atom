@@ -4,7 +4,7 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2020</rights>
-	<updated>2020-09-12T14:17:08Z</updated>
+	<updated>2020-09-12T14:18:11Z</updated>
 	<subtitle>Get-ITips</subtitle>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/teams-preview-wsl" />
@@ -450,7 +450,7 @@ Have to change the way the FQDN is asked, as http is currently hard-coded.&lt;/p
 		<updated>2019-05-05T00:00:00Z</updated>
 		<content>&lt;p&gt;&lt;img src="/images/DeploymentLocator.png" class="img-fluid" alt="msRTCSip-DeploymentLocator" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;SEPTEMBER 2020 - UPDATE&lt;/strong&gt;
-&lt;strong&gt;Microsoft has just recently added a note to an [official Docs article])(&lt;a href="https://docs.microsoft.com/skypeforbusiness/hybrid/cloud-consolidation-disabling-hybrid"&gt;https://docs.microsoft.com/skypeforbusiness/hybrid/cloud-consolidation-disabling-hybrid&lt;/a&gt;), recommending not to clear any attributes unless directed by Support services.&lt;/strong&gt;
+&lt;strong&gt;Microsoft has just recently added a note to an &lt;a href="https://docs.microsoft.com/skypeforbusiness/hybrid/cloud-consolidation-disabling-hybrid"&gt;official Docs article&lt;/a&gt;, recommending not to clear any attributes unless directed by Support services.&lt;/strong&gt;
 &lt;strong&gt;As you will read in this blog post, it includes the clearing of some attributes, in our case this was done in accordance with the customer and in this specific scenario, it fixed our problem.&lt;/strong&gt;
 &lt;strong&gt;Please be sure to know what you are doing in your scenario before applying any of our recommendations, this post is provided AS IS without any warranty.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Hi!
