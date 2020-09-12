@@ -5,8 +5,8 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2020</copyright>
-		<pubDate>Thu, 13 Aug 2020 00:49:10 GMT</pubDate>
-		<lastBuildDate>Thu, 13 Aug 2020 00:49:10 GMT</lastBuildDate>
+		<pubDate>Sat, 12 Sep 2020 14:15:29 GMT</pubDate>
+		<lastBuildDate>Sat, 12 Sep 2020 14:15:29 GMT</lastBuildDate>
 		<item>
 			<title>Running Teams PowerShell GA module and Preview module side by side using WSL</title>
 			<link>https://get-itips.capazero.net/posts/teams-preview-wsl</link>
@@ -451,6 +451,10 @@ Have to change the way the FQDN is asked, as http is currently hard-coded.&lt;/p
 			<guid>https://get-itips.capazero.net/posts/sfbonprem-interpretedusertype</guid>
 			<pubDate>Sun, 05 May 2019 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;&lt;img src="/images/DeploymentLocator.png" class="img-fluid" alt="msRTCSip-DeploymentLocator" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;SEPTEMBER 2020 - UPDATE&lt;/strong&gt;
+&lt;strong&gt;Microsoft has just recently added a note to an [official Docs article])(&lt;a href="https://docs.microsoft.com/skypeforbusiness/hybrid/cloud-consolidation-disabling-hybrid"&gt;https://docs.microsoft.com/skypeforbusiness/hybrid/cloud-consolidation-disabling-hybrid&lt;/a&gt;), recommending not to clear any attributes unless directed by Support services.&lt;/strong&gt;
+&lt;strong&gt;As you will read in this blog post, it includes the clearing of some attributes, in our case this was done in accordance with the customer and in this specific scenario, it fixed our problem.&lt;/strong&gt;
+&lt;strong&gt;Please be sure to know what you are doing in your scenario before applying any of our recommendations, this post is provided AS IS without any warranty.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Hi!
 I was involved in a project with my colleage &lt;a href="https://twitter.com/dariomws"&gt;Dario Woitasen&lt;/a&gt; to remove Skype for Business from an hybrid deployment with SfB Online and experienced some odd things that we had to deal with.
 I want to share them if anyone experiences the same as we did.&lt;/p&gt;
