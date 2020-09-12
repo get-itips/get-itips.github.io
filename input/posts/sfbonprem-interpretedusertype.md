@@ -4,6 +4,11 @@ Tags: Skype4B
 ---
 ![msRTCSip-DeploymentLocator](/images/DeploymentLocator.png)
 
+**SEPTEMBER 2020 - UPDATE**
+**Microsoft has just recently added a note to an [official Docs article])(https://docs.microsoft.com/skypeforbusiness/hybrid/cloud-consolidation-disabling-hybrid), recommending not to clear any attributes unless directed by Support services.**
+**As you will read in this blog post, it includes the clearing of some attributes, in our case this was done in accordance with the customer and in this specific scenario, it fixed our problem.**
+**Please be sure to know what you are doing in your scenario before applying any of our recommendations, this post is provided AS IS without any warranty.**
+
 Hi!
 I was involved in a project with my colleage [Dario Woitasen](https://twitter.com/dariomws) to remove Skype for Business from an hybrid deployment with SfB Online and experienced some odd things that we had to deal with.
 I want to share them if anyone experiences the same as we did.
