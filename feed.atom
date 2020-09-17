@@ -4,7 +4,7 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2020</rights>
-	<updated>2020-09-17T22:33:48Z</updated>
+	<updated>2020-09-17T22:38:14Z</updated>
 	<subtitle>Get-ITips</subtitle>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/s4b-reconnect-teams" />
@@ -13,7 +13,7 @@
 		<updated>2020-09-17T00:00:00Z</updated>
 		<content>&lt;p&gt;&lt;img src="/images/TeamsS4BReconnect.png" class="img-fluid" alt="introimage" /&gt;&lt;/p&gt;
 &lt;p&gt;Microsoft has just released &lt;a href="https://www.powershellgallery.com/packages/MicrosoftTeams/1.1.6"&gt;Teams PowerShell module version 1.1.6&lt;/a&gt;, a version that includes the Skype for Business Online Connector built-in, so, it is a requirement to uninstall it, if you had it installed on your computer.&lt;/p&gt;
-&lt;p&gt;Thanks to a great &lt;a href="https://twitter.com/AlexHolmeset"&gt;Alexander Holmeset&lt;/a&gt;'s heads-up, that identified that a very handy PowerShell cmdlet called  &lt;strong&gt;Enable-CsOnlineSessionForReconnection&lt;/strong&gt;, was not anymore present, more information on this cmdlet on this &lt;a href="https://ucstatus.com/2019/11/25/skypeonlineconnector-session-reconnection/"&gt;excellent blog post&lt;/a&gt; by Randy Chapman.&lt;/p&gt;
+&lt;p&gt;Thanks to a great &lt;a href="https://twitter.com/AlexHolmeset"&gt;Alexander Holmeset&lt;/a&gt;'s heads-up, that identified that a very handy PowerShell cmdlet called  &lt;strong&gt;Enable-CsOnlineSessionForReconnection&lt;/strong&gt;, was not anymore present, I decided to investigate if we could get the functionality back, more information on this cmdlet on this &lt;a href="https://ucstatus.com/2019/11/25/skypeonlineconnector-session-reconnection/"&gt;excellent blog post&lt;/a&gt; by Randy Chapman, but essentially, it allows you to reconnect the Skype For Business session automatically when it time-outs after an hour.&lt;/p&gt;
 &lt;p&gt;So I downloaded the Skype for Business Online Connector bits on another computer and tried to find where was it, finally found it inside C:\Program Files\Common Files\Skype for Business Online\Modules\SkypeOnlineConnector\SkypeOnlineConnectorStartup.psm1 and decided to give it a try &amp;quot;as is&amp;quot;, but it threw some errors and did not worked, as expected, so I realized I had to make some adjustments to it, specifically the way it recognizes if the module is already loaded.&lt;/p&gt;
 &lt;p&gt;Here is the script, based on the original function, save it as Enable-CsOnlineSessionForReconnection.ps1&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-powershell"&gt;$global:CsOnlineSessionInputParams=$UserCredential
