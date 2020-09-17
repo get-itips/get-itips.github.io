@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany</title>
+        <title>Andr&#xE9;s Gorzelany - Enable-CsOnlineSessionForReconnection... on Teams PowerShell 1.1.6</title>
         <meta name="description" content="Get-ITips" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Enable-CsOnlineSessionForReconnection... on Teams PowerShell 1.1.6" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/s4b-reconnect-teams" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -89,10 +89,14 @@
                                 <div class="row">
                                         <div class="col-md-12">
 
-    <div class="site-heading">
-        <h1>Get-ITips</h1>
-                <hr class="small">
-        <span class="subheading">Exchange/Sharepoint/SfB/Teams/TFS/AzureDevOps/PS and a little Dev Stuff from a Computer Science Engineer/Microsoft Senior Consultant</span>
+    
+<div class="post-heading">
+    <h1>Enable-CsOnlineSessionForReconnection... on Teams PowerShell 1.1.6</h1>
+    <div class="meta">        
+Published on Thursday, September 17, 2020<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams</a>
+        </div>     
 </div>
                                         </div>
                                 </div>
@@ -104,74 +108,142 @@
                         <div class="row">
                                 <div id="content" class="col-md-12">
                                         
-<div class="row">
-    <div class="col-sm-8 right-border">
-                <div class="post-preview">
-                    <a href="/posts/s4b-reconnect-teams">
-                        <h2 class="post-title">Enable-CsOnlineSessionForReconnection... on Teams PowerShell 1.1.6</h2>
-                    </a>
-                    <p class="post-meta">Posted on Thursday, September 17, 2020</p>
-<p><img src="/images/TeamsS4BReconnect.png" class="img-fluid" alt="introimage"></p>                </div>       
-                    <hr /> 
-                <div class="post-preview">
-                    <a href="/posts/teams-preview-wsl">
-                        <h2 class="post-title">Running Teams PowerShell GA module and Preview module side by side using WSL</h2>
-                    </a>
-                    <p class="post-meta">Posted on Wednesday, August 12, 2020</p>
-<p><img src="/images/TeamsWSL.png" class="img-fluid" alt="introimage"></p>                </div>       
-                    <hr /> 
-                <div class="post-preview">
-                    <a href="/posts/teams-ps-for-pscore">
-                        <h2 class="post-title">Teams PowerShell module is now compatible with PowerShell Core!</h2>
-                    </a>
-                    <p class="post-meta">Posted on Thursday, June 25, 2020</p>
-<p>Is it?, well, let's see.</p>                </div>       
-        <ul class="pager">
-            <li class="previous">                
-            </li>
-            <li class="next">
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-4 sidebar">
-        <hr class="visible-xs-block" />
 
-            <h5>Tags</h5>
-            <div>
-                    <a role="button" href="/tags/Teams" class="btn btn-default btn-sm"> Teams (6)</a>
-                    <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-sm"> TeamFoundationServer (4)</a>
-                    <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-sm"> Sharepoint (4)</a>
-                    <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-sm"> ExchangeServer (3)</a>
-                    <a role="button" href="/tags/Skype4B" class="btn btn-default btn-sm"> Skype4B (2)</a>
-                    <a role="button" href="/tags/Ignite" class="btn btn-default btn-sm"> Ignite (2)</a>
-                    <a role="button" href="/tags/General" class="btn btn-default btn-sm"> General (1)</a>
-                    <a role="button" href="/tags/GitHub" class="btn btn-default btn-sm"> GitHub (1)</a>
-                    <a role="button" href="/tags/Powershell" class="btn btn-default btn-sm"> Powershell (1)</a>
-                    <a role="button" href="/tags/Misc" class="btn btn-default btn-sm"> Misc (1)</a>
-            </div>
-            <ul class="pager">
-                <li class="next">
-                    <a href="/tags">View All Tags &rarr;</a>
-                </li>
-            </ul>
+<p><img src="/images/TeamsS4BReconnect.png" class="img-fluid" alt="introimage" /></p>
+<p>Microsoft has just released <a href="https://www.powershellgallery.com/packages/MicrosoftTeams/1.1.6">Teams PowerShell module version 1.1.6</a>, a version that includes the Skype for Business Online Connector built-in, so, it is a requirement to uninstall it, if you had it installed on your computer.</p>
+<p>Thanks to a great <a href="https://twitter.com/AlexHolmeset">Alexander Holmeset</a>'s heads-up, that identified that a very handy PowerShell cmdlet called  <strong>Enable-CsOnlineSessionForReconnection</strong>, was not anymore present, more information on this cmdlet on this <a href="https://ucstatus.com/2019/11/25/skypeonlineconnector-session-reconnection/">excellent blog post</a> by Randy Chapman.</p>
+<p>So I downloaded the Skype for Business Online Connector bits on another computer and tried to find where was it, finally found it inside C:\Program Files\Common Files\Skype for Business Online\Modules\SkypeOnlineConnector\SkypeOnlineConnectorStartup.psm1 and decided to give it a try &quot;as is&quot;, but it threw some errors and did not worked, as expected, so I realized I had to make some adjustments to it, specifically the way it recognizes if the module is already loaded.</p>
+<p>Here is the script, based on the original function, save it as Enable-CsOnlineSessionForReconnection.ps1</p>
+<pre><code class="language-powershell">$global:CsOnlineSessionInputParams=$UserCredential
+$modules = Get-Module tmp_*
+$csModuleUrl = &quot;/OcsPowershellOAuth&quot;
+$isSfbPsModuleFound = $false;
 
-            <hr />
-            <h5>Older Posts</h5>
-            <ul class="list-unstyled">
-                    <li><a href="/posts/teams-msi-links">Getting past Teams MSI versions</a></li>
-                    <li><a href="/posts/what-is-missing-from-linkedin">What&#x27;s missing from LinkedIn</a></li>
-                    <li><a href="/posts/ms-700">MS-700 Managing Microsoft Teams exam Study Guide</a></li>
-                    <li><a href="/posts/tfs-release-query">Team Foundation Server SQL Query to get Releases and approvals</a></li>
-            </ul>
-                <ul class="pager">
-                    <li class="next">
-                        <a href="/posts">Archive &rarr;</a>
-                    </li>
-                </ul>
+    foreach ($module in $modules)
+    {
+        [string] $moduleUrl = $module.Description
+        [int] $queryStringIndex = $moduleUrl.IndexOf(&quot;?&quot;)
 
-        
-    </div> 
-</div>
+        if ($queryStringIndex -gt 0)
+        {
+            $moduleUrl = $moduleUrl.SubString(0,$queryStringIndex)
+        }
+
+        if ($moduleUrl.Contains($csModuleUrl))
+        {
+            $isSfbPsModuleFound = $true
+            &amp; $module { ${function:Get-PSImplicitRemotingSession} = `
+            {
+                param(
+                    [Parameter(Mandatory = $true, Position = 0)]
+                    [string]
+                    $commandName
+                )
+
+                if (($script:PSSession -eq $null) -or ($script:PSSession.Runspace.RunspaceStateInfo.State -ne 'Opened'))
+                {
+                    Set-PSImplicitRemotingSession `
+                        (&amp; $script:GetPSSession `
+                            -InstanceId $script:PSSession.InstanceId.Guid `
+                            -ErrorAction SilentlyContinue )
+                }
+                if (($script:PSSession -ne $null) -and ($script:PSSession.Runspace.RunspaceStateInfo.State -eq 'Disconnected'))
+                {
+                    # If we are handed a disconnected session, try re-connecting it before creating a new session.
+                    Set-PSImplicitRemotingSession `
+                        (&amp; $script:ConnectPSSession `
+                            -Session $script:PSSession `
+                            -ErrorAction SilentlyContinue)
+                }
+                if (($script:PSSession -eq $null) -or ($script:PSSession.Runspace.RunspaceStateInfo.State -ne 'Opened'))
+                {
+                    Write-PSImplicitRemotingMessage ('Recreating a new remote powershell session (implicit) for command: &quot;{0}&quot; ...' -f $commandName)
+
+                    if ((Test-Path variable:global:CsOnlineSessionInputParams) -ne $true)
+                    {
+                        throw 'Unable find input parameters from global scope, will not be able to recreate session'
+                    }
+
+                    if ((Test-Path variable:global:CsOnlineSessionRetryAttempt) -ne $true)
+                    {
+                        $global:CsOnlineSessionRetryAttempt = 1
+                    }
+                    else
+                    {
+                        $global:CsOnlineSessionRetryAttempt = $global:CsOnlineSessionRetryAttempt + 1
+                    }
+
+                    $session = New-CsOnlineSession -Credential &#64;global:CsOnlineSessionInputParams
+
+                    if ($session -ne $null)
+                    {
+                        Set-PSImplicitRemotingSession -CreatedByModule $true -PSSession $session
+                    }
+
+                    #note - this magic string has to be same as above, search for this string above, it will become clear
+                    #because this will be in callback handler, I am not putting this into const variable
+                    $sfbPsSessionPrefix = &quot;SfBPowerShellSession_&quot;
+                    #sessions originally created will have the below one
+                    $sfbPsSessionRegEx1 = $sfbPsSessionPrefix + &quot;*&quot;
+                    #sessions created later will get their name changed by powershell during Set-PSImplicitRemotingSession
+                    #and so it will have names like &quot;Session for implicit remoting module at C:\Users\&lt;user&gt;\AppData\Local\Temp\tmp_tsdvdhga.20e\tmp_tsdvdhga.20e.psm1&quot;
+                    #tmp_tsdvdhga.20e being the module name
+                    $sfbPsSessionRegEx2 = Get-PSImplicitRemotingModuleName
+                    $sfbPsSessionRegEx2 = &quot;*&quot; + $sfbPsSessionRegEx2 + &quot;*&quot;
+                    #delete broken sessions - begin
+                    $psBroken = Get-PSSession | where-object {($_.Name -like $sfbPsSessionRegEx1 -or $_.Name -like $sfbPsSessionRegEx2) -and $_.State -like &quot;*Broken*&quot;}
+                    $psClosed = Get-PSSession | where-object {($_.Name -like $sfbPsSessionRegEx1 -or $_.Name -like $sfbPsSessionRegEx2) -and $_.State -like &quot;*Closed*&quot;}
+
+                    $psBroken | Remove-PSSession;
+                    $psClosed | Remove-PSSession;
+                    #delete broken sessions - end
+                }
+                if (($script:PSSession -eq $null) -or ($script:PSSession.Runspace.RunspaceStateInfo.State -ne 'Opened'))
+                {
+                    throw 'No session has been associated with this implicit remoting module'
+                }
+
+                return [Management.Automation.Runspaces.PSSession]$script:PSSession
+            }}
+        }
+    }
+</code></pre>
+<p>and use it like this</p>
+<pre><code class="language-powershell">$userCredential = Get-Credential
+#Connect to Microsoft Teams
+Connect-MicrosoftTeams -Credential $credential
+
+$sfbSession = New-CsOnlineSession -Credential $userCredential
+Import-PsSession $sfbSession
+
+.\Enable-CsOnlineSessionForReconnection.ps1
+</code></pre>
+<p>That should be enough for it to make it work as before, I tested it and it worked for me, please be aware that this is provided as is without any guarantee, let me know if it works four you!</p>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 's4b-reconnect-teams';
+    var disqus_title = 'Enable-CsOnlineSessionForReconnection... on Teams PowerShell 1.1.6';
+    var disqus_url = 'https://get-itips.capazero.net/posts/s4b-reconnect-teams';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
                                 </div>
                         </div>
