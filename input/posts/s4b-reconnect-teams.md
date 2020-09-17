@@ -6,7 +6,7 @@ Tags: Teams
 
 Microsoft has just released [Teams PowerShell module version 1.1.6](https://www.powershellgallery.com/packages/MicrosoftTeams/1.1.6), a version that includes the Skype for Business Online Connector built-in, so, it is a requirement to uninstall it, if you had it installed on your computer.
 
-Thanks to a great [Alexander Holmeset](https://twitter.com/AlexHolmeset)'s heads-up, that identified that a very handy PowerShell cmdlet called  **Enable-CsOnlineSessionForReconnection**, was not anymore present, more information on this cmdlet on this [excellent blog post](https://ucstatus.com/2019/11/25/skypeonlineconnector-session-reconnection/) by Randy Chapman.
+Thanks to a great [Alexander Holmeset](https://twitter.com/AlexHolmeset)'s heads-up, that identified that a very handy PowerShell cmdlet called  **Enable-CsOnlineSessionForReconnection**, was not anymore present, I decided to investigate if we could get the functionality back, more information on this cmdlet on this [excellent blog post](https://ucstatus.com/2019/11/25/skypeonlineconnector-session-reconnection/) by Randy Chapman, but essentially, it allows you to reconnect the Skype For Business session automatically when it time-outs after an hoour.
 
 So I downloaded the Skype for Business Online Connector bits on another computer and tried to find where was it, finally found it inside C:\Program Files\Common Files\Skype for Business Online\Modules\SkypeOnlineConnector\SkypeOnlineConnectorStartup.psm1 and decided to give it a try "as is", but it threw some errors and did not worked, as expected, so I realized I had to make some adjustments to it, specifically the way it recognizes if the module is already loaded.
 
