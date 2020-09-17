@@ -8,7 +8,7 @@ Microsoft has just released [Teams PowerShell module version 1.1.6](https://www.
 
 Thanks to a great [Alexander Holmeset](https://twitter.com/AlexHolmeset)'s heads-up, that identified that a very handy PowerShell cmdlet called  **Enable-CsOnlineSessionForReconnection**, was not anymore present, I decided to investigate if we could get the functionality back, more information on this cmdlet on this [excellent blog post](https://ucstatus.com/2019/11/25/skypeonlineconnector-session-reconnection/) by Randy Chapman, but essentially, it allows you to reconnect the Skype For Business session automatically when it time-outs after an hour.
 
-So I downloaded the Skype for Business Online Connector bits on another computer and tried to find where was it, finally found it inside C:\Program Files\Common Files\Skype for Business Online\Modules\SkypeOnlineConnector\SkypeOnlineConnectorStartup.psm1 and decided to give it a try "as is", but it threw some errors and did not worked, as expected, so I realized I had to make some adjustments to it, specifically the way it recognizes if the module is already loaded.
+So I downloaded the Skype for Business Online Connector bits on another computer and tried to find where was it, finally found it inside C:\Program Files\Common Files\Skype for Business Online\Modules\SkypeOnlineConnector\SkypeOnlineConnectorStartup.psm1 and decided to give it a try "as is", but it threw some errors and did not work as expected, so I realized I had to make some adjustments to it, specifically the way it recognizes if the module is already loaded.
 
 Here is the script, based on the original function, save it as Enable-CsOnlineSessionForReconnection.ps1
 
