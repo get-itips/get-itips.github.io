@@ -5,8 +5,8 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2020</copyright>
-		<pubDate>Fri, 09 Oct 2020 00:28:41 GMT</pubDate>
-		<lastBuildDate>Fri, 09 Oct 2020 00:28:41 GMT</lastBuildDate>
+		<pubDate>Fri, 09 Oct 2020 01:07:56 GMT</pubDate>
+		<lastBuildDate>Fri, 09 Oct 2020 01:07:56 GMT</lastBuildDate>
 		<item>
 			<title>PnP Teams Cmdlets Review</title>
 			<link>https://get-itips.capazero.net/posts/teams-pnp</link>
@@ -72,7 +72,7 @@ At line:1 char:1
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The first time that you run that cmdlet, you will be presented with the typical app consent window, to approve the use of the PnP Management Shell on your tenant, that is totally expected if you are used to work with the Graph API.&lt;/p&gt;
 &lt;p&gt;Note that I used only one scope but you can specify more than one, for more information refer to the &lt;a href="https://docs.microsoft.com/powershell/module/sharepoint-pnp/connect-pnponline?view=sharepoint-ps"&gt;official documentation of the cmdlet&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Now that we are connected, let's move on and test the Teams cmdlets, for a more detailed guide on how to connect there is an excellent &lt;a href="https://www.erwinmcm.com/pnp-teams-cmdlets/"&gt;blog post&lt;/a&gt; from one Erwin van Hunen, one of the Maintainers of PnP PowerShell.&lt;/p&gt;
+&lt;p&gt;Now that we are connected, let's move on and test the Teams cmdlets, for a more detailed guide on how to connect there is an excellent &lt;a href="https://www.erwinmcm.com/pnp-teams-cmdlets/"&gt;blog post&lt;/a&gt; from Erwin van Hunen, one of the Maintainers of PnP PowerShell.&lt;/p&gt;
 &lt;h1 id="the-teams-pnp-cmdlets"&gt;The Teams PnP cmdlets&lt;/h1&gt;
 &lt;p&gt;Let's start with, what seems to be the most simple one &lt;code&gt;Get-PnPTeamsTeam&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src="/images/pnpteams_getteam.png" class="img-fluid" alt="getpnpteamsteam" /&gt;&lt;/p&gt;
@@ -142,7 +142,7 @@ MailNickName                      Property   string MailNickName {get;set;}
 ShowInTeamsSearchAndSuggestions   Property   System.Nullable[bool] ShowInTeamsSearchAndSuggestions {get;set;}
 Visibility                        Property   string Visibility {get;set;}
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;So, under the hood, a lot of differences, and that is welcomed, why? because we will be able to have an alternative to the official Microsoft Teams PowerShell module in case this one runs short on something.&lt;/p&gt;
+&lt;p&gt;So, under the hood, a lot of differences, and that is welcomed, why? because we will be able to have an alternative to the official Microsoft Teams PowerShell module in case this one runs short on something and best of all, these ones are &lt;a href="https://github.com/pnp/PnP-PowerShell/tree/master/Commands/Teams"&gt;open source&lt;/a&gt;, so if we want, we can dig into how they are developed and contribute to them.&lt;/p&gt;
 &lt;p&gt;Let's try now some cmdlets that aren't available on the official Teams Module like &lt;code&gt;Get-PnPTeamsChannelMessage&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src="/images/pnpteams_getmessages.png" class="img-fluid" alt="getpnpteamschannelmessage" /&gt;&lt;/p&gt;
 &lt;p&gt;Pretty neat, huh?&lt;/p&gt;
@@ -965,33 +965,6 @@ or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
-			<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
-			<link>https://get-itips.capazero.net/posts/csv-adPerm</link>
-			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/csv-adPerm</guid>
-			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
-This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
-$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
-$connector=&amp;quot;connectorName&amp;quot;
-$perms=Get-adpermission $connector
-
-foreach($perm in $perms){
-    $perm
-    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
-    $csv +=&amp;quot;`n&amp;quot;
-}
-
-$fso = new-object -comobject scripting.filesystemobject
-$file = $fso.CreateTextFile($path,$true)
-$file.write($csv)
-$file.close()
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-		</item>
-		<item>
 			<title>Handy SMTP Handshake for testing with Telnet</title>
 			<link>https://get-itips.capazero.net/posts/handy-handshake</link>
 			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
@@ -1025,6 +998,33 @@ This is the email content.
 &lt;p&gt;&lt;strong&gt;Important notes:&lt;/strong&gt;
 You have to hit enter twice after subject input.
 account name and password are entered Base64 encoded, so first encode that information using for example &lt;a href="https://www.base64encode.org/"&gt;this site.&lt;/a&gt;&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
+			<link>https://get-itips.capazero.net/posts/csv-adPerm</link>
+			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/csv-adPerm</guid>
+			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
+&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
+This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
+$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
+$connector=&amp;quot;connectorName&amp;quot;
+$perms=Get-adpermission $connector
+
+foreach($perm in $perms){
+    $perm
+    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
+    $csv +=&amp;quot;`n&amp;quot;
+}
+
+$fso = new-object -comobject scripting.filesystemobject
+$file = $fso.CreateTextFile($path,$true)
+$file.write($csv)
+$file.close()
+&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
 		<item>

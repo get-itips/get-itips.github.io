@@ -168,7 +168,7 @@ At line:1 char:1
 </code></pre>
 <p>The first time that you run that cmdlet, you will be presented with the typical app consent window, to approve the use of the PnP Management Shell on your tenant, that is totally expected if you are used to work with the Graph API.</p>
 <p>Note that I used only one scope but you can specify more than one, for more information refer to the <a href="https://docs.microsoft.com/powershell/module/sharepoint-pnp/connect-pnponline?view=sharepoint-ps">official documentation of the cmdlet</a>.</p>
-<p>Now that we are connected, let's move on and test the Teams cmdlets, for a more detailed guide on how to connect there is an excellent <a href="https://www.erwinmcm.com/pnp-teams-cmdlets/">blog post</a> from one Erwin van Hunen, one of the Maintainers of PnP PowerShell.</p>
+<p>Now that we are connected, let's move on and test the Teams cmdlets, for a more detailed guide on how to connect there is an excellent <a href="https://www.erwinmcm.com/pnp-teams-cmdlets/">blog post</a> from Erwin van Hunen, one of the Maintainers of PnP PowerShell.</p>
 <h1 id="the-teams-pnp-cmdlets">The Teams PnP cmdlets</h1>
 <p>Let's start with, what seems to be the most simple one <code>Get-PnPTeamsTeam</code></p>
 <p><img src="/images/pnpteams_getteam.png" class="img-fluid" alt="getpnpteamsteam" /></p>
@@ -238,7 +238,7 @@ MailNickName                      Property   string MailNickName {get;set;}
 ShowInTeamsSearchAndSuggestions   Property   System.Nullable[bool] ShowInTeamsSearchAndSuggestions {get;set;}
 Visibility                        Property   string Visibility {get;set;}
 </code></pre>
-<p>So, under the hood, a lot of differences, and that is welcomed, why? because we will be able to have an alternative to the official Microsoft Teams PowerShell module in case this one runs short on something.</p>
+<p>So, under the hood, a lot of differences, and that is welcomed, why? because we will be able to have an alternative to the official Microsoft Teams PowerShell module in case this one runs short on something and best of all, these ones are <a href="https://github.com/pnp/PnP-PowerShell/tree/master/Commands/Teams">open source</a>, so if we want, we can dig into how they are developed and contribute to them.</p>
 <p>Let's try now some cmdlets that aren't available on the official Teams Module like <code>Get-PnPTeamsChannelMessage</code></p>
 <p><img src="/images/pnpteams_getmessages.png" class="img-fluid" alt="getpnpteamschannelmessage" /></p>
 <p>Pretty neat, huh?</p>
