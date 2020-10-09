@@ -1,8 +1,8 @@
-Title: PnP Teams Cmdlets for Teams Admins
+Title: PnP Teams Cmdlets Review
 Published: 10/8/2020
 Tags: Teams
 ---
-![introimage](/images/TeamsPNG.png)
+![introimage](/images/TeamsPNP.png)
 
 # Introduction
 
