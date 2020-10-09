@@ -85,7 +85,7 @@ The first time that you run that cmdlet, you will be presented with the typical 
 
 Note that I used only one scope but you can specify more than one, for more information refer to the [official documentation of the cmdlet](https://docs.microsoft.com/powershell/module/sharepoint-pnp/connect-pnponline?view=sharepoint-ps).
 
-Now that we are connected, let's move on and test the Teams cmdlets, for a more detailed guide on how to connect there is an excellent [blog post](https://www.erwinmcm.com/pnp-teams-cmdlets/) from one Erwin van Hunen, one of the Maintainers of PnP PowerShell.
+Now that we are connected, let's move on and test the Teams cmdlets, for a more detailed guide on how to connect there is an excellent [blog post](https://www.erwinmcm.com/pnp-teams-cmdlets/) from Erwin van Hunen, one of the Maintainers of PnP PowerShell.
 
 # The Teams PnP cmdlets
 
@@ -166,7 +166,7 @@ ShowInTeamsSearchAndSuggestions   Property   System.Nullable[bool] ShowInTeamsSe
 Visibility                        Property   string Visibility {get;set;}
 ```
 
-So, under the hood, a lot of differences, and that is welcomed, why? because we will be able to have an alternative to the official Microsoft Teams PowerShell module in case this one runs short on something.
+So, under the hood, a lot of differences, and that is welcomed, why? because we will be able to have an alternative to the official Microsoft Teams PowerShell module in case this one runs short on something and best of all, these ones are [open source](https://github.com/pnp/PnP-PowerShell/tree/master/Commands/Teams), so if we want, we can dig into how they are developed and contribute to them.
 
 Let's try now some cmdlets that aren't available on the official Teams Module like `Get-PnPTeamsChannelMessage`
 
