@@ -4,8 +4,17 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2020</rights>
-	<updated>2020-10-27T14:23:12Z</updated>
+	<updated>2020-10-27T14:25:54Z</updated>
 	<subtitle>Get-ITips</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/interpretedusertype" />
+		<id>https://get-itips.capazero.net/posts/interpretedusertype</id>
+		<title>InterpretedUserType list</title>
+		<updated>2020-10-27T00:00:00Z</updated>
+		<content>&lt;h1 id="interpretedusertype"&gt;InterpretedUserType&lt;/h1&gt;
+&lt;?# Gist 10a2f6e0186fa34b8a7b4bd7d436785d /?&gt;
+</content>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/teams-pnp" />
 		<id>https://get-itips.capazero.net/posts/teams-pnp</id>
@@ -1025,58 +1034,5 @@ $file.close()
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;Hi,&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.capazero.net/posts/import-ca-trend-iwsva" />
-		<id>https://get-itips.capazero.net/posts/import-ca-trend-iwsva</id>
-		<title>How to succesfully import Root CA to Trend IWSVA</title>
-		<updated>2016-12-13T00:00:00Z</updated>
-		<content>&lt;p&gt;Customer reached me to get help importing Root CA certificate to InterScan Web Security Virtual Appliance,&lt;br /&gt;
-from Trend Micro documentation:&lt;/p&gt;
-&lt;blockquote class="blockquote"&gt;
-&lt;p&gt;&amp;quot;By default, IWSVA acts as a private Certificate Authority (CA) and dynamically generates digital certificates&lt;br /&gt;
-that are sent to client browsers to complete a secure passage for HTTPS connections. However, the default CA
-is not signed by a well-known (trusted) CA on the Internet.Client browsers always display a certificate
-warning every time users access an HTTPS Web site.
-Although users can safely ignore the certificate warning, Trend Micro recommends using a signed root certificate for IWSVA.&amp;quot;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;So, if you want your users not to receive a warning from their browsers you have to use, typical,an internal Certification Authority that all client computers trust, for example an Enterprise Windows CA like this was the case.&lt;/p&gt;
-&lt;p&gt;So, first of all, I had to export the CA Root Certificate including the Private Key,&lt;br /&gt;
-go on and logon the Certification Authority computer:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Go to 'Start' -&amp;gt; 'Run' -&amp;gt; mmc.exe&lt;/li&gt;
-&lt;li&gt;Click on 'File' -&amp;gt; 'Add / Remove Snap-in'&lt;/li&gt;
-&lt;li&gt;Click the 'Add...' button&lt;/li&gt;
-&lt;li&gt;Select 'Certificates' then click 'Add'&lt;/li&gt;
-&lt;li&gt;Select 'Computer Account' -&amp;gt; 'Next' -&amp;gt; 'Local Computer' -&amp;gt; 'Finish'&lt;/li&gt;
-&lt;li&gt;click 'Close' -&amp;gt; 'OK'&lt;/li&gt;
-&lt;li&gt;Expand Certificates -&amp;gt; and click on 'Personal' -&amp;gt; 'Certificates'&lt;/li&gt;
-&lt;li&gt;Right click the CA cert and choose 'All Tasks' -&amp;gt; 'Export'&lt;/li&gt;
-&lt;li&gt;Click 'Next' -&amp;gt; Select 'Yes, Export the private key' -&amp;gt; 'Next'&lt;/li&gt;
-&lt;li&gt;Uncheck all of the options here. PKCS 12 should be the only option available. Click 'Next'&lt;/li&gt;
-&lt;li&gt;Give the private key a password of your choice&lt;/li&gt;
-&lt;li&gt;Give a filename to save as and click 'Next', then 'Finish'&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Now that you have a .pfx file we will need to use the excellent tool called OpenSSL, as I was using Windows, I used OpenSSL for Windows binaries that you can get here &lt;a href="http://gnuwin32.sourceforge.net/packages/openssl.htm"&gt;http://gnuwin32.sourceforge.net/packages/openssl.htm&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Install it and copy the pfx to your computer.&lt;/p&gt;
-&lt;p&gt;start a command prompt or PowerShell and run:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-cmd"&gt;openssl pkcs12 -in -clcerts -nokeys -out certificate.cer
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;then&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-cmd"&gt;openssl pkcs12 -in -nocerts -out pkey-encrypted.key 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You will end up with two files: certificate.cer and pkey-encrypted.key&lt;/p&gt;
-&lt;p&gt;If you import them right into IWSVA console it will fail saying &amp;quot;Root Certificate file is invalid. Try Again&amp;quot;&lt;/p&gt;
-&lt;p&gt;This drove me nuts, documentation is not so good, it only says you need to provide a PEM file format,  base54 encoded and RSA based encrypted key, and I was sure I was providing just that...  but wait... after many tries and errors, I read that some systems do not accept anything below this line in public certificate key file:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-code"&gt;-----BEGIN CERTIFICATE-----
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;and this line for the private key file&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-code"&gt;-----BEGIN PRIVATE KEY-----
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;so I tried and deleted everything below that lines on both lines... and it worked! Apparently IWSVA can not handle well ignoring the information that comes there.&lt;/p&gt;
-&lt;p&gt;Hope is useful for someone else.&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;Customer reached me to get help importing Root CA certificate to InterScan Web Security Virtual Appliance,&lt;br&gt;
-from Trend Micro documentation:&lt;/p&gt;</summary>
 	</entry>
 </feed>
