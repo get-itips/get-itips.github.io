@@ -5,8 +5,43 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2021</copyright>
-		<pubDate>Fri, 26 Feb 2021 17:59:41 GMT</pubDate>
-		<lastBuildDate>Fri, 26 Feb 2021 17:59:41 GMT</lastBuildDate>
+		<pubDate>Wed, 10 Mar 2021 20:07:30 GMT</pubDate>
+		<lastBuildDate>Wed, 10 Mar 2021 20:07:30 GMT</lastBuildDate>
+		<item>
+			<title>HAFNIUM Exchange Server exploits - Resources</title>
+			<link>https://get-itips.capazero.net/posts/hafnium-resources</link>
+			<description>&lt;p&gt;Some days had passed since the public Microsoft announcement about this HAFNIUM exploit and as I have been asked to step to help several customers I would like to list all the resources I used to work on this matter, I will try to update this list with new content as it is being generated.&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/hafnium-resources</guid>
+			<pubDate>Wed, 10 Mar 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Some days had passed since the public Microsoft announcement about this HAFNIUM exploit and as I have been asked to step to help several customers I would like to list all the resources I used to work on this matter, I will try to update this list with new content as it is being generated.&lt;/p&gt;
+&lt;h1 id="microsoft-resources"&gt;Microsoft resources&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/"&gt;Microsoft Security Blog entry&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Probably the official &lt;strong&gt;entry point&lt;/strong&gt; to understand the exploit and should be the initial procedure to take against this vulnerability.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/microsoft/CSS-Exchange/tree/main/Security"&gt;Script to check if your Exchange has been compromised&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Not only contains a script that you must execute to understand if your Exchange logs show suspicious entries (Suspicious activity found in % log!), &lt;strong&gt;EVEN IF YOU APPLIED THE PATCHES&lt;/strong&gt;, but also a mitigation script to apply if for some reason you are unable to install the Security Patches.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/safety-scanner-download"&gt;MSERT Safety Scanner tool&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This tool was updated to detect web shells that could have been left by attackers, not enough, but a must-run tool.&lt;/p&gt;
+&lt;h1 id="other-resources"&gt;Other resources&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;An excellent &lt;a href="https://www.msxfaq.de/exchange/update/hafnium-exploit.htm"&gt;MSxFAQ.de blog post&lt;/a&gt;. (In German)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Frank Carius always produces great content, this time is sharing a very complete review of the vulnerability, also with a recommended workflow to follow.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A very &lt;a href="https://www.crowdstrike.com/blog/falcon-complete-stops-microsoft-exchange-server-zero-day-exploits/"&gt;interesting analysis of attacking behavior based on log entries and W3WP memory dumps&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;(I am not affiliated, associated, authorized, endorsed by, or in any way officially connected with this solution)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;a href="https://krebsonsecurity.com/2021/03/a-basic-timeline-of-the-exchange-mass-hack/"&gt;Basic Timeline by Krebs on Security&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;An excellent compilation of events since the discovery of this vulnerability.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>How to take an Online Proctored exam and not go crazy trying</title>
 			<link>https://get-itips.capazero.net/posts/how-to-online-proctoring</link>
@@ -1014,42 +1049,6 @@ $file = $fso.CreateTextFile($path,$true)
 $file.write($csv)
 $file.close()
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Handy SMTP Handshake for testing with Telnet</title>
-			<link>https://get-itips.capazero.net/posts/handy-handshake</link>
-			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/handy-handshake</guid>
-			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;It's always useful to test SMTP service, using Telnet, so these are the commands needed:&lt;/p&gt;
-&lt;p&gt;First of all, connect through Command Prompt or Powershell&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-cmd"&gt;Telnet x.x.x.x tcpPort
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For Example &lt;code&gt;Telnet 10.0.2.1 25&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;You will get a welcome message from SMTP Server, like this one:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;220 exc02.contoso.com Microsoft ESMTP MAIL Service ready at Wed&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;then write sequentially hitting enter at each line what is coloured in green here (no color lines are server responses)&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-code"&gt;EHLO mailtesting
-AUTH LOGIN
-334 VXNlcm5hbWU6
-Y29udG9zb1xhY2NvdW50
-334 UGFzc3dvcmQ6
-dGhlUGFzc3dvcmQ=
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-code"&gt;MAIL FROM:
-RCPT TO:
-DATA
-Subject: here comes the test 
-This is the email content.
-.
-250 Queued mail for delivery 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;strong&gt;Important notes:&lt;/strong&gt;
-You have to hit enter twice after subject input.
-account name and password are entered Base64 encoded, so first encode that information using for example &lt;a href="https://www.base64encode.org/"&gt;this site.&lt;/a&gt;&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>

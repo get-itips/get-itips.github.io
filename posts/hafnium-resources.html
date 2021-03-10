@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - Skype4B</title>
+        <title>Andr&#xE9;s Gorzelany - HAFNIUM Exchange Server exploits - Resources</title>
         <meta name="description" content="Get-ITips" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Skype4B" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - HAFNIUM Exchange Server exploits - Resources" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/tags/Skype4B" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/hafnium-resources" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -88,9 +88,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>Skype4B</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>HAFNIUM Exchange Server exploits - Resources</h1>
+    <div class="meta">        
+Published on Wednesday, March 10, 2021<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -99,50 +107,61 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-sm-8 right-border col-sm-height">
-                    <div class="post-list">
-            <a href="/posts/sfbonprem-interpretedusertype">
-                <h3 class="post-title">SfB On-Prem decommission and InterpretedUserType</h3>
-            </a>
-            <p class="post-meta">Posted on Sunday, May 5, 2019</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/call-failed">
-                <h3 class="post-title">Call failed to establish due to a media connectivity failure when both endpoints are...</h3>
-            </a>
-            <p class="post-meta">Posted on Friday, July 21, 2017</p>      
-        </div>   
+                                        
+
+<p>Some days had passed since the public Microsoft announcement about this HAFNIUM exploit and as I have been asked to step to help several customers I would like to list all the resources I used to work on this matter, I will try to update this list with new content as it is being generated.</p>
+<h1 id="microsoft-resources">Microsoft resources</h1>
+<ul>
+<li><a href="https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/">Microsoft Security Blog entry</a></li>
+</ul>
+<p>Probably the official <strong>entry point</strong> to understand the exploit and should be the initial procedure to take against this vulnerability.</p>
+<ul>
+<li><a href="https://github.com/microsoft/CSS-Exchange/tree/main/Security">Script to check if your Exchange has been compromised</a></li>
+</ul>
+<p>Not only contains a script that you must execute to understand if your Exchange logs show suspicious entries (Suspicious activity found in % log!), <strong>EVEN IF YOU APPLIED THE PATCHES</strong>, but also a mitigation script to apply if for some reason you are unable to install the Security Patches.</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/windows/security/threat-protection/intelligence/safety-scanner-download">MSERT Safety Scanner tool</a></li>
+</ul>
+<p>This tool was updated to detect web shells that could have been left by attackers, not enough, but a must-run tool.</p>
+<h1 id="other-resources">Other resources</h1>
+<ul>
+<li>An excellent <a href="https://www.msxfaq.de/exchange/update/hafnium-exploit.htm">MSxFAQ.de blog post</a>. (In German)</li>
+</ul>
+<p>Frank Carius always produces great content, this time is sharing a very complete review of the vulnerability, also with a recommended workflow to follow.</p>
+<ul>
+<li>A very <a href="https://www.crowdstrike.com/blog/falcon-complete-stops-microsoft-exchange-server-zero-day-exploits/">interesting analysis of attacking behavior based on log entries and W3WP memory dumps</a>.</li>
+</ul>
+<p>(I am not affiliated, associated, authorized, endorsed by, or in any way officially connected with this solution)</p>
+<ul>
+<li>A <a href="https://krebsonsecurity.com/2021/03/a-basic-timeline-of-the-exchange-mass-hack/">Basic Timeline by Krebs on Security</a></li>
+</ul>
+<p>An excellent compilation of events since the discovery of this vulnerability.</p>
 
 
-            <nav>
-                <ul class="pager">
-                    <li class="previous">                
-                    </li>
-                    <li class="next">
-                    </li>
-                </ul>
-            </nav>
-            <hr class="visible-xs-block" />
-        </div>
-		
-        <div class="col-sm-4 col-sm-height">
-                <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams (7)</a>
-                <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer (4)</a>
-                <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-xs">TeamFoundationServer (4)</a>
-                <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-xs">Sharepoint (4)</a>
-                <a role="button" href="/tags/Skype4B" class="btn btn-primary btn-xs">Skype4B (2)</a>
-                <a role="button" href="/tags/Ignite" class="btn btn-default btn-xs">Ignite (2)</a>
-                <a role="button" href="/tags/Exams" class="btn btn-default btn-xs">Exams (1)</a>
-                <a role="button" href="/tags/Misc" class="btn btn-default btn-xs">Misc (1)</a>
-                <a role="button" href="/tags/GitHub" class="btn btn-default btn-xs">GitHub (1)</a>
-                <a role="button" href="/tags/General" class="btn btn-default btn-xs">General (1)</a>
-                <a role="button" href="/tags/SSL" class="btn btn-default btn-xs">SSL (1)</a>
-                <a role="button" href="/tags/Powershell" class="btn btn-default btn-xs">Powershell (1)</a>
-        </div>
-    </div>
-</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'hafnium-resources';
+    var disqus_title = 'HAFNIUM Exchange Server exploits - Resources';
+    var disqus_url = 'https://get-itips.capazero.net/posts/hafnium-resources';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
                                 </div>
                         </div>
                 </div>
