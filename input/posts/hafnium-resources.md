@@ -5,6 +5,8 @@ Tags: ExchangeServer
 
 Some days had passed since the public Microsoft announcement about this HAFNIUM exploit and as I have been asked to step to help several customers I would like to list all the resources I used to work on this matter, I will try to update this list with new content as it is being generated.
 
+3/10/2021: Added two more resources.
+
 # Microsoft resources
 
 - [Microsoft Security Blog entry](https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/)
@@ -32,5 +34,11 @@ Frank Carius always produces great content, this time is sharing a very complete
 - A [Basic Timeline by Krebs on Security](https://krebsonsecurity.com/2021/03/a-basic-timeline-of-the-exchange-mass-hack/)
 
 An excellent compilation of events since the discovery of this vulnerability.
+
+- [Practical 365 - Attack on Exchange Servers Gives Impetus to Move Email to the Cloud](https://practical365.com/blog/attack-exchange-impetus-move-cloud/)
+
+- [How To Rebuild your Exchange Server (AFTER HAFNIUM INFECTION)](https://jaapwesselius.com/2021/03/09/rebuild-your-exchange-server-after-hafnium-infection/)
+
+
 
 
