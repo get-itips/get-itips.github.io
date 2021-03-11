@@ -5,6 +5,8 @@ Tags: ExchangeServer
 
 Some days had passed since the public Microsoft announcement about this HAFNIUM exploit and as I have been asked to step to help several customers I would like to list all the resources I used to work on this matter, I will try to update this list with new content as it is being generated.
 
+3/10/2021: Added two more resources.
+
 # Microsoft resources
 
 - [Microsoft Security Blog entry](https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/)
