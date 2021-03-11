@@ -4,7 +4,7 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2021</rights>
-	<updated>2021-03-10T20:11:28Z</updated>
+	<updated>2021-03-11T01:11:54Z</updated>
 	<subtitle>Get-ITips</subtitle>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/hafnium-resources" />
@@ -12,6 +12,7 @@
 		<title>HAFNIUM Exchange Server exploits - Resources</title>
 		<updated>2021-03-10T00:00:00Z</updated>
 		<content>&lt;p&gt;Some days had passed since the public Microsoft announcement about this HAFNIUM exploit and as I have been asked to step to help several customers I would like to list all the resources I used to work on this matter, I will try to update this list with new content as it is being generated.&lt;/p&gt;
+&lt;p&gt;3/10/2021: Added two more resources.&lt;/p&gt;
 &lt;h1 id="microsoft-resources"&gt;Microsoft resources&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/"&gt;Microsoft Security Blog entry&lt;/a&gt;&lt;/li&gt;
@@ -38,6 +39,12 @@
 &lt;li&gt;A &lt;a href="https://krebsonsecurity.com/2021/03/a-basic-timeline-of-the-exchange-mass-hack/"&gt;Basic Timeline by Krebs on Security&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;An excellent compilation of events since the discovery of this vulnerability.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://practical365.com/blog/attack-exchange-impetus-move-cloud/"&gt;Practical 365 - Attack on Exchange Servers Gives Impetus to Move Email to the Cloud&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://jaapwesselius.com/2021/03/09/rebuild-your-exchange-server-after-hafnium-infection/"&gt;How To Rebuild your Exchange Server (AFTER HAFNIUM INFECTION)&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 </content>
 		<summary>&lt;p&gt;Some days had passed since the public Microsoft announcement about this HAFNIUM exploit and as I have been asked to step to help several customers I would like to list all the resources I used to work on this matter, I will try to update this list with new content as it is being generated.&lt;/p&gt;</summary>
 	</entry>
