@@ -33,4 +33,10 @@ Frank Carius always produces great content, this time is sharing a very complete
 
 An excellent compilation of events since the discovery of this vulnerability.
 
+- [Practical 365 - Attack on Exchange Servers Gives Impetus to Move Email to the Cloud](https://practical365.com/blog/attack-exchange-impetus-move-cloud/)
+
+- [How To Rebuild your Exchange Server (AFTER HAFNIUM INFECTION)](https://jaapwesselius.com/2021/03/09/rebuild-your-exchange-server-after-hafnium-infection/)
+
+
+
 
