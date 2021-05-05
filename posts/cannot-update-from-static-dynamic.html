@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - Powershell</title>
+        <title>Andr&#xE9;s Gorzelany - Public IP address is in use by ipconfig and cannot be updated from static to dynamic.</title>
         <meta name="description" content="Get-ITips" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Powershell" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Public IP address is in use by ipconfig and cannot be updated from static to dynamic." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/tags/Powershell" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/cannot-update-from-static-dynamic" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -88,9 +88,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>Powershell</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>Public IP address is in use by ipconfig and cannot be updated from static to dynamic.</h1>
+    <div class="meta">        
+Published on Wednesday, May 5, 2021<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/Azure" class="btn btn-default btn-xs">Azure</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -99,45 +107,43 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-sm-8 right-border col-sm-height">
-                    <div class="post-list">
-            <a href="/posts/connect-sql-posh">
-                <h3 class="post-title">Connect to SQL using Powershell</h3>
-            </a>
-            <p class="post-meta">Posted on Tuesday, June 28, 2016</p>      
-        </div>   
+                                        
+
+<p>Hello, maybe my first blog post specifically about Azure, do not know if this is the best way to fix this error however I couldn't find many results on Internet.
+Somehow, do not know how, an IP Address associated to one of my Virtual Machines in Azure was configured as static (I do not remember doing that, maybe when I was playing with the DNS name associated I made the mistake), so when I tried to change it back to dynamic I received:</p>
+<blockquote class="blockquote">
+<p>Public IP address /subscriptions/bd0d2034-4212-436e-9516-xxxxxx/resourceGroups/onpremlab/providers/Microsoft.Network/publicIPAddresses/onpremlabvm01-ip is in use by ipconfig /subscriptions/bd0d2034-4212-436e-9516-xxxxxx/resourceGroups/onpremlab/providers/Microsoft.Network/networkInterfaces/onpremlabvm01189/ipConfigurations/ipconfig1 and cannot be updated from static to dynamic.</p>
+</blockquote>
+<p>As everything is an object in Azure, &quot;ipconfig1&quot; was the IP Configuration object belonging to the Network Interface of that VM.</p>
+<p>So what I did was to open the Network interface by going to the Network Interfaces blade in Azure, located the one of that VM and clicked on IP Configurations and obviously saw the static IP Address of the external interface listed there under &quot;Public IP Address&quot;, clicked on it and you can either click &quot;Disassociate&quot;, save the changes or create a new public IP address from this panel.</p>
+<p>If you click disassociate, you need to then go to Public IP addresses blade, locate it and change it to dynamic, now you should be able to do it. Remember to then, go back to the IP Configuration and re-associate the Public IP address object to the IP Configuration.</p>
+<p>Please let me know if you have a better solution! :)</p>
 
 
-            <nav>
-                <ul class="pager">
-                    <li class="previous">                
-                    </li>
-                    <li class="next">
-                    </li>
-                </ul>
-            </nav>
-            <hr class="visible-xs-block" />
-        </div>
-		
-        <div class="col-sm-4 col-sm-height">
-                <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams (7)</a>
-                <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer (4)</a>
-                <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-xs">TeamFoundationServer (4)</a>
-                <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-xs">Sharepoint (4)</a>
-                <a role="button" href="/tags/Skype4B" class="btn btn-default btn-xs">Skype4B (2)</a>
-                <a role="button" href="/tags/Ignite" class="btn btn-default btn-xs">Ignite (2)</a>
-                <a role="button" href="/tags/Azure" class="btn btn-default btn-xs">Azure (1)</a>
-                <a role="button" href="/tags/Exams" class="btn btn-default btn-xs">Exams (1)</a>
-                <a role="button" href="/tags/Misc" class="btn btn-default btn-xs">Misc (1)</a>
-                <a role="button" href="/tags/GitHub" class="btn btn-default btn-xs">GitHub (1)</a>
-                <a role="button" href="/tags/General" class="btn btn-default btn-xs">General (1)</a>
-                <a role="button" href="/tags/SSL" class="btn btn-default btn-xs">SSL (1)</a>
-                <a role="button" href="/tags/Powershell" class="btn btn-primary btn-xs">Powershell (1)</a>
-        </div>
-    </div>
-</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'cannot-update-from-static-dynamic';
+    var disqus_title = 'Public IP address is in use by ipconfig and cannot be updated from static to dynamic.';
+    var disqus_url = 'https://get-itips.capazero.net/posts/cannot-update-from-static-dynamic';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
                                 </div>
                         </div>
                 </div>

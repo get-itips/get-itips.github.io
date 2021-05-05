@@ -5,8 +5,26 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2021</copyright>
-		<pubDate>Thu, 11 Mar 2021 01:14:38 GMT</pubDate>
-		<lastBuildDate>Thu, 11 Mar 2021 01:14:38 GMT</lastBuildDate>
+		<pubDate>Wed, 05 May 2021 14:16:54 GMT</pubDate>
+		<lastBuildDate>Wed, 05 May 2021 14:16:54 GMT</lastBuildDate>
+		<item>
+			<title>Public IP address is in use by ipconfig and cannot be updated from static to dynamic.</title>
+			<link>https://get-itips.capazero.net/posts/cannot-update-from-static-dynamic</link>
+			<description>&lt;p&gt;Hello, maybe my first blog post specifically about Azure, do not know if this is the best way to fix this error however I couldn't find many results on Internet.
+Somehow, do not know how, an IP Address associated to one of my Virtual Machines in Azure was configured as static (I do not remember doing that, maybe when I was playing with the DNS name associated I made the mistake), so when I tried to change it back to dynamic I received:&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/cannot-update-from-static-dynamic</guid>
+			<pubDate>Wed, 05 May 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Hello, maybe my first blog post specifically about Azure, do not know if this is the best way to fix this error however I couldn't find many results on Internet.
+Somehow, do not know how, an IP Address associated to one of my Virtual Machines in Azure was configured as static (I do not remember doing that, maybe when I was playing with the DNS name associated I made the mistake), so when I tried to change it back to dynamic I received:&lt;/p&gt;
+&lt;blockquote class="blockquote"&gt;
+&lt;p&gt;Public IP address /subscriptions/bd0d2034-4212-436e-9516-xxxxxx/resourceGroups/onpremlab/providers/Microsoft.Network/publicIPAddresses/onpremlabvm01-ip is in use by ipconfig /subscriptions/bd0d2034-4212-436e-9516-xxxxxx/resourceGroups/onpremlab/providers/Microsoft.Network/networkInterfaces/onpremlabvm01189/ipConfigurations/ipconfig1 and cannot be updated from static to dynamic.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;As everything is an object in Azure, &amp;quot;ipconfig1&amp;quot; was the IP Configuration object belonging to the Network Interface of that VM.&lt;/p&gt;
+&lt;p&gt;So what I did was to open the Network interface by going to the Network Interfaces blade in Azure, located the one of that VM and clicked on IP Configurations and obviously saw the static IP Address of the external interface listed there under &amp;quot;Public IP Address&amp;quot;, clicked on it and you can either click &amp;quot;Disassociate&amp;quot;, save the changes or create a new public IP address from this panel.&lt;/p&gt;
+&lt;p&gt;If you click disassociate, you need to then go to Public IP addresses blade, locate it and change it to dynamic, now you should be able to do it. Remember to then, go back to the IP Configuration and re-associate the Public IP address object to the IP Configuration.&lt;/p&gt;
+&lt;p&gt;Please let me know if you have a better solution! :)&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>HAFNIUM Exchange Server exploits - Resources</title>
 			<link>https://get-itips.capazero.net/posts/hafnium-resources</link>
@@ -1029,33 +1047,6 @@ or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-cmd"&gt;a=remote-candidates:1 65.55.127.80 54860 2 65.55.127.80 54721
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;and we lived happily ever after.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
-			<link>https://get-itips.capazero.net/posts/csv-adPerm</link>
-			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/csv-adPerm</guid>
-			<pubDate>Wed, 08 Feb 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
-This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
-$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
-$connector=&amp;quot;connectorName&amp;quot;
-$perms=Get-adpermission $connector
-
-foreach($perm in $perms){
-    $perm
-    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
-    $csv +=&amp;quot;`n&amp;quot;
-}
-
-$fso = new-object -comobject scripting.filesystemobject
-$file = $fso.CreateTextFile($path,$true)
-$file.write($csv)
-$file.close()
-&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
 	</channel>

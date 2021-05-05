@@ -4,8 +4,26 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2021</rights>
-	<updated>2021-03-11T01:14:38Z</updated>
+	<updated>2021-05-05T14:16:54Z</updated>
 	<subtitle>Get-ITips</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/cannot-update-from-static-dynamic" />
+		<id>https://get-itips.capazero.net/posts/cannot-update-from-static-dynamic</id>
+		<title>Public IP address is in use by ipconfig and cannot be updated from static to dynamic.</title>
+		<updated>2021-05-05T00:00:00Z</updated>
+		<content>&lt;p&gt;Hello, maybe my first blog post specifically about Azure, do not know if this is the best way to fix this error however I couldn't find many results on Internet.
+Somehow, do not know how, an IP Address associated to one of my Virtual Machines in Azure was configured as static (I do not remember doing that, maybe when I was playing with the DNS name associated I made the mistake), so when I tried to change it back to dynamic I received:&lt;/p&gt;
+&lt;blockquote class="blockquote"&gt;
+&lt;p&gt;Public IP address /subscriptions/bd0d2034-4212-436e-9516-xxxxxx/resourceGroups/onpremlab/providers/Microsoft.Network/publicIPAddresses/onpremlabvm01-ip is in use by ipconfig /subscriptions/bd0d2034-4212-436e-9516-xxxxxx/resourceGroups/onpremlab/providers/Microsoft.Network/networkInterfaces/onpremlabvm01189/ipConfigurations/ipconfig1 and cannot be updated from static to dynamic.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;As everything is an object in Azure, &amp;quot;ipconfig1&amp;quot; was the IP Configuration object belonging to the Network Interface of that VM.&lt;/p&gt;
+&lt;p&gt;So what I did was to open the Network interface by going to the Network Interfaces blade in Azure, located the one of that VM and clicked on IP Configurations and obviously saw the static IP Address of the external interface listed there under &amp;quot;Public IP Address&amp;quot;, clicked on it and you can either click &amp;quot;Disassociate&amp;quot;, save the changes or create a new public IP address from this panel.&lt;/p&gt;
+&lt;p&gt;If you click disassociate, you need to then go to Public IP addresses blade, locate it and change it to dynamic, now you should be able to do it. Remember to then, go back to the IP Configuration and re-associate the Public IP address object to the IP Configuration.&lt;/p&gt;
+&lt;p&gt;Please let me know if you have a better solution! :)&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;Hello, maybe my first blog post specifically about Azure, do not know if this is the best way to fix this error however I couldn't find many results on Internet.
+Somehow, do not know how, an IP Address associated to one of my Virtual Machines in Azure was configured as static (I do not remember doing that, maybe when I was playing with the DNS name associated I made the mistake), so when I tried to change it back to dynamic I received:&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/hafnium-resources" />
 		<id>https://get-itips.capazero.net/posts/hafnium-resources</id>
@@ -1029,32 +1047,5 @@ or one endpoint is internal and the other is federated or remote...&lt;/p&gt;
 		<summary>&lt;p&gt;internal&lt;br&gt;
 external&lt;br&gt;
 or one endpoint is internal and the other is federated or remote...&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.capazero.net/posts/csv-adPerm" />
-		<id>https://get-itips.capazero.net/posts/csv-adPerm</id>
-		<title>Powershell Script to CSV all AD Permissions for a particular Receive Connector</title>
-		<updated>2017-02-08T00:00:00Z</updated>
-		<content>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;Had to do this PS Script for me to troubleshoot a receive connector permissions problem.
-This will output to a CSV all permissions assigned to a receive connector, please change the $path and $connector variables to suit your needs&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;$path = &amp;quot;E:\path\dumpRights.csv&amp;quot;
-$csv = &amp;quot;user,identity,deny,accessrights,extendedrights`r`n&amp;quot;
-$connector=&amp;quot;connectorName&amp;quot;
-$perms=Get-adpermission $connector
-
-foreach($perm in $perms){
-    $perm
-    $csv+=$perm.user.RawIdentity+ &amp;quot;,&amp;quot; + $perm.identity.ToString() + &amp;quot;,&amp;quot; + $perm.deny.IsPresent + &amp;quot;,&amp;quot; + $perm.accessrights + &amp;quot;,&amp;quot; + $perm.extendedrights
-    $csv +=&amp;quot;`n&amp;quot;
-}
-
-$fso = new-object -comobject scripting.filesystemobject
-$file = $fso.CreateTextFile($path,$true)
-$file.write($csv)
-$file.close()
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;Hi,&lt;/p&gt;</summary>
 	</entry>
 </feed>
