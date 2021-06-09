@@ -1,0 +1,353 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+
+        <title>Andr&#xE9;s Gorzelany - Microsoft Teams PowerShell and token-based auth</title>
+        <meta name="description" content="Get-ITips" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+
+        <link type="application/rss+xml" rel="alternate" title="Andr&#xE9;s Gorzelany" href="/feed.rss" />
+                <link type="application/atom+xml" rel="alternate" title="Andr&#xE9;s Gorzelany" href="/feed.atom" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+        <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/assets/css/highlight.css" rel="stylesheet">
+        <link href="/assets/css/clean-blog.css" rel="stylesheet" />
+        <link href="/assets/css/master.css" rel="stylesheet" />
+        <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+        <link href="/assets/css/override.css" rel="stylesheet" />
+
+
+        <meta name="application-name" content="Andr&#xE9;s Gorzelany" />
+        <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
+        <meta name="msapplication-starturl" content="/" />
+
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Microsoft Teams PowerShell and token-based auth" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/teams-powershell-token-auth" />
+        <!-- TODO: More social graph meta tags -->
+
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>     
+        <script src="/assets/js/highlight.pack.js"></script>   
+        <script src="/assets/js/clean-blog.js"></script>
+        <script src="/assets/js/d3.v3.min.js"></script>
+        <script src="/assets/js/trianglify.min.js"></script>
+        <script src="/assets/js/Please-compressed.js"></script>
+        <script src="/assets/js/background-check.min.js"></script>
+                
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+                <script src="/assets/js/html5shiv.js"></script>
+                <script src="/assets/js/respond.min.js"></script>
+        <![endif]-->
+        
+        
+
+
+        </head>
+        <body>
+                
+                <!-- Navigation -->
+                <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+                        <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header page-scroll">
+                                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        </button>
+                                        <a class="navbar-brand" href="/">Andr&#xE9;s Gorzelany</a>
+                                </div>
+                        
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="navbar-collapse">
+                                        <ul class="nav navbar-nav navbar-right">
+                                                        <li><a href="/posts">Archive</a></li>
+        <li><a href="/tags">Tags</a></li>
+        <li><a href="/about">About Me</a></li>
+ 
+                                        </ul>
+                                </div>
+                                <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container -->
+                </nav>
+                
+                <!-- Page Header -->
+                <header class="intro-header" id="intro-header">
+                        <div class="container">
+                                <div class="row">
+                                        <div class="col-md-12">
+
+    
+<div class="post-heading">
+    <h1>Microsoft Teams PowerShell and token-based auth</h1>
+    <div class="meta">        
+Published on Wednesday, June 9, 2021<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams</a>
+        </div>     
+</div>
+                                        </div>
+                                </div>
+                        </div>
+                </header>
+                
+                <!-- Main Content -->
+                <div class="container">
+                        <div class="row">
+                                <div id="content" class="col-md-12">
+                                        
+
+<p>Early in May, a new entry was added to the <a href="https://docs.microsoft.com/microsoftteams/teams-powershell-release-notes">Official Docs article</a> for the Microsoft Teams PowerShell module Release notes, we could read:</p>
+<blockquote class="blockquote">
+<ul>
+<li>Updates for AccessToken login with Connect-MicrosoftTeams</li>
+<li>Unified token array instead of resource specific access token parameters</li>
+<li>Removed all AADGraph references as AADGraph is nearing End of Life</li>
+</ul>
+</blockquote>
+<p>The entry was mentioning a 3.0.0 version number however was later changed to 2.3.2-preview, is this version finally fixing the issues trying to use other methods of connection other than interactive login? Let's remember that, even though in &lt;2.3.2 we could connect using access tokens and Certificate-based authentication, if we tried to use any <em>-Cs</em> cmdlet they failed with a <code>GetSteppablePipeline</code> error.</p>
+<p>But wait! not only that, <code>-AccountId</code> parameter wasn't usable too, if we try to use it we will get: <em>connect-microsoftteams : Integrated Windows Auth is not supported for managed users.</em></p>
+<h2 id="connect-microsoftteams">Connect-MicrosoftTeams</h2>
+<p>Let's focus on this cmdlet, <code>-AadAccessToken</code> is gone, now we have <code>-AccessTokens</code>, and according to documentation, this parameter is an string array consisting of <code>&#64;($graphtoken, $teamstoken)</code>, but how do we request them?</p>
+<p>I am not a Graph expert, I leave that to my good friend <a href="https://twitter.com/AlexHolmeset">Alex Holmeset</a>, what follows is what I did based on what I could find in official documentation and Tech Community forums.</p>
+<p>First, I created an application in the Azure AD Portal, for more information, see <a href="https://docs.microsoft.com/graph/auth-register-app-v2">Register an application with the Microsoft identity platform</a>, assigned permissions (more on that later), created a client secret and <a href="https://docs.microsoft.com/azure/active-directory/develop/v2-permissions-and-consent">granted consent</a>.</p>
+<p>From that step, we will need to collect:</p>
+<ul>
+<li>The Application (client) ID (a GUID from the Overview page in the Application menu blade)</li>
+<li>The Directory (tenant) name (something.onmicrosoft.com)</li>
+<li>The client secret (you should have copied it when you created it)</li>
+</ul>
+<p>AzureAD V2 PowerShell alternative to get the Application (client) ID and Directory (tenant) name:</p>
+<pre><code class="language-Powershell">$application=&quot;NameThatYouGaveToTheApp&quot;
+Connect-AzureAD
+Get-AzureADApplication -Filter &quot;DisplayName eq '$application'&quot;  | ft AppId
+Get-AzureADTenantDetail
+</code></pre>
+<h3 id="api-permissions">API Permissions</h3>
+<p>According to documentation you only need these:</p>
+<ul>
+<li>For Microsoft Graph API - Delegated permissions
+<ul>
+<li>&quot;AppCatalog.ReadWrite.All&quot;, &quot;Group.ReadWrite.All&quot;, &quot;User.Read.All&quot;.</li>
+</ul>
+</li>
+<li>For Skype and Teams Tenant Admin API
+<ul>
+<li>&quot;Add all listed&quot;</li>
+</ul>
+</li>
+</ul>
+<p>However, only setting those permissions will not be enough as the connect cmdlet will not warn you, but you will get a <em>Authorization_RequestDenied</em> when running any cmdlet, so I ended up also adding these (trial and error and reviewing the permissions documented in <a href="https://docs.microsoft.com/graph/api/resources/teams-api-overview?view=graph-rest-1.0">Use the Microsoft Graph API to work with Microsoft Teams</a>:</p>
+<ul>
+<li>For Microsoft Graph API - Application permissions
+<ul>
+<li>&quot;Directory.ReadWrite.All&quot;, &quot;Directory.Read.All&quot;</li>
+</ul>
+</li>
+</ul>
+<h3 id="getting-the-tokens">Getting the Tokens</h3>
+<p>Once you get all of that I described earlier, it's time to get the tokens, as I said, I am not a Graph expert, so it was a lot of trial and error, the official documentation for <a href="https://docs.microsoft.com/powershell/module/teams/connect-microsoftteams?view=teams-ps">Connect-MicrosoftTeams</a> said</p>
+<pre><code class="language-Powershell">$graphtoken = #Get MSGraph Token for following for resource  &quot;https://graph.microsoft.com&quot; and scopes &quot;AppCatalog.ReadWrite.All&quot;, &quot;Group.ReadWrite.All&quot;, &quot;User.Read.All&quot;;
+$teamstoken = #Get Teams resource token for resource id &quot;48ac35b8-9aa8-4d74-927d-1f4a14a0b239&quot; and scope &quot;user_impersonation&quot;;
+</code></pre>
+<p>And this <a href="https://techcommunity.microsoft.com/t5/teams-developer/authenticating-with-an-access-token-connect-microsoftteams/m-p/2233794/page/2">Tech Community thread</a> also helped.</p>
+<p>For Graph token:</p>
+<pre><code class="language-Powershell">$clientId = &quot;6a7b5598-clientid-a1be-503ee9eda982&quot;  
+$clientSecret = &quot;olbc9secretfmWRMC55-.Qet&quot;  
+$tenantName = &quot;tenantname.onmicrosoft.com&quot;  
+$resource = &quot;https://graph.microsoft.com/&quot;  
+$tokenBody = &#64;{  
+   Grant_Type    = &quot;client_credentials&quot;  
+   Scope         = &quot;https://graph.microsoft.com/.default&quot;  
+   Client_Id     = $clientId  
+   Client_Secret = $clientSecret  
+}   
+$graphTokenResponse = Invoke-RestMethod -Uri &quot;https://login.microsoftonline.com/$tenantName/oauth2/v2.0/token&quot; -Method POST -Body $tokenBody
+</code></pre>
+<p>For Teams token:</p>
+<pre><code class="language-Powershell">$clientId = &quot;6a7b5598-clientid-a1be-503ee9eda982&quot;  
+$clientSecret = &quot;olbc9secretfmWRMC55-.Qet&quot; 
+$tenantName = &quot;tenantname.onmicrosoft.com&quot;   
+$resource = &quot;https://api.interfaces.records.teams.microsoft.com&quot;  
+$tokenBody = &#64;{  
+   Grant_Type    = &quot;client_credentials&quot;  
+   Scope         = &quot;48ac35b8-9aa8-4d74-927d-1f4a14a0b239/.default&quot;  
+   Client_Id     = $clientId  
+   Client_Secret = $clientSecret
+  
+}   
+$TeamsTokenResponse = Invoke-RestMethod -Uri &quot;https://login.microsoftonline.com/$tenantName/oauth2/v2.0/token&quot; -Method POST -Body $tokenBody
+</code></pre>
+<p>So now we have the tokens in two variables, <code>$graphTokenResponse.access_token</code> and <code>$TeamsTokenResponse.access_token</code>, if you parse the tokens in <a href="https://jwt.ms/">https://jwt.ms/</a> you should see something like this for Graph token:</p>
+<pre><code class="language-json">  &quot;roles&quot;: [
+    &quot;Directory.ReadWrite.All&quot;,
+    &quot;Directory.Read.All&quot;
+  ],
+</code></pre>
+<p>and this for the Teams token:</p>
+<pre><code class="language-json">  &quot;roles&quot;: [
+    &quot;application_access_custom_sba_appliance&quot;,
+    &quot;application_access&quot;
+  ],
+</code></pre>
+<h3 id="ok-lets-connect-now">Ok, let's connect now</h3>
+<p>The cmdlet should be used like this</p>
+<pre><code class="language-Powershell">Connect-MicrosoftTeams -AccessTokens &#64;($graphTokenResponse.access_token,$TeamsTokenResponse.access_token) -AccountId meganb&#64;tenantname.onmicrosoft.com
+</code></pre>
+<p>If everything went well, you should be able to run any native Teams cmdlet.</p>
+<h3 id="cs-cmdlets">-Cs* cmdlets</h3>
+<p>Unfortunately, any -Cs* cmdlets still result in an error:</p>
+<pre><code class="language-Powershell">Get-CsOnlineSession : Connecting to remote server api.interfaces.records.teams.microsoft.com failed with the following
+error message : The WinRM client cannot process the request. The authentication mechanism requested by the client is
+not supported by the server or unencrypted traffic is disabled in the service configuration. Verify the unencrypted
+traffic setting in the service configuration or specify one of the authentication mechanisms supported by the server.
+To use Kerberos, specify the computer name as the remote destination. Also verify that the client computer and the
+destination computer are joined to a domain. To use Basic, specify the computer name as the remote destination,
+specify Basic authentication and provide user name and password. Possible authentication mechanisms reported by
+server: For more information, see the about_Remote_Troubleshooting Help topic.
+At C:\Program Files\WindowsPowerShell\Modules\MicrosoftTeams\2.3.2\net472\SfBORemotePowershellModule.psm1:63 char:22
++     $remoteSession = &amp; (Get-CsOnlineSessionCommand)
++                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Get-CsOnlineSession], PSRemotingTransportException
+    + FullyQualifiedErrorId : PSRemotingTransportException,Microsoft.Teams.ConfigApi.Cmdlets.GetCsOnlineSession
+
+Invoke-Command : Cannot validate argument on parameter 'Session'. The argument is null or empty. Provide an argument
+that is not null or empty, and then try the command again.
+At C:\Program Files\WindowsPowerShell\Modules\MicrosoftTeams\2.3.2\net472\SfBORemotePowershellModule.psm1:9490 char:38
++ ...    -Session (Get-PSImplicitRemotingSession -CommandName 'Get-CsOnline ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [Invoke-Command], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : ParameterArgumentValidationError,Microsoft.PowerShell.Commands.InvokeCommandCommand
+</code></pre>
+<h2 id="conclussion">Conclussion</h2>
+<p>The changes are welcomed, however I really hope the issue with -Cs* cmdlets is fixed once this release gets General Availability condition, any non-interactive method is very useful for unattended scripting scenarios and it has been long requested by the community.
+If you have any other method, other than the described in this blog post to obtain the tokens or if you could make -Cs* cmdlets work please leave me a comment!</p>
+<p>For instructions on how to install this specific version, you can visit <a href="https://msshells.net/">&gt;_☁ MSShells.net</a>.</p>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'teams-powershell-token-auth';
+    var disqus_title = 'Microsoft Teams PowerShell and token-based auth';
+    var disqus_url = 'https://get-itips.capazero.net/posts/teams-powershell-token-auth';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                                </div>
+                        </div>
+                </div>
+                
+                <hr>
+                
+                <!-- Footer -->
+                <footer>
+                        <div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+
+            <ul class="list-inline">
+                <li>
+                    <a href="https://twitter.com/andresgorzelany" target="_blank" title="Twitter Profile">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/get-itips" target="_blank" title="Github Profile">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/andresgorzelany/" target="_blank" title="LinkedIn Profile">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+
+            <p class="copyright text-muted">
+                    <a href="/feed.rss" class="btn-rss">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                        </span> RSS Feed
+                    </a>
+                                    <a href="/feed.atom" class="btn-rss">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                        </span> Atom Feed
+                    </a>
+                <br />
+                Copyright © 2021 by Andres Gorzelany
+                <br />
+                <strong><a href="https://wyam.io" target="_blank">Generated by Wyam</a></strong>
+            </p>
+        </div>
+    </div>
+</div>
+
+                </footer> 
+
+                
+                <script>hljs.initHighlightingOnLoad();</script>
+
+                        <script type="text/javascript">                
+                                // Header background                        
+                                var colors = Please.make_color({
+                                        colors_returned: 3,
+                                        saturation: .6
+                                });
+                                var t = new Trianglify({
+                                        x_gradient: colors,
+                                        y_gradient: ["#FFFFFF"]
+                                });
+                                var header = document.getElementById("intro-header");
+                                var pattern = t.generate(header.clientWidth, header.clientHeight);
+                                header.setAttribute('style', 'background-image: ' + pattern.dataUrl);                        
+                        </script>
+
+                <script>
+                        BackgroundCheck.init({
+                                targets: '.intro-header,.navbar',
+                                images: '.intro-header'
+                        });
+                </script>
+        </body>
+</html>
+
