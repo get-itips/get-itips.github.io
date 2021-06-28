@@ -5,8 +5,8 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2021</copyright>
-		<pubDate>Mon, 28 Jun 2021 22:58:42 GMT</pubDate>
-		<lastBuildDate>Mon, 28 Jun 2021 22:58:42 GMT</lastBuildDate>
+		<pubDate>Mon, 28 Jun 2021 23:02:41 GMT</pubDate>
+		<lastBuildDate>Mon, 28 Jun 2021 23:02:41 GMT</lastBuildDate>
 		<item>
 			<title>Useful community tools to administer Microsoft 365</title>
 			<link>https://get-itips.capazero.net/posts/useful-community-tools</link>
@@ -27,6 +27,7 @@
 &lt;li&gt;&lt;a href="https://o365atp.com/"&gt;ATP Safe Links decoder&lt;/a&gt; every link that goes thru ATP is rewritten and encoded so it can be analyzed before the user is presented with the destination and real website, this handy tool can decode the ATP link so we can see the real website behind it.&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://mha.azurewebsites.net/"&gt;Message Header Analyzer&lt;/a&gt; This is very useful for EXO administrators, essentially, paste the mail message header of a Microsoft 365 e-mail, and this tool will present it in a much more friendly way the information contained in it.&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;Do you have other that isn't listed here? Share it with me please. Thank you!&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
