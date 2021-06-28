@@ -16,3 +16,5 @@ Not really community tools as they are provided by Microsoft or Microsoft employ
 
 - [ATP Safe Links decoder](https://o365atp.com/) every link that goes thru ATP is rewritten and encoded so it can be analyzed before the user is presented with the destination and real website, this handy tool can decode the ATP link so we can see the real website behind it.
 - [Message Header Analyzer](https://mha.azurewebsites.net/) This is very useful for EXO administrators, essentially, paste the mail message header of a Microsoft 365 e-mail, and this tool will present it in a much more friendly way the information contained in it.
+
+Do you have other that isn't listed here? Share it with me please. Thank you!
