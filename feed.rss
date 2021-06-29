@@ -5,38 +5,15 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2021</copyright>
-		<pubDate>Tue, 29 Jun 2021 20:54:31 GMT</pubDate>
-		<lastBuildDate>Tue, 29 Jun 2021 20:54:31 GMT</lastBuildDate>
-		<item>
-			<title>Useful community tools to administer Microsoft 365</title>
-			<link>https://get-itips.capazero.net/posts/useful-community-tools</link>
-			<description>&lt;p&gt;This post is intended to list all the sites/tools I use to administer Microsoft 365. I hope you find them useful:&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/useful-community-tools</guid>
-			<pubDate>Mon, 28 Jun 2021 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;This post is intended to list all the sites/tools I use to administer Microsoft 365. I hope you find them useful:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://msportals.io/"&gt;MSPortals&lt;/a&gt; by Adam Fowler, it's a great site that summarizes all the different official portals created by Microsoft to administer all the Microsoft 365 solutions, it even has a search function.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://changewindows.org/"&gt;ChangeWindows&lt;/a&gt;, a very complete site that keeps track of all the releases of Windows.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.whatismytenantid.com/"&gt;What is my Tenant ID?&lt;/a&gt;, actually, a Microsoft Partner is behind this site, it is very useful to find your (or others) tenant ID.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://m365maps.com/"&gt;M365 Maps&lt;/a&gt;, a very useful site to understand what is really included in each Microsoft 365 license offering.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://MSShells.net"&gt;MSShells&lt;/a&gt;, this site belongs to me and as I open-sourced it, it receives contributions from the community, keeps tracks of the different versions of the official modules to administer Microsoft 365 and Azure.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="bonus-track"&gt;Bonus Track:&lt;/h3&gt;
-&lt;p&gt;Not really community tools as they are provided by Microsoft or Microsoft employees, however, they are useful and not so well documented:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://o365atp.com/"&gt;ATP Safe Links decoder&lt;/a&gt; every link that goes thru ATP is rewritten and encoded so it can be analyzed before the user is presented with the destination and real website, this handy tool can decode the ATP link so we can see the real website behind it.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://mha.azurewebsites.net/"&gt;Message Header Analyzer&lt;/a&gt; This is very useful for EXO administrators, essentially, paste the mail message header of a Microsoft 365 e-mail, and this tool will present it in a much more friendly way the information contained in it.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Do you have other that isn't listed here? Share it with me please. Thank you!&lt;/p&gt;
-</content:encoded>
-		</item>
+		<pubDate>Tue, 29 Jun 2021 20:58:01 GMT</pubDate>
+		<lastBuildDate>Tue, 29 Jun 2021 20:58:01 GMT</lastBuildDate>
 		<item>
 			<title>PnP Teams Cmdlets Review - Part II</title>
 			<link>https://get-itips.capazero.net/posts/teams-pnp-part2</link>
 			<description>&lt;p&gt;Back in October 2020 I made a review of PnP Teams cmdlets, you can find that review &lt;a href="https://get-itips.capazero.net/posts/teams-pnp"&gt;here&lt;/a&gt;.
 However, that review is now outdated as PnP project had a major change in the architecture, now being built in .NET Core 3.1 / .NET Framework 4.6.1 and, hence, supporting PowerShell core, so because of that fact, let's make another review to see what has changed.&lt;/p&gt;</description>
 			<guid>https://get-itips.capazero.net/posts/teams-pnp-part2</guid>
-			<pubDate>Thu, 10 Jun 2021 00:00:00 GMT</pubDate>
+			<pubDate>Tue, 29 Jun 2021 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h1 id="introduction"&gt;Introduction&lt;/h1&gt;
 &lt;p&gt;Back in October 2020 I made a review of PnP Teams cmdlets, you can find that review &lt;a href="https://get-itips.capazero.net/posts/teams-pnp"&gt;here&lt;/a&gt;.
 However, that review is now outdated as PnP project had a major change in the architecture, now being built in .NET Core 3.1 / .NET Framework 4.6.1 and, hence, supporting PowerShell core, so because of that fact, let's make another review to see what has changed.&lt;/p&gt;
@@ -107,6 +84,29 @@ Timestamp: 2021-06-29 17:38:00Z
 &lt;p&gt;This worked great, adding a web site to a Teams channel.&lt;/p&gt;
 &lt;h1 id="conclussions"&gt;Conclussions&lt;/h1&gt;
 &lt;p&gt;PnP Teams cmdlets didn't change so much since Part I of these series, it would be interesting to see more cmdlets and more parameters in next releases however it is fantastic to have a community alternative to the official Teams module, the same way we have an alternative to the official SharePoint Online module.&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Useful community tools to administer Microsoft 365</title>
+			<link>https://get-itips.capazero.net/posts/useful-community-tools</link>
+			<description>&lt;p&gt;This post is intended to list all the sites/tools I use to administer Microsoft 365. I hope you find them useful:&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/useful-community-tools</guid>
+			<pubDate>Mon, 28 Jun 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;This post is intended to list all the sites/tools I use to administer Microsoft 365. I hope you find them useful:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://msportals.io/"&gt;MSPortals&lt;/a&gt; by Adam Fowler, it's a great site that summarizes all the different official portals created by Microsoft to administer all the Microsoft 365 solutions, it even has a search function.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://changewindows.org/"&gt;ChangeWindows&lt;/a&gt;, a very complete site that keeps track of all the releases of Windows.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.whatismytenantid.com/"&gt;What is my Tenant ID?&lt;/a&gt;, actually, a Microsoft Partner is behind this site, it is very useful to find your (or others) tenant ID.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://m365maps.com/"&gt;M365 Maps&lt;/a&gt;, a very useful site to understand what is really included in each Microsoft 365 license offering.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://MSShells.net"&gt;MSShells&lt;/a&gt;, this site belongs to me and as I open-sourced it, it receives contributions from the community, keeps tracks of the different versions of the official modules to administer Microsoft 365 and Azure.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="bonus-track"&gt;Bonus Track:&lt;/h3&gt;
+&lt;p&gt;Not really community tools as they are provided by Microsoft or Microsoft employees, however, they are useful and not so well documented:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://o365atp.com/"&gt;ATP Safe Links decoder&lt;/a&gt; every link that goes thru ATP is rewritten and encoded so it can be analyzed before the user is presented with the destination and real website, this handy tool can decode the ATP link so we can see the real website behind it.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://mha.azurewebsites.net/"&gt;Message Header Analyzer&lt;/a&gt; This is very useful for EXO administrators, essentially, paste the mail message header of a Microsoft 365 e-mail, and this tool will present it in a much more friendly way the information contained in it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Do you have other that isn't listed here? Share it with me please. Thank you!&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
