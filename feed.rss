@@ -5,8 +5,8 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2021</copyright>
-		<pubDate>Mon, 28 Jun 2021 23:09:41 GMT</pubDate>
-		<lastBuildDate>Mon, 28 Jun 2021 23:09:41 GMT</lastBuildDate>
+		<pubDate>Tue, 29 Jun 2021 20:54:31 GMT</pubDate>
+		<lastBuildDate>Tue, 29 Jun 2021 20:54:31 GMT</lastBuildDate>
 		<item>
 			<title>Useful community tools to administer Microsoft 365</title>
 			<link>https://get-itips.capazero.net/posts/useful-community-tools</link>
@@ -28,6 +28,85 @@
 &lt;li&gt;&lt;a href="https://mha.azurewebsites.net/"&gt;Message Header Analyzer&lt;/a&gt; This is very useful for EXO administrators, essentially, paste the mail message header of a Microsoft 365 e-mail, and this tool will present it in a much more friendly way the information contained in it.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Do you have other that isn't listed here? Share it with me please. Thank you!&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>PnP Teams Cmdlets Review - Part II</title>
+			<link>https://get-itips.capazero.net/posts/teams-pnp-part2</link>
+			<description>&lt;p&gt;Back in October 2020 I made a review of PnP Teams cmdlets, you can find that review &lt;a href="https://get-itips.capazero.net/posts/teams-pnp"&gt;here&lt;/a&gt;.
+However, that review is now outdated as PnP project had a major change in the architecture, now being built in .NET Core 3.1 / .NET Framework 4.6.1 and, hence, supporting PowerShell core, so because of that fact, let's make another review to see what has changed.&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/teams-pnp-part2</guid>
+			<pubDate>Thu, 10 Jun 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="introduction"&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Back in October 2020 I made a review of PnP Teams cmdlets, you can find that review &lt;a href="https://get-itips.capazero.net/posts/teams-pnp"&gt;here&lt;/a&gt;.
+However, that review is now outdated as PnP project had a major change in the architecture, now being built in .NET Core 3.1 / .NET Framework 4.6.1 and, hence, supporting PowerShell core, so because of that fact, let's make another review to see what has changed.&lt;/p&gt;
+&lt;h1 id="requirements"&gt;Requirements&lt;/h1&gt;
+&lt;h2 id="pnp-module-version"&gt;PnP Module Version&lt;/h2&gt;
+&lt;p&gt;Be sure to be running the latest stable version of the PnP PowerShell module, to this date, that is 1.6.0.&lt;/p&gt;
+&lt;p&gt;also, we can check, which commands are currently available for Teams related tasks running&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;Get-Command -Module *PnP* -Name &amp;quot;*Teams*&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;CommandType     Name                                               Version    Source
+-----------     ----                                               -------    ------
+Cmdlet          Add-PnPTeamsChannel                                1.6.0      PnP.PowerShell
+Cmdlet          Add-PnPTeamsTab                                    1.6.0      PnP.PowerShell
+Cmdlet          Add-PnPTeamsTeam                                   1.6.0      PnP.PowerShell
+Cmdlet          Add-PnPTeamsUser                                   1.6.0      PnP.PowerShell
+Cmdlet          Get-PnPTeamsApp                                    1.6.0      PnP.PowerShell
+Cmdlet          Get-PnPTeamsChannel                                1.6.0      PnP.PowerShell
+Cmdlet          Get-PnPTeamsChannelMessage                         1.6.0      PnP.PowerShell
+Cmdlet          Get-PnPTeamsTab                                    1.6.0      PnP.PowerShell
+Cmdlet          Get-PnPTeamsTeam                                   1.6.0      PnP.PowerShell
+Cmdlet          Get-PnPTeamsUser                                   1.6.0      PnP.PowerShell
+Cmdlet          New-PnPTeamsApp                                    1.6.0      PnP.PowerShell
+Cmdlet          New-PnPTeamsTeam                                   1.6.0      PnP.PowerShell
+Cmdlet          New-PnPTenantSequenceTeamSite                      1.6.0      PnP.PowerShell
+Cmdlet          Remove-PnPTeamsApp                                 1.6.0      PnP.PowerShell
+Cmdlet          Remove-PnPTeamsChannel                             1.6.0      PnP.PowerShell
+Cmdlet          Remove-PnPTeamsTab                                 1.6.0      PnP.PowerShell
+Cmdlet          Remove-PnPTeamsTeam                                1.6.0      PnP.PowerShell
+Cmdlet          Remove-PnPTeamsUser                                1.6.0      PnP.PowerShell
+Cmdlet          Set-PnPTeamsChannel                                1.6.0      PnP.PowerShell
+Cmdlet          Set-PnPTeamsTab                                    1.6.0      PnP.PowerShell
+Cmdlet          Set-PnPTeamsTeam                                   1.6.0      PnP.PowerShell
+Cmdlet          Set-PnPTeamsTeamArchivedState                      1.6.0      PnP.PowerShell
+Cmdlet          Set-PnPTeamsTeamPicture                            1.6.0      PnP.PowerShell
+Cmdlet          Submit-PnPTeamsChannelMessage                      1.6.0      PnP.PowerShell
+Cmdlet          Sync-PnPAppToTeams                                 1.6.0      PnP.PowerShell
+Cmdlet          Update-PnPTeamsApp                                 1.6.0      PnP.PowerShell
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Seems the same list of cmdlets that were available at the time I made the first part of my review, no new cmdlets.&lt;/p&gt;
+&lt;h2 id="graph-api-permissions"&gt;Graph API Permissions&lt;/h2&gt;
+&lt;p&gt;To run any of those cmdlets, we will need special Graph API Permissions, thankfully, those are documented at Microsoft Docs, for example for the &lt;code&gt;Get-PnPTeamsTeam&lt;/code&gt; cmdlet, we will need either Group.Read.All or Group.ReadWrite.All.&lt;/p&gt;
+&lt;h2 id="connecting-to-pnp-online"&gt;Connecting to PnP Online&lt;/h2&gt;
+&lt;p&gt;If we try to use any &lt;em&gt;PnPTeams&lt;/em&gt; cmdlet without the required permissions we will receive an error like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-PowerShell"&gt;Connect-PnPOnline: AADSTS65001: The user or administrator has not consented to use the application with ID '31359c7f-bd7e-475c-86db-fdb8c937548e' named 'PnP Management Shell'. Send an interactive authorization request for this user and resource.
+Trace ID: 185aa11a-cb90-4434-8aee-6c5538a3d800
+Correlation ID: d72ec6f1-75a5-4ccb-9d97-c537a4c59f1a
+Timestamp: 2021-06-29 17:38:00Z
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To understand how to connect it is better to read the source information from the PnP team &lt;a href="https://pnp.github.io/powershell/articles/connecting.html"&gt;here&lt;/a&gt; as the process changed, for example &lt;code&gt;-Scopes&lt;/code&gt; parameter is not there anymore in &lt;code&gt;Connect-PnpOnline&lt;/code&gt;.&lt;/p&gt;
+&lt;h1 id="the-teams-pnp-cmdlets"&gt;The Teams PnP cmdlets&lt;/h1&gt;
+&lt;p&gt;Back in the Part I, I showed the output of &lt;code&gt;Get-PnPTeamsTeam&lt;/code&gt; and &lt;code&gt;Get-PnPTeamsChannelMessage&lt;/code&gt; and an example use of &lt;code&gt;Submit-PnPTeamsChannelMessage&lt;/code&gt;, they haven't changed much so let's try other cmdlets&lt;/p&gt;
+&lt;h2 id="set-pnpteamschannel"&gt;Set-PnPTeamsChannel&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;IsFavoriteByDefault&lt;/code&gt; boolean parameter described in the &lt;a href="https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpteamschannel?view=sharepoint-ps"&gt;documentation&lt;/a&gt; got my attention, however, I receive an error trying to use it:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-PowerShell"&gt;Set-PnPTeamsChannel: Failed to execute backend request.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;An &lt;a href="https://github.com/pnp/powershell/issues/563"&gt;issue&lt;/a&gt; is already created in the PnP GitHub repository, so eventually it will be fixed.&lt;/p&gt;
+&lt;p&gt;If you try to change any property of a built-in Channel, like General, it will fail with:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-PowerShell"&gt;Set-PnPTeamsChannel: General channel cannot be patched.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Besides that, I was able to run:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-PowerShell"&gt;set-PnPTeamsChannel -Team &amp;quot;Contoso&amp;quot; -Identity &amp;quot;CustomChannel&amp;quot; -DisplayName &amp;quot;Custom Channel&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;On a custom made channel.&lt;/p&gt;
+&lt;h2 id="add-pnpteamstab"&gt;Add-PnPTeamsTab&lt;/h2&gt;
+&lt;p&gt;Let's test this interesting cmdlet to add a custom tab of type &amp;quot;WebSite&amp;quot; to a Teams Channel&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-PowerShell"&gt;Add-PnPTeamsTab -Team &amp;quot;Contoso&amp;quot; -Channel &amp;quot;Custom Channel&amp;quot; -DisplayName &amp;quot;MSShells&amp;quot; -Type WebSite -ContentUrl &amp;quot;https://msshells.net&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This worked great, adding a web site to a Teams channel.&lt;/p&gt;
+&lt;h1 id="conclussions"&gt;Conclussions&lt;/h1&gt;
+&lt;p&gt;PnP Teams cmdlets didn't change so much since Part I of these series, it would be interesting to see more cmdlets and more parameters in next releases however it is fantastic to have a community alternative to the official Teams module, the same way we have an alternative to the official SharePoint Online module.&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
@@ -1108,63 +1187,6 @@ Basically, when executing a Build using TFS Build Agents, we were seeing this er
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;so it is processing the git fetch as if ABZ-Branch and Abz-Branch were the same! leading  to the error saying that it is expecting other digest.&lt;/p&gt;
 &lt;p&gt;So if you encounter exactly this, check if you have two branches with the same name but different case.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Script to call POSH-LTM-Rest cmdlets to enable or disable Pool Members on a F5 LTM Load Balancer</title>
-			<link>https://get-itips.capazero.net/posts/ScriptPoshLTM</link>
-			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/ScriptPoshLTM</guid>
-			<pubDate>Wed, 21 Mar 2018 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;Had to do this PS Script for a customer, they use TFS and wanted to control F5 LTM (Load Balancer) to disable or enable nodes in a release definition,
-so they can disable a node, update the binaries on it, and enable it again.
-So, I found this excellent &lt;a href="https://github.com/joel74/POSH-LTM-Rest"&gt;Powershell modules&lt;/a&gt; from &lt;a href="https://github.com/joel74"&gt;Joel74&lt;/a&gt; that include the needed functions.
-First of all, you have to install the POSH-LTM modules as the creator says on his github page on the computer that will be used to run the PS Script,
-then, save this PS Script on the same computer.&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt; param (
-    [Parameter(Mandatory=$true)][string]$LTMName,
-    [Parameter(Mandatory=$true)][string]$Partition,
-    [Parameter(Mandatory=$true)][string]$PoolName,
-    [Parameter(Mandatory=$true)][string]$MemberName,
-    [switch]$disable = $false,
-    [Parameter(Mandatory=$true)][string]$F5Username,
-    [Parameter(Mandatory=$true)][string]$F5Password
-)
-
-$passwd = $F5Password
-$user=$F5Username
-
-$secpasswd = ConvertTo-SecureString $passwd -AsPlainText -Force
-$ltmCreds = New-Object System.Management.Automation.PSCredential ($user, $secpasswd)
-
-
-#Se solicita una sesion al F5 BIG-IP
-$session = $null
-$session = New-F5Session -LTMCredentials $ltmCreds -LTMName $LTMName -PassThrough
-
-if($session -ne $null){
-    if($Disable){
-    Write-Verbose &amp;quot;Trying to disable $LTMName|$Partition|$PoolName|$MemberName&amp;quot;
-    Disable-PoolMember -F5Session $session -PoolName $PoolName -Partition $Partition -Name $MemberName
-
-    }else{
-    Write-Verbose &amp;quot;Trying to enable $LTMName|$Partition|$PoolName|$MemberName&amp;quot;
-    Enable-PoolMember -F5Session $session -PoolName $PoolName -Partition $Partition -Name $MemberName
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Go to the release definition of your project of choice, and add a &amp;quot;Powershell on target Machines&amp;quot; task, fill the fields as follows:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Machines: fill with the hostname or IP of the computer with the PS Module and PS Script saved in the last step.&lt;/li&gt;
-&lt;li&gt;Admin Login / Password: Credentials to connect to this computer&lt;/li&gt;
-&lt;li&gt;Protocol: HTTP or HTTPS&lt;/li&gt;
-&lt;li&gt;Powershell Script: Full path to the PS Script saved in the last step, for example C:\Scripts\F5Manage-TeamMember.ps1&lt;/li&gt;
-&lt;li&gt;Script Arguments: Arguments needed by my script, for example, using release variables:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;-LTMName $(LTMName) -Partition $(Partition) -PoolName $(PoolName) -MemberName $(MemberName) -F5Username $(Username) -F5Password $(Password)&lt;/p&gt;
-&lt;p&gt;Remember to create this variables in the release definition.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Test it. always test it on your environment.&lt;/strong&gt;&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>

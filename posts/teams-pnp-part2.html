@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany</title>
+        <title>Andr&#xE9;s Gorzelany - PnP Teams Cmdlets Review - Part II</title>
         <meta name="description" content="Get-ITips" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - PnP Teams Cmdlets Review - Part II" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/teams-pnp-part2" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -89,10 +89,14 @@
                                 <div class="row">
                                         <div class="col-md-12">
 
-    <div class="site-heading">
-        <h1>Get-ITips</h1>
-                <hr class="small">
-        <span class="subheading">Exchange/Sharepoint/SfB/Teams/TFS/AzureDevOps/PS and a little Dev Stuff from a Computer Science Engineer/Microsoft Senior Consultant</span>
+    
+<div class="post-heading">
+    <h1>PnP Teams Cmdlets Review - Part II</h1>
+    <div class="meta">        
+Published on Thursday, June 10, 2021<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams</a>
+        </div>     
 </div>
                                         </div>
                                 </div>
@@ -104,75 +108,102 @@
                         <div class="row">
                                 <div id="content" class="col-md-12">
                                         
-<div class="row">
-    <div class="col-sm-8 right-border">
-                <div class="post-preview">
-                    <a href="/posts/useful-community-tools">
-                        <h2 class="post-title">Useful community tools to administer Microsoft 365</h2>
-                    </a>
-                    <p class="post-meta">Posted on Monday, June 28, 2021</p>
-<p>This post is intended to list all the sites/tools I use to administer Microsoft 365. I hope you find them useful:</p>                </div>       
-                    <hr /> 
-                <div class="post-preview">
-                    <a href="/posts/teams-pnp-part2">
-                        <h2 class="post-title">PnP Teams Cmdlets Review - Part II</h2>
-                    </a>
-                    <p class="post-meta">Posted on Thursday, June 10, 2021</p>
+
+<h1 id="introduction">Introduction</h1>
 <p>Back in October 2020 I made a review of PnP Teams cmdlets, you can find that review <a href="https://get-itips.capazero.net/posts/teams-pnp">here</a>.
-However, that review is now outdated as PnP project had a major change in the architecture, now being built in .NET Core 3.1 / .NET Framework 4.6.1 and, hence, supporting PowerShell core, so because of that fact, let's make another review to see what has changed.</p>                </div>       
-                    <hr /> 
-                <div class="post-preview">
-                    <a href="/posts/teams-powershell-token-auth">
-                        <h2 class="post-title">Microsoft Teams PowerShell and token-based auth</h2>
-                    </a>
-                    <p class="post-meta">Posted on Wednesday, June 9, 2021</p>
-<p>Early in May, a new entry was added to the <a href="https://docs.microsoft.com/microsoftteams/teams-powershell-release-notes">Official Docs article</a> for the Microsoft Teams PowerShell module Release notes, we could read:</p>                </div>       
-        <ul class="pager">
-            <li class="previous">                
-            </li>
-            <li class="next">
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-4 sidebar">
-        <hr class="visible-xs-block" />
+However, that review is now outdated as PnP project had a major change in the architecture, now being built in .NET Core 3.1 / .NET Framework 4.6.1 and, hence, supporting PowerShell core, so because of that fact, let's make another review to see what has changed.</p>
+<h1 id="requirements">Requirements</h1>
+<h2 id="pnp-module-version">PnP Module Version</h2>
+<p>Be sure to be running the latest stable version of the PnP PowerShell module, to this date, that is 1.6.0.</p>
+<p>also, we can check, which commands are currently available for Teams related tasks running</p>
+<pre><code class="language-powershell">Get-Command -Module *PnP* -Name &quot;*Teams*&quot;
+</code></pre>
+<pre><code class="language-powershell">CommandType     Name                                               Version    Source
+-----------     ----                                               -------    ------
+Cmdlet          Add-PnPTeamsChannel                                1.6.0      PnP.PowerShell
+Cmdlet          Add-PnPTeamsTab                                    1.6.0      PnP.PowerShell
+Cmdlet          Add-PnPTeamsTeam                                   1.6.0      PnP.PowerShell
+Cmdlet          Add-PnPTeamsUser                                   1.6.0      PnP.PowerShell
+Cmdlet          Get-PnPTeamsApp                                    1.6.0      PnP.PowerShell
+Cmdlet          Get-PnPTeamsChannel                                1.6.0      PnP.PowerShell
+Cmdlet          Get-PnPTeamsChannelMessage                         1.6.0      PnP.PowerShell
+Cmdlet          Get-PnPTeamsTab                                    1.6.0      PnP.PowerShell
+Cmdlet          Get-PnPTeamsTeam                                   1.6.0      PnP.PowerShell
+Cmdlet          Get-PnPTeamsUser                                   1.6.0      PnP.PowerShell
+Cmdlet          New-PnPTeamsApp                                    1.6.0      PnP.PowerShell
+Cmdlet          New-PnPTeamsTeam                                   1.6.0      PnP.PowerShell
+Cmdlet          New-PnPTenantSequenceTeamSite                      1.6.0      PnP.PowerShell
+Cmdlet          Remove-PnPTeamsApp                                 1.6.0      PnP.PowerShell
+Cmdlet          Remove-PnPTeamsChannel                             1.6.0      PnP.PowerShell
+Cmdlet          Remove-PnPTeamsTab                                 1.6.0      PnP.PowerShell
+Cmdlet          Remove-PnPTeamsTeam                                1.6.0      PnP.PowerShell
+Cmdlet          Remove-PnPTeamsUser                                1.6.0      PnP.PowerShell
+Cmdlet          Set-PnPTeamsChannel                                1.6.0      PnP.PowerShell
+Cmdlet          Set-PnPTeamsTab                                    1.6.0      PnP.PowerShell
+Cmdlet          Set-PnPTeamsTeam                                   1.6.0      PnP.PowerShell
+Cmdlet          Set-PnPTeamsTeamArchivedState                      1.6.0      PnP.PowerShell
+Cmdlet          Set-PnPTeamsTeamPicture                            1.6.0      PnP.PowerShell
+Cmdlet          Submit-PnPTeamsChannelMessage                      1.6.0      PnP.PowerShell
+Cmdlet          Sync-PnPAppToTeams                                 1.6.0      PnP.PowerShell
+Cmdlet          Update-PnPTeamsApp                                 1.6.0      PnP.PowerShell
+</code></pre>
+<p>Seems the same list of cmdlets that were available at the time I made the first part of my review, no new cmdlets.</p>
+<h2 id="graph-api-permissions">Graph API Permissions</h2>
+<p>To run any of those cmdlets, we will need special Graph API Permissions, thankfully, those are documented at Microsoft Docs, for example for the <code>Get-PnPTeamsTeam</code> cmdlet, we will need either Group.Read.All or Group.ReadWrite.All.</p>
+<h2 id="connecting-to-pnp-online">Connecting to PnP Online</h2>
+<p>If we try to use any <em>PnPTeams</em> cmdlet without the required permissions we will receive an error like this:</p>
+<pre><code class="language-PowerShell">Connect-PnPOnline: AADSTS65001: The user or administrator has not consented to use the application with ID '31359c7f-bd7e-475c-86db-fdb8c937548e' named 'PnP Management Shell'. Send an interactive authorization request for this user and resource.
+Trace ID: 185aa11a-cb90-4434-8aee-6c5538a3d800
+Correlation ID: d72ec6f1-75a5-4ccb-9d97-c537a4c59f1a
+Timestamp: 2021-06-29 17:38:00Z
+</code></pre>
+<p>To understand how to connect it is better to read the source information from the PnP team <a href="https://pnp.github.io/powershell/articles/connecting.html">here</a> as the process changed, for example <code>-Scopes</code> parameter is not there anymore in <code>Connect-PnpOnline</code>.</p>
+<h1 id="the-teams-pnp-cmdlets">The Teams PnP cmdlets</h1>
+<p>Back in the Part I, I showed the output of <code>Get-PnPTeamsTeam</code> and <code>Get-PnPTeamsChannelMessage</code> and an example use of <code>Submit-PnPTeamsChannelMessage</code>, they haven't changed much so let's try other cmdlets</p>
+<h2 id="set-pnpteamschannel">Set-PnPTeamsChannel</h2>
+<p>The <code>IsFavoriteByDefault</code> boolean parameter described in the <a href="https://docs.microsoft.com/powershell/module/sharepoint-pnp/set-pnpteamschannel?view=sharepoint-ps">documentation</a> got my attention, however, I receive an error trying to use it:</p>
+<pre><code class="language-PowerShell">Set-PnPTeamsChannel: Failed to execute backend request.
+</code></pre>
+<p>An <a href="https://github.com/pnp/powershell/issues/563">issue</a> is already created in the PnP GitHub repository, so eventually it will be fixed.</p>
+<p>If you try to change any property of a built-in Channel, like General, it will fail with:</p>
+<pre><code class="language-PowerShell">Set-PnPTeamsChannel: General channel cannot be patched.
+</code></pre>
+<p>Besides that, I was able to run:</p>
+<pre><code class="language-PowerShell">set-PnPTeamsChannel -Team &quot;Contoso&quot; -Identity &quot;CustomChannel&quot; -DisplayName &quot;Custom Channel&quot;
+</code></pre>
+<p>On a custom made channel.</p>
+<h2 id="add-pnpteamstab">Add-PnPTeamsTab</h2>
+<p>Let's test this interesting cmdlet to add a custom tab of type &quot;WebSite&quot; to a Teams Channel</p>
+<pre><code class="language-PowerShell">Add-PnPTeamsTab -Team &quot;Contoso&quot; -Channel &quot;Custom Channel&quot; -DisplayName &quot;MSShells&quot; -Type WebSite -ContentUrl &quot;https://msshells.net&quot;
+</code></pre>
+<p>This worked great, adding a web site to a Teams channel.</p>
+<h1 id="conclussions">Conclussions</h1>
+<p>PnP Teams cmdlets didn't change so much since Part I of these series, it would be interesting to see more cmdlets and more parameters in next releases however it is fantastic to have a community alternative to the official Teams module, the same way we have an alternative to the official SharePoint Online module.</p>
 
-            <h5>Tags</h5>
-            <div>
-                    <a role="button" href="/tags/Teams" class="btn btn-default btn-sm"> Teams (9)</a>
-                    <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-sm"> TeamFoundationServer (4)</a>
-                    <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-sm"> Sharepoint (4)</a>
-                    <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-sm"> ExchangeServer (4)</a>
-                    <a role="button" href="/tags/Skype4B" class="btn btn-default btn-sm"> Skype4B (2)</a>
-                    <a role="button" href="/tags/Ignite" class="btn btn-default btn-sm"> Ignite (2)</a>
-                    <a role="button" href="/tags/General" class="btn btn-default btn-sm"> General (1)</a>
-                    <a role="button" href="/tags/Powershell" class="btn btn-default btn-sm"> Powershell (1)</a>
-                    <a role="button" href="/tags/365" class="btn btn-default btn-sm"> 365 (1)</a>
-                    <a role="button" href="/tags/Exams" class="btn btn-default btn-sm"> Exams (1)</a>
-            </div>
-            <ul class="pager">
-                <li class="next">
-                    <a href="/tags">View All Tags &rarr;</a>
-                </li>
-            </ul>
 
-            <hr />
-            <h5>Older Posts</h5>
-            <ul class="list-unstyled">
-                    <li><a href="/posts/cannot-update-from-static-dynamic">Public IP address is in use by ipconfig and cannot be updated from static to dynamic.</a></li>
-                    <li><a href="/posts/hafnium-resources">HAFNIUM Exchange Server exploits - Resources</a></li>
-                    <li><a href="/posts/how-to-online-proctoring">How to take an Online Proctored exam and not go crazy trying</a></li>
-                    <li><a href="/posts/teams-pnp">PnP Teams Cmdlets Review</a></li>
-            </ul>
-                <ul class="pager">
-                    <li class="next">
-                        <a href="/posts">Archive &rarr;</a>
-                    </li>
-                </ul>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'teams-pnp-part2';
+    var disqus_title = 'PnP Teams Cmdlets Review - Part II';
+    var disqus_url = 'https://get-itips.capazero.net/posts/teams-pnp-part2';
 
-        
-    </div> 
-</div>
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
                                 </div>
                         </div>
