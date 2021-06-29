@@ -1,5 +1,5 @@
 Title: PnP Teams Cmdlets Review - Part II
-Published: 06/10/2021
+Published: 06/29/2021
 Tags: Teams
 ---
 
