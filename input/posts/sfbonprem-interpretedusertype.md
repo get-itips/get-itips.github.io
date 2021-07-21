@@ -4,7 +4,13 @@ Tags: Skype4B
 ---
 ![msRTCSip-DeploymentLocator](/images/DeploymentLocator.png)
 
+**JULY 2021 - UPDATE**
+
+**I created some time ago a GitHub repository to maintain the list of InterpretedUserType values, I recommend opening the list in another tab while you read this article**
+**[InterpretedUserType GitHub repository](https://github.com/get-itips/InterpretedUserType)**
+
 **SEPTEMBER 2020 - UPDATE**
+
 **Microsoft has just recently added a note to an [official Docs article](https://docs.microsoft.com/skypeforbusiness/hybrid/cloud-consolidation-disabling-hybrid), recommending not to clear any attributes unless directed by Support services.**
 **As you will read in this blog post, it includes the clearing of some attributes, in our case this was done in accordance with the customer and in this specific scenario, it fixed our problem.**
 **Please be sure to know what you are doing in your scenario before applying any of our recommendations, this post is provided AS IS without any warranty.**
@@ -88,7 +94,7 @@ PureOnlineNoServiceWithDeletedLicenses
 PureOnlineSfBUser
 ```
 
-We are not sure of the complete enumeration of this type of data, but as you may see, the list is big, this excellent post tries to explain some of them [InterpretedUserType to the rescue for Hybrid Deployments](http://www.be-com.eu/?p=3286)
+We are not sure of the complete enumeration of this type of data, but as you may see, the list is big, this excellent post tries to explain some of them InterpretedUserType to the rescue for Hybrid Deployments. (UPDATE JULY 2021: Sadly, this blog post seems gone and as it was redirecting to a malicious site I had to remove it)
 
 ## InterpretedUserType
 
