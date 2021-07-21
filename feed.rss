@@ -5,8 +5,8 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2021</copyright>
-		<pubDate>Mon, 05 Jul 2021 20:50:16 GMT</pubDate>
-		<lastBuildDate>Mon, 05 Jul 2021 20:50:16 GMT</lastBuildDate>
+		<pubDate>Wed, 21 Jul 2021 14:29:56 GMT</pubDate>
+		<lastBuildDate>Wed, 21 Jul 2021 14:29:56 GMT</lastBuildDate>
 		<item>
 			<title>PnP Teams Cmdlets Review - Part II</title>
 			<link>https://get-itips.capazero.net/posts/teams-pnp-part2</link>
@@ -1037,8 +1037,11 @@ Have to change the way the FQDN is asked, as http is currently hard-coded.&lt;/p
 			<guid>https://get-itips.capazero.net/posts/sfbonprem-interpretedusertype</guid>
 			<pubDate>Sun, 05 May 2019 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;&lt;img src="/images/DeploymentLocator.png" class="img-fluid" alt="msRTCSip-DeploymentLocator" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;SEPTEMBER 2020 - UPDATE&lt;/strong&gt;
-&lt;strong&gt;Microsoft has just recently added a note to an &lt;a href="https://docs.microsoft.com/skypeforbusiness/hybrid/cloud-consolidation-disabling-hybrid"&gt;official Docs article&lt;/a&gt;, recommending not to clear any attributes unless directed by Support services.&lt;/strong&gt;
+&lt;p&gt;&lt;strong&gt;JULY 2021 - UPDATE&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;I created some time ago a GitHub repository to maintain the list of InterpretedUserType values, I recommend opening the list in another tab while you read this article&lt;/strong&gt;
+&lt;strong&gt;&lt;a href="https://github.com/get-itips/InterpretedUserType"&gt;InterpretedUserType GitHub repository&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;SEPTEMBER 2020 - UPDATE&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Microsoft has just recently added a note to an &lt;a href="https://docs.microsoft.com/skypeforbusiness/hybrid/cloud-consolidation-disabling-hybrid"&gt;official Docs article&lt;/a&gt;, recommending not to clear any attributes unless directed by Support services.&lt;/strong&gt;
 &lt;strong&gt;As you will read in this blog post, it includes the clearing of some attributes, in our case this was done in accordance with the customer and in this specific scenario, it fixed our problem.&lt;/strong&gt;
 &lt;strong&gt;Please be sure to know what you are doing in your scenario before applying any of our recommendations, this post is provided AS IS without any warranty.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Hi!
@@ -1105,7 +1108,7 @@ PureOnlineNoService
 PureOnlineNoServiceWithDeletedLicenses
 PureOnlineSfBUser
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We are not sure of the complete enumeration of this type of data, but as you may see, the list is big, this excellent post tries to explain some of them &lt;a href="http://www.be-com.eu/?p=3286"&gt;InterpretedUserType to the rescue for Hybrid Deployments&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;We are not sure of the complete enumeration of this type of data, but as you may see, the list is big, this excellent post tries to explain some of them InterpretedUserType to the rescue for Hybrid Deployments. (UPDATE JULY 2021: Sadly, this blog post seems gone and as it was redirecting to a malicious site I had to remove it)&lt;/p&gt;
 &lt;h2 id="interpretedusertype"&gt;InterpretedUserType&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;We could not find official documentation about the exact meaning of every value, so I will try to match them to other values I observed, so please use this at your own risk, if I found out that some of this values is incorrect or get any official documentation I will update this&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
