@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - Misc</title>
+        <title>Andr&#xE9;s Gorzelany - M365 Enterprise Demo Customizer</title>
         <meta name="description" content="Get-ITips" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Misc" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - M365 Enterprise Demo Customizer" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/tags/Misc" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/m365entdemo-customizer" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -95,9 +95,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>Misc</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>M365 Enterprise Demo Customizer</h1>
+    <div class="meta">        
+Published on Monday, July 26, 2021<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/365" class="btn btn-default btn-xs">365</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -106,46 +114,51 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-sm-8 right-border col-sm-height">
-                    <div class="post-list">
-            <a href="/posts/what-is-missing-from-linkedin">
-                <h3 class="post-title">What&#x27;s missing from LinkedIn</h3>
-            </a>
-            <p class="post-meta">Posted on Tuesday, February 4, 2020</p>      
-        </div>   
+                                        
+
+<p>Hello,</p>
+<p>I am a heavy Microsoft 365 Enterprise Demos user (<a href="https://demos.microsoft.com">https://demos.microsoft.com</a>), from Customer Digital Experiences (CDX - <a href="https://cdx.transform.microsoft.com/">https://cdx.transform.microsoft.com/</a>) you can recognize them as Microsoft assigns to them tenant domain names like this M365x######.OnMicrosoft.com.</p>
+<p>There are plenty of tenant templates, EDU-content tenant names receive domain names like this M365EDU###### and so on, however, probably the most popular is the Microsoft 365 Enterprise Demo Content.</p>
+<p>These demo tenants have two durations, 90 days or one year, I usually create a one-year duration demo tenant and two 90-day tenants.</p>
+<p>The thing is, they expire, and with that, you have to start over customizing it with your needs, the thing that I do most is assigning administrative roles to different users, this helps me in my <a href="https://Docs.Microsoft.com">https://Docs.Microsoft.com</a> collaborator/Pull Request reviewer job to test different permissions with different Azure AD built-in roles and also to test different scenarios before executing on customers.</p>
+<p>So I decided to create a simple script, named it Customize-M365EnterpriseDemo.ps1, to assign different roles to the different users provided in the tenant template, decided to share the script to the community, maybe you find it useful, <a href="https://github.com/get-itips/M365EnterpriseDemoCustomizer">the script is hosted in a GitHub repository</a>, that way, anyone can easily file a bug or collaborate by adding some feature to it.</p>
+<p>The script takes a .csv file as input, this file can be customized if you want or does not fit your demo tenant or needs, however, if you run it as-is, you will end up with:</p>
+<ul>
+<li>Allan Deyoung as Exchange and SharePoint admin</li>
+<li>Isaiah Langer as Teams Administrator</li>
+<li>Irvin Sayers as Teams Communication Support Specialist</li>
+<li>Lee Gu as Global Reader</li>
+<li>And so on...</li>
+</ul>
+<p>I wanted all administrative users to have a license, with the provided licenses of the demo tenant, this means assigning more than one role to some users, so I tried to assign totally not-related roles when assigning more than one role to a user.</p>
+<p>I hope you find it useful, this is still version 0.1, it surely needs more work and adjustments, contributions are very well welcomed!</p>
+<p>Andrés</p>
 
 
-            <nav>
-                <ul class="pager">
-                    <li class="previous">                
-                    </li>
-                    <li class="next">
-                    </li>
-                </ul>
-            </nav>
-            <hr class="visible-xs-block" />
-        </div>
-		
-        <div class="col-sm-4 col-sm-height">
-                <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams (9)</a>
-                <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer (4)</a>
-                <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-xs">TeamFoundationServer (4)</a>
-                <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-xs">Sharepoint (4)</a>
-                <a role="button" href="/tags/365" class="btn btn-default btn-xs">365 (2)</a>
-                <a role="button" href="/tags/Skype4B" class="btn btn-default btn-xs">Skype4B (2)</a>
-                <a role="button" href="/tags/Ignite" class="btn btn-default btn-xs">Ignite (2)</a>
-                <a role="button" href="/tags/Azure" class="btn btn-default btn-xs">Azure (1)</a>
-                <a role="button" href="/tags/Exams" class="btn btn-default btn-xs">Exams (1)</a>
-                <a role="button" href="/tags/Misc" class="btn btn-primary btn-xs">Misc (1)</a>
-                <a role="button" href="/tags/GitHub" class="btn btn-default btn-xs">GitHub (1)</a>
-                <a role="button" href="/tags/General" class="btn btn-default btn-xs">General (1)</a>
-                <a role="button" href="/tags/SSL" class="btn btn-default btn-xs">SSL (1)</a>
-                <a role="button" href="/tags/Powershell" class="btn btn-default btn-xs">Powershell (1)</a>
-        </div>
-    </div>
-</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'm365entdemo-customizer';
+    var disqus_title = 'M365 Enterprise Demo Customizer';
+    var disqus_url = 'https://get-itips.capazero.net/posts/m365entdemo-customizer';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
                                 </div>
                         </div>
                 </div>
