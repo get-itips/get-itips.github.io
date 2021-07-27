@@ -5,8 +5,48 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2021</copyright>
-		<pubDate>Mon, 26 Jul 2021 15:50:56 GMT</pubDate>
-		<lastBuildDate>Mon, 26 Jul 2021 15:50:56 GMT</lastBuildDate>
+		<pubDate>Tue, 27 Jul 2021 20:27:12 GMT</pubDate>
+		<lastBuildDate>Tue, 27 Jul 2021 20:27:12 GMT</lastBuildDate>
+		<item>
+			<title>Task did NOT pass the parameter validation, the error message is The target site does not exist</title>
+			<link>https://get-itips.capazero.net/posts/spmt-site-does-not-exists</link>
+			<description>&lt;p&gt;Hello,&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/spmt-site-does-not-exists</guid>
+			<pubDate>Tue, 27 Jul 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Hello,&lt;/p&gt;
+&lt;p&gt;Doing some tests migrations from SharePoint Server (on-premises) to SharePoint Online using SPMT (&lt;a href="https://docs.microsoft.com/en-us/sharepointmigration/new-and-improved-features-in-the-sharepoint-migration-tool"&gt;SharePoint Migration Tool&lt;/a&gt;) using the SPMT PowerShell module I faced this error message:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Task did NOT pass the parameter validation, the error message is The target site does not exist
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;At first, I checked if, maybe I mispelled the target SPO site, but it was ok, reading the logs I found this&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Microsoft.SharePoint.Migration.Common.Exceptions.WebTransportException ---&amp;gt; System.Net.WebException: The underlying connection was closed: An unexpected error occurred on a send. ---&amp;gt; System.IO.IOException: Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host. ---&amp;gt; System.Net.Sockets.SocketException: An existing connection was forcibly closed by the remote host
+   at System.Net.Sockets.NetworkStream.Read(Byte[] buffer, Int32 offset, Int32 size)
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.NetworkStream.Read(Byte[] buffer, Int32 offset, Int32 size)
+   at System.Net.FixedSizeReader.ReadPacket(Byte[] buffer, Int32 offset, Int32 count)
+   at System.Net.Security.SslState.StartReceiveBlob(Byte[] buffer, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslState.CheckCompletionBeforeNextReceive(ProtocolToken message, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslState.ForceAuthentication(Boolean receiveFirst, Byte[] buffer, AsyncProtocolRequest asyncRequest)
+   at System.Net.Security.SslState.ProcessAuthentication(LazyAsyncResult lazyResult)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Net.TlsStream.ProcessAuthentication(LazyAsyncResult result)
+   at System.Net.TlsStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Hmm... SSL... This must be related to TLS 1.2 in PowerShell, to check, tried to use &lt;code&gt;Invoke-WebRequest&lt;/code&gt; against an SSL site and it failed with&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Invoke-WebRequest : The request was aborted: Could not create SSL/TLS secure channel.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So I run in PowerShell:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And voilá, the error was gone and the migration finished with no issues. Keep in mind, that command will only last for the duration of the PowerShell session.&lt;/p&gt;
+&lt;p&gt;To make it permanent I ran this one-liners:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Set-ItemProperty -Path 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\.NetFramework\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord
+Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\.NetFramework\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Hope this is useful for someone as it was for me.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>M365 Enterprise Demo Customizer</title>
 			<link>https://get-itips.capazero.net/posts/m365entdemo-customizer</link>
@@ -1164,30 +1204,6 @@ PureOnlineSfBUser
 &lt;p&gt;(I recommend running this cmdlet against the same Domain Controller using the -Server parameter)&lt;/p&gt;
 &lt;p&gt;That's it, we waited some hours and started to see the expected value for the users (DirSyncSfBUser), then, we followed the guide and removed the last servers and ran Disable-CsAdDomain and Disable-CsAdForest.&lt;/p&gt;
 &lt;p&gt;Hope this post helps anyone that stumble upon the same scenario as Dario and me got.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>It's like SysInternals, but for Git-Hub!</title>
-			<link>https://get-itips.capazero.net/posts/PwshGitHubTools</link>
-			<description>&lt;p&gt;Hi!
-(Well... If the great Mark Russinovich allows me... obviously)
-I am back! It's been a busy year, hopefully, I'll write more often.
-Last year I started contributing in GitHub, more specifically as a Collaborator for docs.microsoft.com creating Pull Requests to improve the documentation based on user feedback.&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/PwshGitHubTools</guid>
-			<pubDate>Sat, 02 Mar 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Hi!
-(Well... If the great Mark Russinovich allows me... obviously)
-I am back! It's been a busy year, hopefully, I'll write more often.
-Last year I started contributing in GitHub, more specifically as a Collaborator for docs.microsoft.com creating Pull Requests to improve the documentation based on user feedback.&lt;/p&gt;
-&lt;p&gt;Let me tell you that is an activity I really enjoy to do! I think Microsoft has made the right choice open-sourcing the documentation of their solutions.&lt;/p&gt;
-&lt;p&gt;So as I am a PowerShell guy (now a PowerShell Core guy) I created a small script to check the status of Issues.&lt;/p&gt;
-&lt;p&gt;The name of this Script is Get-GitHubIssuesState.ps1&lt;/p&gt;
-&lt;p&gt;Example Use&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;PS &amp;gt; .\Get-GitHubIssuesState.ps1 -Owner MicrosoftDocs -Repo officedocs-SkypeForBusiness -Issues 834,817,803,779,777,772,771,774,663 -OAuthtoken x02ab2e5xxx34ef25fea707cfb02542e9d7xxx
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;The reason behind needing OAuthToken is because of a limit in requests per hour that an anonymous user can make.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;The repo is located &lt;a href="https://github.com/get-itips/PwshGitHubTools"&gt;here&lt;/a&gt; and I expect to create other small tools to do things with GitHub through PowerShell.&lt;/p&gt;
-&lt;p&gt;Remember, PowerShell makes you PowerFULL&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>
