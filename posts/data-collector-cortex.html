@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - ExchangeServer</title>
+        <title>Andr&#xE9;s Gorzelany - The Data Collector Set or one of its dependencies is already in use</title>
         <meta name="description" content="Get-ITips" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - ExchangeServer" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - The Data Collector Set or one of its dependencies is already in use" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/tags/ExchangeServer" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/data-collector-cortex" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -95,9 +95,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>ExchangeServer</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>The Data Collector Set or one of its dependencies is already in use</h1>
+    <div class="meta">        
+Published on Tuesday, August 3, 2021<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/Windows" class="btn btn-default btn-xs">Windows</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -106,65 +114,47 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-sm-8 right-border col-sm-height">
-                    <div class="post-list">
-            <a href="/posts/hafnium-resources">
-                <h3 class="post-title">HAFNIUM Exchange Server exploits - Resources</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, March 10, 2021</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/csv-adPerm">
-                <h3 class="post-title">Powershell Script to CSV all AD Permissions for a particular Receive Connector</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, February 8, 2017</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/handy-handshake">
-                <h3 class="post-title">Handy SMTP Handshake for testing with Telnet</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, February 8, 2017</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/copy-block-list">
-                <h3 class="post-title">Copy IP Block List from one Server to Another</h3>
-            </a>
-            <p class="post-meta">Posted on Tuesday, June 14, 2016</p>      
-        </div>   
+                                        
+
+<p>I was troubleshooting a high CPU usage of lsass.exe process in some Domain Controllers and I found this article <a href="https://docs.microsoft.com/troubleshoot/windows-server/identity/troubleshoot-high-lsass.exe-cpu-utilization">How to troubleshoot high Lsass.exe CPU utilization on Active Directory Domain Controllers</a>.</p>
+<p>In that article, it recommends to run the Active Directory Data Collector, when I tried to do it I got</p>
+<blockquote class="blockquote">
+<p>The Data Collector Set or one of its dependencies is already in use.</p>
+</blockquote>
+<p>I checked if it was already running, any Data Collector, but they were all stopped, I also found this event in <strong>Microsoft</strong> &gt; <strong>Windows</strong> &gt; <strong>Diagnosis-PLA</strong> &gt; <strong>Operational</strong>:</p>
+<blockquote class="blockquote">
+<p>Data collector set system\Active Directory Diagnostics failed to start as DOMAIN\DCACCOUNT$ with error code 0x803000AA.</p>
+</blockquote>
+<p>On an internet search I found multiple things, restart the server, look for running data collectors, I tried everything I found as a possible fix with no luck, until I noticed a pattern, all DCs where I couldn't run the said Data Collector were running PaloAlto Cortex, I also found some Data Collectors that seemed to belong to the product in Startup Event Trace Sessions under System Data Collector sets in Performance Monitor, and in particular, XdrAgentLog was enabled.</p>
+<h2 id="resolution">Resolution</h2>
+<p>I asked the customer to disable the Cortex agent and I could succesfully run the Active Directory Data Collector, we later re-enabled it and will probably open a support ticket to find a way not to do that while we need to run the data collector.</p>
+<p>Publishing this in case anyone faces the same, hope anyone find this useful.</p>
 
 
-            <nav>
-                <ul class="pager">
-                    <li class="previous">                
-                    </li>
-                    <li class="next">
-                    </li>
-                </ul>
-            </nav>
-            <hr class="visible-xs-block" />
-        </div>
-		
-        <div class="col-sm-4 col-sm-height">
-                <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams (9)</a>
-                <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-xs">Sharepoint (5)</a>
-                <a role="button" href="/tags/ExchangeServer" class="btn btn-primary btn-xs">ExchangeServer (4)</a>
-                <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-xs">TeamFoundationServer (4)</a>
-                <a role="button" href="/tags/365" class="btn btn-default btn-xs">365 (2)</a>
-                <a role="button" href="/tags/Skype4B" class="btn btn-default btn-xs">Skype4B (2)</a>
-                <a role="button" href="/tags/Ignite" class="btn btn-default btn-xs">Ignite (2)</a>
-                <a role="button" href="/tags/Windows" class="btn btn-default btn-xs">Windows (1)</a>
-                <a role="button" href="/tags/Azure" class="btn btn-default btn-xs">Azure (1)</a>
-                <a role="button" href="/tags/Exams" class="btn btn-default btn-xs">Exams (1)</a>
-                <a role="button" href="/tags/Misc" class="btn btn-default btn-xs">Misc (1)</a>
-                <a role="button" href="/tags/GitHub" class="btn btn-default btn-xs">GitHub (1)</a>
-                <a role="button" href="/tags/General" class="btn btn-default btn-xs">General (1)</a>
-                <a role="button" href="/tags/SSL" class="btn btn-default btn-xs">SSL (1)</a>
-                <a role="button" href="/tags/Powershell" class="btn btn-default btn-xs">Powershell (1)</a>
-        </div>
-    </div>
-</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'data-collector-cortex';
+    var disqus_title = 'The Data Collector Set or one of its dependencies is already in use';
+    var disqus_url = 'https://get-itips.capazero.net/posts/data-collector-cortex';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
                                 </div>
                         </div>
                 </div>
