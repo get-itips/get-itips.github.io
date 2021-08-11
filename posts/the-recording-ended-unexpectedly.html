@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - GitHub</title>
+        <title>Andr&#xE9;s Gorzelany - The recording ended unexpectedly</title>
         <meta name="description" content="Get-ITips" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - GitHub" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - The recording ended unexpectedly" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/tags/GitHub" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/the-recording-ended-unexpectedly" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -95,9 +95,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>GitHub</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>The recording ended unexpectedly</h1>
+    <div class="meta">        
+Published on Wednesday, August 11, 2021<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -106,47 +114,45 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-sm-8 right-border col-sm-height">
-                    <div class="post-list">
-            <a href="/posts/PwshGitHubTools">
-                <h3 class="post-title">It&#x27;s like SysInternals, but for Git-Hub!</h3>
-            </a>
-            <p class="post-meta">Posted on Saturday, March 2, 2019</p>      
-        </div>   
+                                        
+
+<p>Recently, Microsoft announced through a <a href="https://admin.microsoft.com/#/MessageCenter/:/messages/MC222640">Message Center notification</a> that every customer will automatically have meeting recordings saved to OneDrive and SharePoint.</p>
+<p>Once you stop the recording or end a meeting that is being recorded, the recording should be uploaded to your OneDrive For Business\SharePoint document library depending on the type of meeting.</p>
+<p>The recording will be uploaded as the user that initiated the recording, so, if for example, Megan Bowen started the recording, that is the name we will see in the SharePoint document library named &quot;Recordings&quot; as the creator/modifier of the file.</p>
+<p>If for any reason, this upload fails, an error message will appear in red letters saying &quot;The recording ended unexpectedly&quot; and a link to download it will be available stating it &quot;expires in 20 day(s)&quot;</p>
+<p><img src="/images/tmr_error.png" class="img-fluid" alt="Teams Meetings Recording Error" /></p>
+<p>Besides it would be very strange, I forced that error removing the permissions to save to this Recordings folder to the user initiating the recording.
+According to the <a href="https://docs.microsoft.com/MicrosoftTeams/tmr-meeting-recording-change">documentation</a>, when this happens, the recording is uploaded to Azure Media Services:</p>
+<blockquote class="blockquote">
+<p>If a Teams meeting recording fails to successfully upload to OneDrive/SharePoint, the recording will instead be temporarily saved to Azure Media Services (AMS). Once stored in AMS, no retry attempts are made to automatically upload the recording to OneDrive/SharePoint or Stream.</p>
+</blockquote>
+<p>Take note of that, no retry attempts will be made to automatically upload the recording again, so upon fixing the issue that prevented the uploading, you should download the recording and upload it manually either to the your OneDrive For Business\SharePoint document library.</p>
 
 
-            <nav>
-                <ul class="pager">
-                    <li class="previous">                
-                    </li>
-                    <li class="next">
-                    </li>
-                </ul>
-            </nav>
-            <hr class="visible-xs-block" />
-        </div>
-		
-        <div class="col-sm-4 col-sm-height">
-                <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams (10)</a>
-                <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-xs">Sharepoint (5)</a>
-                <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer (4)</a>
-                <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-xs">TeamFoundationServer (4)</a>
-                <a role="button" href="/tags/365" class="btn btn-default btn-xs">365 (2)</a>
-                <a role="button" href="/tags/Skype4B" class="btn btn-default btn-xs">Skype4B (2)</a>
-                <a role="button" href="/tags/Ignite" class="btn btn-default btn-xs">Ignite (2)</a>
-                <a role="button" href="/tags/Windows" class="btn btn-default btn-xs">Windows (1)</a>
-                <a role="button" href="/tags/Azure" class="btn btn-default btn-xs">Azure (1)</a>
-                <a role="button" href="/tags/Exams" class="btn btn-default btn-xs">Exams (1)</a>
-                <a role="button" href="/tags/Misc" class="btn btn-default btn-xs">Misc (1)</a>
-                <a role="button" href="/tags/GitHub" class="btn btn-primary btn-xs">GitHub (1)</a>
-                <a role="button" href="/tags/General" class="btn btn-default btn-xs">General (1)</a>
-                <a role="button" href="/tags/SSL" class="btn btn-default btn-xs">SSL (1)</a>
-                <a role="button" href="/tags/Powershell" class="btn btn-default btn-xs">Powershell (1)</a>
-        </div>
-    </div>
-</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'the-recording-ended-unexpectedly';
+    var disqus_title = 'The recording ended unexpectedly';
+    var disqus_url = 'https://get-itips.capazero.net/posts/the-recording-ended-unexpectedly';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
                                 </div>
                         </div>
                 </div>

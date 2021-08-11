@@ -5,8 +5,27 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2021</copyright>
-		<pubDate>Tue, 03 Aug 2021 22:09:42 GMT</pubDate>
-		<lastBuildDate>Tue, 03 Aug 2021 22:09:42 GMT</lastBuildDate>
+		<pubDate>Wed, 11 Aug 2021 18:41:36 GMT</pubDate>
+		<lastBuildDate>Wed, 11 Aug 2021 18:41:36 GMT</lastBuildDate>
+		<item>
+			<title>The recording ended unexpectedly</title>
+			<link>https://get-itips.capazero.net/posts/the-recording-ended-unexpectedly</link>
+			<description>&lt;p&gt;Recently, Microsoft announced through a &lt;a href="https://admin.microsoft.com/#/MessageCenter/:/messages/MC222640"&gt;Message Center notification&lt;/a&gt; that every customer will automatically have meeting recordings saved to OneDrive and SharePoint.&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/the-recording-ended-unexpectedly</guid>
+			<pubDate>Wed, 11 Aug 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Recently, Microsoft announced through a &lt;a href="https://admin.microsoft.com/#/MessageCenter/:/messages/MC222640"&gt;Message Center notification&lt;/a&gt; that every customer will automatically have meeting recordings saved to OneDrive and SharePoint.&lt;/p&gt;
+&lt;p&gt;Once you stop the recording or end a meeting that is being recorded, the recording should be uploaded to your OneDrive For Business\SharePoint document library depending on the type of meeting.&lt;/p&gt;
+&lt;p&gt;The recording will be uploaded as the user that initiated the recording, so, if for example, Megan Bowen started the recording, that is the name we will see in the SharePoint document library named &amp;quot;Recordings&amp;quot; as the creator/modifier of the file.&lt;/p&gt;
+&lt;p&gt;If for any reason, this upload fails, an error message will appear in red letters saying &amp;quot;The recording ended unexpectedly&amp;quot; and a link to download it will be available stating it &amp;quot;expires in 20 day(s)&amp;quot;&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/tmr_error.png" class="img-fluid" alt="Teams Meetings Recording Error" /&gt;&lt;/p&gt;
+&lt;p&gt;Besides it would be very strange, I forced that error removing the permissions to save to this Recordings folder to the user initiating the recording.
+According to the &lt;a href="https://docs.microsoft.com/MicrosoftTeams/tmr-meeting-recording-change"&gt;documentation&lt;/a&gt;, when this happens, the recording is uploaded to Azure Media Services:&lt;/p&gt;
+&lt;blockquote class="blockquote"&gt;
+&lt;p&gt;If a Teams meeting recording fails to successfully upload to OneDrive/SharePoint, the recording will instead be temporarily saved to Azure Media Services (AMS). Once stored in AMS, no retry attempts are made to automatically upload the recording to OneDrive/SharePoint or Stream.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Take note of that, no retry attempts will be made to automatically upload the recording again, so upon fixing the issue that prevented the uploading, you should download the recording and upload it manually either to the your OneDrive For Business\SharePoint document library.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>The Data Collector Set or one of its dependencies is already in use</title>
 			<link>https://get-itips.capazero.net/posts/data-collector-cortex</link>
@@ -1093,27 +1112,6 @@ At line:1 char:1
     + FullyQualifiedErrorId : Modules_ModuleNotFound,Microsoft.PowerShell.Commands.ImportModuleCommand
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Simply copy the &lt;code&gt;Microsoft.SharePoint.MigrationTool.PowerShell&lt;/code&gt; folder in &lt;code&gt;C:\Program Files\WindowsPowerShell\Modules&lt;/code&gt; and you will be able to import it.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Export TFS Release Definitions to a CSV file</title>
-			<link>https://get-itips.capazero.net/posts/Export-TFSReleaseDefinitions</link>
-			<description>&lt;p&gt;Hi,&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/Export-TFSReleaseDefinitions</guid>
-			<pubDate>Thu, 23 May 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;I created a simple small script in Powershell to query Team Foundation Server to get a list of all Release Definitions per project, the
-output of the script is a csv file with this header&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;quot;Project;ReleaseDefinition&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;It uses the REST API to query for this information and if the project does not have release definition it will appear with a NULL value on
-the ReleaseDefinition column, only one time of course.&lt;/p&gt;
-&lt;h3 id="input-parameters"&gt;Input parameters&lt;/h3&gt;
-&lt;p&gt;It asks for FQDN, CollectionName and Path for the CSV file.&lt;/p&gt;
-&lt;h3 id="current-limitations"&gt;Current limitations&lt;/h3&gt;
-&lt;p&gt;It was only tested against Team Foundation Server 2017, I expect to improve it including more versions.
-Have to change the way the FQDN is asked, as http is currently hard-coded.&lt;/p&gt;
-&lt;p&gt;Full script can be found here &lt;a href="https://github.com/get-itips/AzureDevopsTools/blob/master/azuredevopstools-ps/Export-TFSReleaseDefinitions.ps1"&gt;Export-TFSReleaseDefinitions.ps1&lt;/a&gt;&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>
