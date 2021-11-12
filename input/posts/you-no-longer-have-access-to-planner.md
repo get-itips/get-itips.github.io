@@ -33,11 +33,11 @@ https://tasks.office.com/contoso.com/GraphApiV1/PostReplyInGroupConversationThre
 
 I thought "they do not have mailboxes, not even On-Premises". There is this support article [Comment on tasks in Microsoft Planner](https://support.microsoft.com/en-us/office/comment-on-tasks-in-microsoft-planner-fd4aedde-7785-4cd0-96ee-122fbc9140e1) that says
 
->If your organization is not using Exchange Online for your account, you may not be able to comment on tasks in Planner:
+>If your organization is not using Exchange Online for your account, you may not be able to comment on tasks in Planner
 
 ## Resolution
 
-I asked to create mailboxes for these users, we waited for replication, and Voilá! the users could start commenting on Tasks and the email to the group was succesfully sent.
+I asked to create mailboxes for these users (Exchange Server Mailboxes, but if we run into any issue we will migrate them to Online), we waited for replication, and Voilá! the users could start commenting on Tasks and the email to the group was succesfully sent.
 
 I hope this is useful for anyone looking for this error and not using guest accounts.
 
