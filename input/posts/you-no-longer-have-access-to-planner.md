@@ -3,7 +3,7 @@ Published: 11/12/2021
 Tags: Planner
 ---
 
-## Symptons
+## Symptoms
 
 I was called by a customer running into this error, essentially, they create company Azure AD accounts for external users (not using guests accounts) to access some resources.
 
