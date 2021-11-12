@@ -5,15 +5,15 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2021</copyright>
-		<pubDate>Fri, 12 Nov 2021 12:47:17 GMT</pubDate>
-		<lastBuildDate>Fri, 12 Nov 2021 12:47:17 GMT</lastBuildDate>
+		<pubDate>Fri, 12 Nov 2021 12:55:56 GMT</pubDate>
+		<lastBuildDate>Fri, 12 Nov 2021 12:55:56 GMT</lastBuildDate>
 		<item>
 			<title>You no longer have access to &lt;Guid&gt; on Planner</title>
 			<link>https://get-itips.capazero.net/posts/you-no-longer-have-access-to-planner</link>
 			<description>&lt;p&gt;I was called by a customer running into this error, essentially, they create company Azure AD accounts for external users (not using guests accounts) to access some resources.&lt;/p&gt;</description>
 			<guid>https://get-itips.capazero.net/posts/you-no-longer-have-access-to-planner</guid>
 			<pubDate>Fri, 12 Nov 2021 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h2 id="symptons"&gt;Symptons&lt;/h2&gt;
+			<content:encoded>&lt;h2 id="symptoms"&gt;Symptoms&lt;/h2&gt;
 &lt;p&gt;I was called by a customer running into this error, essentially, they create company Azure AD accounts for external users (not using guests accounts) to access some resources.&lt;/p&gt;
 &lt;p&gt;One of these resources is Microsoft Planner, the users started reporting that they couldn't comment on the assigned tasks of Planner.&lt;/p&gt;
 &lt;p&gt;The error received (in red) was&lt;/p&gt;
