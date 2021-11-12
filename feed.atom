@@ -4,8 +4,42 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2021</rights>
-	<updated>2021-08-11T19:06:56Z</updated>
+	<updated>2021-11-12T12:47:17Z</updated>
 	<subtitle>Get-ITips</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/you-no-longer-have-access-to-planner" />
+		<id>https://get-itips.capazero.net/posts/you-no-longer-have-access-to-planner</id>
+		<title>You no longer have access to &lt;Guid&gt; on Planner</title>
+		<updated>2021-11-12T00:00:00Z</updated>
+		<content>&lt;h2 id="symptons"&gt;Symptons&lt;/h2&gt;
+&lt;p&gt;I was called by a customer running into this error, essentially, they create company Azure AD accounts for external users (not using guests accounts) to access some resources.&lt;/p&gt;
+&lt;p&gt;One of these resources is Microsoft Planner, the users started reporting that they couldn't comment on the assigned tasks of Planner.&lt;/p&gt;
+&lt;p&gt;The error received (in red) was&lt;/p&gt;
+&lt;blockquote class="blockquote"&gt;
+&lt;p&gt;You no longer have access to &amp;lt;Guid&amp;gt;. Technical Details&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote class="blockquote"&gt;
+&lt;p&gt;Correlation Id. &amp;lt;Correlation Id&amp;gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="investigation"&gt;Investigation&lt;/h2&gt;
+&lt;p&gt;Looking for the error on a web search brings this official &lt;strong&gt;Docs&lt;/strong&gt; article:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://docs.microsoft.com/office/troubleshoot/planner/guests-cannot-comment-assigned-tasks"&gt;Guests can't add comments to assigned Planner tasks&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;However, as said, these users were not accessing Planner using Guests account, but company accounts. Anyway, I checked if the account's SMTP address was also present in other account or contact object, as the article says, but it was not.&lt;/p&gt;
+&lt;p&gt;There is one special ingredient in this scenario, they have &lt;strong&gt;Exchange Online doing hybrid with Exchange On-Premises&lt;/strong&gt; and &lt;strong&gt;they don't create Mailboxes for these external resources&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Digging with developer tools, I could see that the HTTP request that was failing was a call to this Graph API:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://tasks.office.com/contoso.com/GraphApiV1/PostReplyInGroupConversationThreadAsync"&gt;https://tasks.office.com/contoso.com/GraphApiV1/PostReplyInGroupConversationThreadAsync&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&amp;quot;PostReplyInGroupConversation&amp;quot;, so it must has something to do with the e-mail that is sent to the 365 Group when a new comment is made on a task.&lt;/p&gt;
+&lt;p&gt;I thought &amp;quot;they do not have mailboxes, not even On-Premises&amp;quot;. There is this support article &lt;a href="https://support.microsoft.com/en-us/office/comment-on-tasks-in-microsoft-planner-fd4aedde-7785-4cd0-96ee-122fbc9140e1"&gt;Comment on tasks in Microsoft Planner&lt;/a&gt; that says&lt;/p&gt;
+&lt;blockquote class="blockquote"&gt;
+&lt;p&gt;If your organization is not using Exchange Online for your account, you may not be able to comment on tasks in Planner&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="resolution"&gt;Resolution&lt;/h2&gt;
+&lt;p&gt;I asked to create mailboxes for these users (Exchange Server Mailboxes, but if we run into any issue we will migrate them to Online), we waited for replication, and Voilá! the users could start commenting on Tasks and the email to the group was succesfully sent.&lt;/p&gt;
+&lt;p&gt;I hope this is useful for anyone looking for this error and not using guest accounts.&lt;/p&gt;
+&lt;p&gt;I also would like to add that, if you invite a Guest user that also happens to have a 365 Tenant, they will be able to comment in a Task without any issue.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;I was called by a customer running into this error, essentially, they create company Azure AD accounts for external users (not using guests accounts) to access some resources.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/the-recording-ended-unexpectedly" />
 		<id>https://get-itips.capazero.net/posts/the-recording-ended-unexpectedly</id>
@@ -1088,29 +1122,5 @@ TeamsChannelLocationException : {}
 &lt;p&gt;Hope this is useful for somebody.&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;&lt;img src="/images/mugatu.PNG" class="img-fluid" alt="teamsSoHot"&gt;&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.capazero.net/posts/spmt-module" />
-		<id>https://get-itips.capazero.net/posts/spmt-module</id>
-		<title>The specified module 'Microsoft.SharePoint.MigrationTool.PowerShell' was not loaded because no valid module file was found in any module directory</title>
-		<updated>2019-07-17T00:00:00Z</updated>
-		<content>&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;Hopefully, this is only useful temporarily until it is fixed in the installation package, but currently, if you install the &lt;a href="https://docs.microsoft.com/en-us/sharepointmigration/introducing-the-sharepoint-migration-tool"&gt;Sharepoint Migration Tool&lt;/a&gt;
-module files will be copied to &lt;code&gt;$env:UserProfile\Documents\WindowsPowerShell\Modules\Microsoft.SharePoint.MigrationTool.PowerShell&lt;/code&gt; as the &lt;a href="https://docs.microsoft.com/en-us/sharepointmigration/overview-spmt-ps-cmdlets"&gt;documentation&lt;/a&gt; says.&lt;/p&gt;
-&lt;p&gt;But if you try to import the module, you will receive an error:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;PS C:\Users\user\Documents\WindowsPowerShell\Modules\Microsoft.SharePoint.MigrationTool.PowerShell&amp;gt; Import-Module Mi
-crosoft.SharePoint.MigrationTool.PowerShell
-Import-Module : The specified module 'Microsoft.SharePoint.MigrationTool.PowerShell' was not loaded because no
-valid module file was found in any module directory.
-At line:1 char:1
-+ Import-Module Microsoft.SharePoint.MigrationTool.PowerShell
-+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : ResourceUnavailable: (Microsoft.Share...Tool.PowerShell:String) [Import-Module], File
-   NotFoundException
-    + FullyQualifiedErrorId : Modules_ModuleNotFound,Microsoft.PowerShell.Commands.ImportModuleCommand
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Simply copy the &lt;code&gt;Microsoft.SharePoint.MigrationTool.PowerShell&lt;/code&gt; folder in &lt;code&gt;C:\Program Files\WindowsPowerShell\Modules&lt;/code&gt; and you will be able to import it.&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;Hi,&lt;/p&gt;</summary>
 	</entry>
 </feed>
