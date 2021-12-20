@@ -5,8 +5,125 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2021</copyright>
-		<pubDate>Fri, 12 Nov 2021 12:57:52 GMT</pubDate>
-		<lastBuildDate>Fri, 12 Nov 2021 12:57:52 GMT</lastBuildDate>
+		<pubDate>Mon, 20 Dec 2021 17:19:30 GMT</pubDate>
+		<lastBuildDate>Mon, 20 Dec 2021 17:19:30 GMT</lastBuildDate>
+		<item>
+			<title>Getting some extra information about Teams federated users using PowerShell</title>
+			<link>https://get-itips.capazero.net/posts/extra-information-federated-teams</link>
+			<description>&lt;p&gt;Hello!&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/extra-information-federated-teams</guid>
+			<pubDate>Mon, 20 Dec 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Hello!&lt;/p&gt;
+&lt;h1 id="introduction"&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Inspired by my friend's Alexander Holmeset excellent blog post: &lt;a href="https://alexholmeset.blog/2021/12/13/microsoft-teams-speed-dial-contacts-provisioning/"&gt;Microsoft Teams Speed Dial Contacts Provisioning&lt;/a&gt;, I decided to investigate some other API calls made by the Teams client (as Alexander explains, easier to see using Teams web and activating browser's developer tools) and I was interested in one in particular, a request that is made when starting a new chat with external contacts, other tenants or Skype consumer.&lt;/p&gt;
+&lt;p&gt;I said, let's see how it discovers those contacts, just for fun or learning purposes, but I discovered more information is outputted than what the end user actually sees.&lt;/p&gt;
+&lt;h1 id="useful-information"&gt;Useful information?&lt;/h1&gt;
+&lt;p&gt;The URL that we will be querying is:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://teams.microsoft.com/api/mt/part/amer-03/beta/users/%5Bsip_uri%5D/externalsearchv3"&gt;https://teams.microsoft.com/api/mt/part/amer-03/beta/users/[sip_uri]/externalsearchv3&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;If I use it to query another Teams tenant user information:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;tenantId          : ceffd5d3-edcb-482e-a7ed-3ecedfe5519c
+isShortProfile    : False
+accountEnabled    : True
+featureSettings   : &amp;#64;{coExistenceMode=TeamsOnly}
+userPrincipalName : freddiem&amp;#64;snoopcore.com
+givenName         : freddiem&amp;#64;snoopcore.com
+surname           :
+email             : freddiem&amp;#64;snoopcore.com
+displayName       : Freddie Mercury
+type              : Federated
+mri               : 8:orgid:87da1b0b-e2a5-4964-9fcc-70bf0a186fe0
+objectId          : 87da1b0b-e2a5-4964-9fcc-70bf0a186fe0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And yes, we can even know if the other party is in TeamsOnly or in Islands mode:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;featureSettings   : &amp;#64;{coExistenceMode=Islands}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is another example, a company that does not have tenancy but Skype For Business on-premises:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;tenantId          : ac23bebc-10b0-4f0f-bae2-48b14c65af41
+isShortProfile    : False
+accountEnabled    : True
+featureSettings   : &amp;#64;{coExistenceMode=Unknown}
+userPrincipalName : john.doe&amp;#64;contoso.com
+givenName         : john.doe&amp;#64;contoso.com
+surname           :
+email             : john.doe&amp;#64;contoso.com
+displayName       : john.doe&amp;#64;contoso.com
+type              : Federated
+mri               : 8:sfb:e1c75ab3-bc2d-4733-ba24-c4186f48d1d0
+objectId          : e1c75ab3-bc2d-4733-ba24-c4186f48d1d0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;See how the mri now says sfb?&lt;/p&gt;
+&lt;p&gt;also a Skype (consumer) user:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;skypeId           : megan.bowen
+city              : Ciudad Autonoma de Buenos Aires
+state             : Buenos Aires
+country           : Argentina
+avatarUrl         : https://api.skype.com/users/megan.bowen/profile/avatar
+isShortProfile    : False
+accountEnabled    : True
+userPrincipalName : megan.bowen&amp;#64;hotmail.com
+email             : megan.bowen&amp;#64;hotmail.com
+displayName       : megan bowen
+type              : SkypeConsumer
+mri               : 8:megan.bowen
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That is more information that I was expecting... :)&lt;/p&gt;
+&lt;p&gt;Is this useful? I do not exactly know, but I decided to share, maybe an administrator receives a call saying that the CEO is unable to communicate with another external user, you get the SIP URI of this user and you can, using this script understand if at least at federation level everything is how it supposed to be.&lt;/p&gt;
+&lt;p&gt;Also, if you are a heavy Teams user/Administrator/Consultant you already received the &amp;quot;Due to organization policy changes...&amp;quot; message, and I think this could help troubleshoot that and other federation scenarios.&lt;/p&gt;
+&lt;h1 id="the-script"&gt;The Script&lt;/h1&gt;
+&lt;p&gt;Here is the script, I basically modified the great output of &amp;quot;Copy as PowerShell&amp;quot; feature of Edge's developer tool, as I see this more as learning purposes, I did not put much effort into it, there is a lot of room to improve it. Credits also to the great module &lt;a href="https://o365blog.com/aadinternals/"&gt;AADInternals&lt;/a&gt; to get the required tokens (Teams token and x-skypetoken)&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;
+$urlPart1=&amp;quot;https://teams.microsoft.com/api/mt/part/amer-03/beta/users/&amp;quot;
+$userToSearch=&amp;quot;meganb&amp;#64;contoso.com&amp;quot; #Replace this with the other party's SIP URI you want to search more information for
+$urlPart3=&amp;quot;/externalsearchv3&amp;quot;
+
+$FinalUrl=$urlPart1+$userToSearch+$urlPart3
+
+Import-Module AADInternals
+
+$user = &amp;quot;admin&amp;#64;M365BV2XXX.onmicrosoft.com&amp;quot; #Replace this with your tenant's username
+$password = &amp;quot;P&amp;#64;ssw0rd&amp;quot; #And your password
+$secpwd = ConvertTo-SecureString $password -AsPlainText -Force
+$Cred = New-Object System.Management.Automation.PSCredential ($user,$secpwd)
+
+$token = Get-AADIntAccessTokenForTeams -Credentials $cred
+
+$skypeToken = Get-AADIntSkypeToken -AccessToken $token
+
+
+$Result=Invoke-WebRequest -UseBasicParsing -Uri $finalUrl `
+-Headers &amp;#64;{
+&amp;quot;method&amp;quot;=&amp;quot;GET&amp;quot;
+  &amp;quot;authority&amp;quot;=&amp;quot;teams.microsoft.com&amp;quot;
+  &amp;quot;scheme&amp;quot;=&amp;quot;https&amp;quot;
+  &amp;quot;path&amp;quot;=&amp;quot;/api/mt/part/amer-03/beta/users/$userToSearch/externalsearchv3&amp;quot;
+  &amp;quot;sec-ch-ua&amp;quot;=&amp;quot;`&amp;quot; Not A;Brand`&amp;quot;;v=`&amp;quot;99`&amp;quot;, `&amp;quot;Chromium`&amp;quot;;v=`&amp;quot;96`&amp;quot;, `&amp;quot;Microsoft Edge`&amp;quot;;v=`&amp;quot;96`&amp;quot;&amp;quot;
+  &amp;quot;x-ms-user-type&amp;quot;=&amp;quot;null&amp;quot;
+  &amp;quot;x-ms-client-type&amp;quot;=&amp;quot;web&amp;quot;
+  &amp;quot;authorization&amp;quot;=&amp;quot;Bearer $token&amp;quot;
+  &amp;quot;x-skypetoken&amp;quot;=$skypeToken
+  &amp;quot;x-ms-client-version&amp;quot;=&amp;quot;1415/1.0.0.2021120724&amp;quot;
+  &amp;quot;sec-ch-ua-platform&amp;quot;=&amp;quot;`&amp;quot;Windows`&amp;quot;&amp;quot;
+  &amp;quot;x-ms-session-id&amp;quot;=&amp;quot;8f622a27-5f89-bf7f-ad89-9bb9550300c8&amp;quot;
+  &amp;quot;x-ms-scenario-id&amp;quot;=&amp;quot;309&amp;quot;
+  &amp;quot;x-anchormailbox&amp;quot;=$user
+  &amp;quot;x-ms-client-env&amp;quot;=&amp;quot;pds-prod-azsc-usea-01&amp;quot;
+  &amp;quot;sec-ch-ua-mobile&amp;quot;=&amp;quot;?0&amp;quot;
+  &amp;quot;accept&amp;quot;=&amp;quot;application/json, text/plain, */*&amp;quot;
+  &amp;quot;x-ms-client-caller&amp;quot;=&amp;quot;search_externally_people_resolver&amp;quot;
+  &amp;quot;x-ringoverride&amp;quot;=&amp;quot;general&amp;quot;
+  &amp;quot;sec-fetch-site&amp;quot;=&amp;quot;same-origin&amp;quot;
+  &amp;quot;sec-fetch-mode&amp;quot;=&amp;quot;cors&amp;quot;
+  &amp;quot;sec-fetch-dest&amp;quot;=&amp;quot;empty&amp;quot;
+  &amp;quot;referer&amp;quot;=&amp;quot;https://teams.microsoft.com/_&amp;quot;
+  &amp;quot;accept-encoding&amp;quot;=&amp;quot;gzip, deflate, br&amp;quot;
+  &amp;quot;accept-language&amp;quot;=&amp;quot;es,es-ES;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&amp;quot;
+  }
+  
+  ConvertFrom-Json -InputObject $result.Content
+
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>You no longer have access to &lt;Guid&gt; on Planner</title>
 			<link>https://get-itips.capazero.net/posts/you-no-longer-have-access-to-planner</link>
@@ -1060,68 +1177,6 @@ AND [Tfs_Collection].[Release].[tbl_ReleaseEnvironment].DefinitionEnvironmentId 
 &lt;p&gt;You will have to pass as parameters the &amp;#64;fromDate and &amp;#64;toDate to tailor the result and please take into account the enviroment names which are
 hard-coded in this query.&lt;/p&gt;
 &lt;p&gt;Hope you find it useful!&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>New-RetentionCompliancePolicy and Teams</title>
-			<link>https://get-itips.capazero.net/posts/teams-retention-policies</link>
-			<description>&lt;p&gt;&lt;img src="/images/mugatu.PNG" class="img-fluid" alt="teamsSoHot"&gt;&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/teams-retention-policies</guid>
-			<pubDate>Wed, 21 Aug 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;&lt;img src="/images/mugatu.PNG" class="img-fluid" alt="teamsSoHot" /&gt;&lt;/p&gt;
-&lt;p&gt;There is a nice post &lt;a href="https://techcommunity.microsoft.com/t5/Microsoft-Teams-Blog/Retention-policies-for-Microsoft-Teams/ba-p/178011"&gt;here&lt;/a&gt;
-explaining how Retention policies for Microsoft Teams work, the intention of this blog post is not to talk about that but is kinda a
-quick cheat sheet if you happen to use the New-RetentionCompliancePolicy cmdlet for Teams.&lt;/p&gt;
-&lt;p&gt;New-RetentionCompliancePolicy includes four parameters related to Teams:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;TeamsChannelLocation&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;The TeamsChannelLocation parameter is used to target specific Teams to include in the policy&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;TeamsChannelLocationException&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;This parameter specifies the Teams to exclude when you use the value All for the TeamsChannelLocation parameter&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;TeamsChatLocation&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;The TeamsChatLocation parameter is used to target specific Teams users to include in the policy&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;TeamsChatLocationException&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;This parameter specifies the Teams users to exclude when you use the value All for the TeamsChatLocation parameter&lt;/em&gt;&lt;/p&gt;
-&lt;h2 id="now-some-examples"&gt;Now, some examples:&lt;/h2&gt;
-&lt;h3 id="example-1"&gt;Example 1&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;New-RetentionCompliancePolicy -Name &amp;quot;Example1&amp;quot; -TeamsChannelLocation &amp;quot;All&amp;quot; -TeamsChannelLocationException &amp;quot;32996b0b-67f6-4159-b4bf-f738d12a5f86&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In this example the Retention applies to all Teams except the Team with GUID 32996b0b-67f6-4159-b4bf-f738d12a5f86, we can only specify an
-Exception when &amp;quot;All&amp;quot; is used for the location parameter.&lt;/p&gt;
-&lt;h3 id="example-2"&gt;Example 2&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;New-RetentionCompliancePolicy -Name &amp;quot;Example2&amp;quot; -TeamsChannelLocation &amp;quot;operations&amp;#64;M365x71714.onmicrosoft.com&amp;quot;,&amp;quot;systems&amp;#64;M365x71714.onmicrosoft.com&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In this example the Retention applies to the Teams operations and systems, as you can see, we are specifying the Teams with email address.&lt;/p&gt;
-&lt;h3 id="example-3"&gt;Example 3&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;New-RetentionCompliancePolicy -Name &amp;quot;Example3&amp;quot; -TeamsChatLocation &amp;quot;All&amp;quot; -TeamsChatLocationException
- &amp;quot;Allan Deyoung&amp;quot;,&amp;quot;Cameron White&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In this example the Retention applies to all users except Allan and Cameron, see that we are specifying them with their Name.&lt;/p&gt;
-&lt;h3 id="example-4"&gt;Example 4&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;New-RetentionCompliancePolicy -Name &amp;quot;Example4&amp;quot; -TeamsChatLocation &amp;quot;41f18a1c-2e21-4c6c-bca9-3b51a8d18a80&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In this example the Retention applies only to user with id 41f18a1c-2e21-4c6c-bca9-3b51a8d18a80, see that we are specifying them with their id
-we can get this id thru Azure AD.&lt;/p&gt;
-&lt;p&gt;We can specify Teams with their name, email, guid and users with their name, email, DN and guid.&lt;/p&gt;
-&lt;h2 id="one-more-thing"&gt;One more thing...&lt;/h2&gt;
-&lt;p&gt;One thing I noticed, is that, policies created using Powershell can't be edited later using the Office 365 Security &amp;amp; Compliance portal, hope
-Microsoft fix this soon.
-Also, if you use &lt;a href="https://docs.microsoft.com/en-us/powershell/module/exchange/policy-and-compliance-retention/get-retentioncompliancepolicy?view=exchange-ps"&gt;Get-RetentionCompliancePolicy&lt;/a&gt;
-to retrieve the newly created policies, you will notice that these attributes will be empty:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;TeamsChatLocation             : {}
-
-TeamsChatLocationException    : {}
-
-TeamsChannelLocation          : {}
-
-TeamsChannelLocationException : {}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Reason for that is that you need to use the -DistributionDetail parameter with it:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;TeamsChatLocation             : {Debra Berger, Allan Deyoung}
-TeamsChatLocationException    : {}
-TeamsChannelLocation          : {}
-TeamsChannelLocationException : {}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Hope this is useful for somebody.&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>

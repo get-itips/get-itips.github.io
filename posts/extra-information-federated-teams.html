@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany</title>
+        <title>Andr&#xE9;s Gorzelany - Getting some extra information about Teams federated users using PowerShell</title>
         <meta name="description" content="Get-ITips" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Getting some extra information about Teams federated users using PowerShell" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/extra-information-federated-teams" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -96,10 +96,14 @@
                                 <div class="row">
                                         <div class="col-md-12">
 
-    <div class="site-heading">
-        <h1>Get-ITips</h1>
-                <hr class="small">
-        <span class="subheading">Exchange/Sharepoint/SfB/Teams/TFS/AzureDevOps/PS and a little Dev Stuff from a Computer Science Engineer/Microsoft Senior Consultant</span>
+    
+<div class="post-heading">
+    <h1>Getting some extra information about Teams federated users using PowerShell</h1>
+    <div class="meta">        
+Published on Monday, December 20, 2021<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams</a>
+        </div>     
 </div>
                                         </div>
                                 </div>
@@ -111,74 +115,141 @@
                         <div class="row">
                                 <div id="content" class="col-md-12">
                                         
-<div class="row">
-    <div class="col-sm-8 right-border">
-                <div class="post-preview">
-                    <a href="/posts/extra-information-federated-teams">
-                        <h2 class="post-title">Getting some extra information about Teams federated users using PowerShell</h2>
-                    </a>
-                    <p class="post-meta">Posted on Monday, December 20, 2021</p>
-<p>Hello!</p>                </div>       
-                    <hr /> 
-                <div class="post-preview">
-                    <a href="/posts/you-no-longer-have-access-to-planner">
-                        <h2 class="post-title">You no longer have access to &lt;Guid&gt; on Planner</h2>
-                    </a>
-                    <p class="post-meta">Posted on Friday, November 12, 2021</p>
-<p>I was called by a customer running into this error, essentially, they create company Azure AD accounts for external users (not using guests accounts) to access some resources.</p>                </div>       
-                    <hr /> 
-                <div class="post-preview">
-                    <a href="/posts/the-recording-ended-unexpectedly">
-                        <h2 class="post-title">The recording ended unexpectedly</h2>
-                    </a>
-                    <p class="post-meta">Posted on Wednesday, August 11, 2021</p>
-<p>Recently, Microsoft announced through a <a href="https://admin.microsoft.com/#/MessageCenter/:/messages/MC222640">Message Center notification</a> that every customer will automatically have meeting recordings saved to OneDrive and SharePoint.</p>                </div>       
-        <ul class="pager">
-            <li class="previous">                
-            </li>
-            <li class="next">
-            </li>
-        </ul>
-    </div>
-    <div class="col-sm-4 sidebar">
-        <hr class="visible-xs-block" />
 
-            <h5>Tags</h5>
-            <div>
-                    <a role="button" href="/tags/Teams" class="btn btn-default btn-sm"> Teams (11)</a>
-                    <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-sm"> Sharepoint (5)</a>
-                    <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-sm"> ExchangeServer (4)</a>
-                    <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-sm"> TeamFoundationServer (4)</a>
-                    <a role="button" href="/tags/Skype4B" class="btn btn-default btn-sm"> Skype4B (2)</a>
-                    <a role="button" href="/tags/Ignite" class="btn btn-default btn-sm"> Ignite (2)</a>
-                    <a role="button" href="/tags/365" class="btn btn-default btn-sm"> 365 (2)</a>
-                    <a role="button" href="/tags/General" class="btn btn-default btn-sm"> General (1)</a>
-                    <a role="button" href="/tags/Windows" class="btn btn-default btn-sm"> Windows (1)</a>
-                    <a role="button" href="/tags/GitHub" class="btn btn-default btn-sm"> GitHub (1)</a>
-            </div>
-            <ul class="pager">
-                <li class="next">
-                    <a href="/tags">View All Tags &rarr;</a>
-                </li>
-            </ul>
+<p>Hello!</p>
+<h1 id="introduction">Introduction</h1>
+<p>Inspired by my friend's Alexander Holmeset excellent blog post: <a href="https://alexholmeset.blog/2021/12/13/microsoft-teams-speed-dial-contacts-provisioning/">Microsoft Teams Speed Dial Contacts Provisioning</a>, I decided to investigate some other API calls made by the Teams client (as Alexander explains, easier to see using Teams web and activating browser's developer tools) and I was interested in one in particular, a request that is made when starting a new chat with external contacts, other tenants or Skype consumer.</p>
+<p>I said, let's see how it discovers those contacts, just for fun or learning purposes, but I discovered more information is outputted than what the end user actually sees.</p>
+<h1 id="useful-information">Useful information?</h1>
+<p>The URL that we will be querying is:</p>
+<p><a href="https://teams.microsoft.com/api/mt/part/amer-03/beta/users/%5Bsip_uri%5D/externalsearchv3">https://teams.microsoft.com/api/mt/part/amer-03/beta/users/[sip_uri]/externalsearchv3</a></p>
+<p>If I use it to query another Teams tenant user information:</p>
+<pre><code class="language-powershell">tenantId          : ceffd5d3-edcb-482e-a7ed-3ecedfe5519c
+isShortProfile    : False
+accountEnabled    : True
+featureSettings   : &#64;{coExistenceMode=TeamsOnly}
+userPrincipalName : freddiem&#64;snoopcore.com
+givenName         : freddiem&#64;snoopcore.com
+surname           :
+email             : freddiem&#64;snoopcore.com
+displayName       : Freddie Mercury
+type              : Federated
+mri               : 8:orgid:87da1b0b-e2a5-4964-9fcc-70bf0a186fe0
+objectId          : 87da1b0b-e2a5-4964-9fcc-70bf0a186fe0
+</code></pre>
+<p>And yes, we can even know if the other party is in TeamsOnly or in Islands mode:</p>
+<pre><code class="language-powershell">featureSettings   : &#64;{coExistenceMode=Islands}
+</code></pre>
+<p>This is another example, a company that does not have tenancy but Skype For Business on-premises:</p>
+<pre><code class="language-powershell">tenantId          : ac23bebc-10b0-4f0f-bae2-48b14c65af41
+isShortProfile    : False
+accountEnabled    : True
+featureSettings   : &#64;{coExistenceMode=Unknown}
+userPrincipalName : john.doe&#64;contoso.com
+givenName         : john.doe&#64;contoso.com
+surname           :
+email             : john.doe&#64;contoso.com
+displayName       : john.doe&#64;contoso.com
+type              : Federated
+mri               : 8:sfb:e1c75ab3-bc2d-4733-ba24-c4186f48d1d0
+objectId          : e1c75ab3-bc2d-4733-ba24-c4186f48d1d0
+</code></pre>
+<p>See how the mri now says sfb?</p>
+<p>also a Skype (consumer) user:</p>
+<pre><code class="language-powershell">skypeId           : megan.bowen
+city              : Ciudad Autonoma de Buenos Aires
+state             : Buenos Aires
+country           : Argentina
+avatarUrl         : https://api.skype.com/users/megan.bowen/profile/avatar
+isShortProfile    : False
+accountEnabled    : True
+userPrincipalName : megan.bowen&#64;hotmail.com
+email             : megan.bowen&#64;hotmail.com
+displayName       : megan bowen
+type              : SkypeConsumer
+mri               : 8:megan.bowen
+</code></pre>
+<p>That is more information that I was expecting... :)</p>
+<p>Is this useful? I do not exactly know, but I decided to share, maybe an administrator receives a call saying that the CEO is unable to communicate with another external user, you get the SIP URI of this user and you can, using this script understand if at least at federation level everything is how it supposed to be.</p>
+<p>Also, if you are a heavy Teams user/Administrator/Consultant you already received the &quot;Due to organization policy changes...&quot; message, and I think this could help troubleshoot that and other federation scenarios.</p>
+<h1 id="the-script">The Script</h1>
+<p>Here is the script, I basically modified the great output of &quot;Copy as PowerShell&quot; feature of Edge's developer tool, as I see this more as learning purposes, I did not put much effort into it, there is a lot of room to improve it. Credits also to the great module <a href="https://o365blog.com/aadinternals/">AADInternals</a> to get the required tokens (Teams token and x-skypetoken)</p>
+<pre><code class="language-powershell">
+$urlPart1=&quot;https://teams.microsoft.com/api/mt/part/amer-03/beta/users/&quot;
+$userToSearch=&quot;meganb&#64;contoso.com&quot; #Replace this with the other party's SIP URI you want to search more information for
+$urlPart3=&quot;/externalsearchv3&quot;
 
-            <hr />
-            <h5>Older Posts</h5>
-            <ul class="list-unstyled">
-                    <li><a href="/posts/data-collector-cortex">The Data Collector Set or one of its dependencies is already in use</a></li>
-                    <li><a href="/posts/spmt-site-does-not-exists">Task did NOT pass the parameter validation, the error message is The target site does not exist</a></li>
-                    <li><a href="/posts/m365entdemo-customizer">M365 Enterprise Demo Customizer</a></li>
-                    <li><a href="/posts/teams-pnp-part2">PnP Teams Cmdlets Review - Part II</a></li>
-            </ul>
-                <ul class="pager">
-                    <li class="next">
-                        <a href="/posts">Archive &rarr;</a>
-                    </li>
-                </ul>
+$FinalUrl=$urlPart1+$userToSearch+$urlPart3
 
-        
-    </div> 
-</div>
+Import-Module AADInternals
+
+$user = &quot;admin&#64;M365BV2XXX.onmicrosoft.com&quot; #Replace this with your tenant's username
+$password = &quot;P&#64;ssw0rd&quot; #And your password
+$secpwd = ConvertTo-SecureString $password -AsPlainText -Force
+$Cred = New-Object System.Management.Automation.PSCredential ($user,$secpwd)
+
+$token = Get-AADIntAccessTokenForTeams -Credentials $cred
+
+$skypeToken = Get-AADIntSkypeToken -AccessToken $token
+
+
+$Result=Invoke-WebRequest -UseBasicParsing -Uri $finalUrl `
+-Headers &#64;{
+&quot;method&quot;=&quot;GET&quot;
+  &quot;authority&quot;=&quot;teams.microsoft.com&quot;
+  &quot;scheme&quot;=&quot;https&quot;
+  &quot;path&quot;=&quot;/api/mt/part/amer-03/beta/users/$userToSearch/externalsearchv3&quot;
+  &quot;sec-ch-ua&quot;=&quot;`&quot; Not A;Brand`&quot;;v=`&quot;99`&quot;, `&quot;Chromium`&quot;;v=`&quot;96`&quot;, `&quot;Microsoft Edge`&quot;;v=`&quot;96`&quot;&quot;
+  &quot;x-ms-user-type&quot;=&quot;null&quot;
+  &quot;x-ms-client-type&quot;=&quot;web&quot;
+  &quot;authorization&quot;=&quot;Bearer $token&quot;
+  &quot;x-skypetoken&quot;=$skypeToken
+  &quot;x-ms-client-version&quot;=&quot;1415/1.0.0.2021120724&quot;
+  &quot;sec-ch-ua-platform&quot;=&quot;`&quot;Windows`&quot;&quot;
+  &quot;x-ms-session-id&quot;=&quot;8f622a27-5f89-bf7f-ad89-9bb9550300c8&quot;
+  &quot;x-ms-scenario-id&quot;=&quot;309&quot;
+  &quot;x-anchormailbox&quot;=$user
+  &quot;x-ms-client-env&quot;=&quot;pds-prod-azsc-usea-01&quot;
+  &quot;sec-ch-ua-mobile&quot;=&quot;?0&quot;
+  &quot;accept&quot;=&quot;application/json, text/plain, */*&quot;
+  &quot;x-ms-client-caller&quot;=&quot;search_externally_people_resolver&quot;
+  &quot;x-ringoverride&quot;=&quot;general&quot;
+  &quot;sec-fetch-site&quot;=&quot;same-origin&quot;
+  &quot;sec-fetch-mode&quot;=&quot;cors&quot;
+  &quot;sec-fetch-dest&quot;=&quot;empty&quot;
+  &quot;referer&quot;=&quot;https://teams.microsoft.com/_&quot;
+  &quot;accept-encoding&quot;=&quot;gzip, deflate, br&quot;
+  &quot;accept-language&quot;=&quot;es,es-ES;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;
+  }
+  
+  ConvertFrom-Json -InputObject $result.Content
+
+</code></pre>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'extra-information-federated-teams';
+    var disqus_title = 'Getting some extra information about Teams federated users using PowerShell';
+    var disqus_url = 'https://get-itips.capazero.net/posts/extra-information-federated-teams';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
                                 </div>
                         </div>
