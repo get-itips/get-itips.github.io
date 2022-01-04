@@ -3,9 +3,9 @@ Title: About Me
 <p align="center">
   <img src="https://pbs.twimg.com/profile_images/913783700600565762/UztLlflB_400x400.jpg">
   
-  <p></p><p></p>
-  ![mvpbadge](images/MVP_Badge_Horizontal_Preferred_Blue3005_RGB.png)
-  <p></p><p></p>
+  <p></p><p></p><p></p><p></p><p></p><p></p>
+  <p align="center"><img src="images/MVP_Badge_Horizontal_Preferred_Blue3005_RGB.png"></p>
+  <p></p><p></p><p></p><p></p><p></p><p></p>
 </p>
 
 Hi, My name is **Andrés Gorzelany** and I am a Computer Science Engineering. S4B Architect since 2007, then, Teams, Sharepoint, Project Server, Exchange, Office 365/Microsoft 365 and many more (BSD,Linux). Hobby Coder (P#,Java,dotnetcore).
