@@ -4,7 +4,7 @@ Title: About Me
   <img src="https://pbs.twimg.com/profile_images/913783700600565762/UztLlflB_400x400.jpg">
   
   <p></p><p></p>
-  ![mvpbadge](/images/MVP_Badge_Horizontal_Preferred_Blue3005_RGB.png)
+  ![mvpbadge](images/MVP_Badge_Horizontal_Preferred_Blue3005_RGB.png)
   <p></p><p></p>
 </p>
 
