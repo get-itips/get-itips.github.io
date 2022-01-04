@@ -3,9 +3,113 @@
 	<link rel="self" href="https://get-itips.capazero.net/" />
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
-	<rights>2021</rights>
-	<updated>2021-12-20T17:27:16Z</updated>
+	<rights>2022</rights>
+	<updated>2022-01-04T17:13:15Z</updated>
 	<subtitle>Get-ITips</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/clear-teams-notifications" />
+		<id>https://get-itips.capazero.net/posts/clear-teams-notifications</id>
+		<title>Mark Teams notifications as read</title>
+		<updated>2022-01-04T00:00:00Z</updated>
+		<content>&lt;p&gt;Hello!&lt;/p&gt;
+&lt;h1 id="introduction"&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;The idea behind this blog post comes from the same idea behind this other blog post &lt;a href="https://get-itips.capazero.net/posts/extra-information-federated-teams"&gt;Getting some extra information about Teams federated users using PowerShell&lt;/a&gt;, so you can read more details about how this is done and what it requires there.&lt;/p&gt;
+&lt;p&gt;Essentially, I continued exploring client-side API calls made by the Teams client, and I decided to play around with the one that is called to mark the notifications that appear under Activity in the Teams app bar as read.&lt;/p&gt;
+&lt;h1 id="why"&gt;Why&lt;/h1&gt;
+&lt;p&gt;Maybe you are returning from vacations/holidays and you have a lot of notifications to mark as read, there isn't currently an easy way to do this using the Teams client, you have to mark as read every single one, so you might want to clear the clutter more easily.&lt;/p&gt;
+&lt;h1 id="the-script"&gt;The Script&lt;/h1&gt;
+&lt;p&gt;This script is a very first version, that means I would like to improve it a lot, and it is provided without any guarantee.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;# Clear all Microsoft Teams notifications
+
+Import-Module AADInternals
+
+#This will prompt for credentials so it supports MFA login
+$token = Get-AADIntAccessTokenForTeams
+
+$skypeToken = Get-AADIntSkypeToken -AccessToken $token
+
+$result=Invoke-WebRequest -UseBasicParsing -Uri &amp;quot;https://amer.ng.msg.teams.microsoft.com/v1/users/ME/conversations/48%3Anotifications/messages?view=msnp24Equivalent|supportsMessageProperties&amp;amp;pageSize=200&amp;quot; `
+-Headers &amp;#64;{
+&amp;quot;method&amp;quot;=&amp;quot;GET&amp;quot;
+  &amp;quot;authority&amp;quot;=&amp;quot;amer.ng.msg.teams.microsoft.com&amp;quot;
+  &amp;quot;scheme&amp;quot;=&amp;quot;https&amp;quot;
+  &amp;quot;path&amp;quot;=&amp;quot;/v1/users/ME/conversations/48%3Anotifications/messages?view=msnp24Equivalent|supportsMessageProperties&amp;amp;pageSize=200&amp;quot;
+  &amp;quot;sec-ch-ua&amp;quot;=&amp;quot;`&amp;quot; Not A;Brand`&amp;quot;;v=`&amp;quot;99`&amp;quot;, `&amp;quot;Chromium`&amp;quot;;v=`&amp;quot;96`&amp;quot;, `&amp;quot;Microsoft Edge`&amp;quot;;v=`&amp;quot;96`&amp;quot;&amp;quot;
+  &amp;quot;x-ms-session-id&amp;quot;=&amp;quot;ae16f178-a088-a7bb-603b-27aad38b6c88&amp;quot;
+  &amp;quot;behavioroverride&amp;quot;=&amp;quot;redirectAs404&amp;quot;
+  &amp;quot;x-ms-scenario-id&amp;quot;=&amp;quot;130&amp;quot;
+  &amp;quot;x-ms-client-cpm&amp;quot;=&amp;quot;ApplicationLaunch&amp;quot;
+  &amp;quot;x-ms-client-env&amp;quot;=&amp;quot;pds-prod-azsc-usce-01&amp;quot;
+  &amp;quot;x-ms-client-type&amp;quot;=&amp;quot;web&amp;quot;
+  &amp;quot;sec-ch-ua-mobile&amp;quot;=&amp;quot;?0&amp;quot;
+  &amp;quot;clientinfo&amp;quot;=&amp;quot;os=windows; osVer=10; proc=x86; lcid=en-us; deviceType=1; country=us; clientName=skypeteams; clientVer=1415/1.0.0.2021120940; utcOffset=-06:00; timezone=America/Costa_Rica&amp;quot;
+  &amp;quot;x-ms-client-version&amp;quot;=&amp;quot;1415/1.0.0.2021120940&amp;quot;
+  &amp;quot;x-ms-user-type&amp;quot;=&amp;quot;null&amp;quot;
+  &amp;quot;authentication&amp;quot;=&amp;quot;skypetoken=$skypeToken&amp;quot;
+  &amp;quot;sec-ch-ua-platform&amp;quot;=&amp;quot;`&amp;quot;Windows`&amp;quot;&amp;quot;
+  &amp;quot;origin&amp;quot;=&amp;quot;https://teams.microsoft.com&amp;quot;
+  &amp;quot;sec-fetch-site&amp;quot;=&amp;quot;same-site&amp;quot;
+  &amp;quot;sec-fetch-mode&amp;quot;=&amp;quot;cors&amp;quot;
+  &amp;quot;sec-fetch-dest&amp;quot;=&amp;quot;empty&amp;quot;
+  &amp;quot;referer&amp;quot;=&amp;quot;https://teams.microsoft.com/&amp;quot;
+  &amp;quot;accept-encoding&amp;quot;=&amp;quot;gzip, deflate, br&amp;quot;
+  &amp;quot;accept-language&amp;quot;=&amp;quot;es,es-ES;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&amp;quot;
+}
+
+$messages=ConvertFrom-Json -InputObject $result.Content
+
+
+$NotificationsToClear=$messages.messages | where-object {$_.properties.isread -ne &amp;quot;True&amp;quot;}
+
+
+foreach($notifications in $notificationsToClear)
+{
+
+$urlFQDN=&amp;quot;https://amer.ng.msg.teams.microsoft.com&amp;quot;
+$urlPart1=&amp;quot;/v1/users/ME/conversations/48%3Anotifications/messages/&amp;quot;
+$urlPart3=&amp;quot;/properties?name=isread&amp;quot;
+$finalUrl=$urlFQDN+$urlPart1+$notifications.Id+$urlPart3
+
+Write-Host &amp;quot;Clearing notification&amp;quot; $notifications.Id
+
+$result=Invoke-WebRequest -UseBasicParsing -Uri $finalUrl `
+-Method &amp;quot;PUT&amp;quot; `
+-Headers &amp;#64;{
+&amp;quot;method&amp;quot;=&amp;quot;PUT&amp;quot;
+  &amp;quot;authority&amp;quot;=&amp;quot;amer.ng.msg.teams.microsoft.com&amp;quot;
+  &amp;quot;scheme&amp;quot;=&amp;quot;https&amp;quot;
+  &amp;quot;path&amp;quot;=$urlPart1+$notifications.Id+$urlPart3
+  &amp;quot;sec-ch-ua&amp;quot;=&amp;quot;`&amp;quot; Not A;Brand`&amp;quot;;v=`&amp;quot;99`&amp;quot;, `&amp;quot;Chromium`&amp;quot;;v=`&amp;quot;96`&amp;quot;, `&amp;quot;Microsoft Edge`&amp;quot;;v=`&amp;quot;96`&amp;quot;&amp;quot;
+  &amp;quot;x-ms-user-type&amp;quot;=&amp;quot;null&amp;quot;
+  &amp;quot;x-ms-client-type&amp;quot;=&amp;quot;web&amp;quot;
+  &amp;quot;x-ms-client-version&amp;quot;=&amp;quot;1415/1.0.0.2021120940&amp;quot;
+  &amp;quot;authentication&amp;quot;=&amp;quot;skypetoken=$skypeToken&amp;quot;
+  &amp;quot;sec-ch-ua-platform&amp;quot;=&amp;quot;`&amp;quot;Windows`&amp;quot;&amp;quot;
+  &amp;quot;x-ms-scenario-id&amp;quot;=&amp;quot;716&amp;quot;
+  &amp;quot;x-ms-client-env&amp;quot;=&amp;quot;pckgsvc-prod-c1-usea-01&amp;quot;
+  &amp;quot;sec-ch-ua-mobile&amp;quot;=&amp;quot;?0&amp;quot;
+  &amp;quot;clientinfo&amp;quot;=&amp;quot;os=windows; osVer=10; proc=x86; lcid=en-us; deviceType=1; country=us; clientName=skypeteams; clientVer=1415/1.0.0.2021120940; utcOffset=-06:00; timezone=America/Costa_Rica&amp;quot;
+  &amp;quot;behavioroverride&amp;quot;=&amp;quot;redirectAs404&amp;quot;
+  &amp;quot;x-ms-client-caller&amp;quot;=&amp;quot;markReadStatus&amp;quot;
+  &amp;quot;origin&amp;quot;=&amp;quot;https://teams.microsoft.com&amp;quot;
+  &amp;quot;sec-fetch-site&amp;quot;=&amp;quot;same-site&amp;quot;
+  &amp;quot;sec-fetch-mode&amp;quot;=&amp;quot;cors&amp;quot;
+  &amp;quot;sec-fetch-dest&amp;quot;=&amp;quot;empty&amp;quot;
+  &amp;quot;referer&amp;quot;=&amp;quot;https://teams.microsoft.com/&amp;quot;
+  &amp;quot;accept-encoding&amp;quot;=&amp;quot;gzip, deflate, br&amp;quot;
+  &amp;quot;accept-language&amp;quot;=&amp;quot;es,es-ES;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&amp;quot;
+} `
+-ContentType &amp;quot;application/json&amp;quot; `
+-Body &amp;quot;{`&amp;quot;isread`&amp;quot;:true}&amp;quot;
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="next-version"&gt;Next version&lt;/h1&gt;
+&lt;p&gt;There are different types of notifications, like mentions, reply, etc, this very first and raw version of the script clears all notifications however I would like to work on it to selectively clear different types of notifications (for example everything but mentions).
+I invite everyone that wants to contribute to this script to do so here in this &lt;a href="https://github.com/get-itips/MiscScripts/blob/main/Teams/Set-NotificationsAsRead.ps1"&gt;GitHub repo&lt;/a&gt;.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;Hello!&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/extra-information-federated-teams" />
 		<id>https://get-itips.capazero.net/posts/extra-information-federated-teams</id>
@@ -1052,130 +1156,5 @@ Type 'help' to get help.
 &lt;p&gt;Hope this quick guide helps anyone that will give a shot to this beta exam, let me know your thoughts too leaving a message here!&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;Hello,&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.capazero.net/posts/tfs-release-query" />
-		<id>https://get-itips.capazero.net/posts/tfs-release-query</id>
-		<title>Team Foundation Server SQL Query to get Releases and approvals</title>
-		<updated>2019-09-25T00:00:00Z</updated>
-		<content>&lt;p&gt;&lt;img src="/images/sqltfs.png" class="img-fluid" alt="tfssql" /&gt;&lt;/p&gt;
-&lt;p&gt;Hi,&lt;/p&gt;
-&lt;p&gt;I created a SQL query to be run against Team Foundation Server collection database to get a list of all releases per project.
-TFS Collection database is not documented at all, so I had to hack into it to understand the relationship of the tables.&lt;/p&gt;
-&lt;p&gt;Essentially when running this Query you will get this columns:&lt;/p&gt;
-&lt;table class="table"&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Column&lt;/th&gt;
-&lt;th&gt;Meaning&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;[Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[Id]&lt;/td&gt;
-&lt;td&gt;Id of the Step inside the environment&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;[Tfs_Collection].[dbo].[tbl_Projects].project_name&lt;/td&gt;
-&lt;td&gt;Project that this release belongs to&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;[Tfs_Collection].[Release].[tbl_Release].Name&lt;/td&gt;
-&lt;td&gt;Release version name&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;[Tfs_Collection].[Release].[tbl_Release].[Description]&lt;/td&gt;
-&lt;td&gt;Description of the Release&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;[Tfs_Collection].[dbo].[ADObjects].DisplayName&lt;/td&gt;
-&lt;td&gt;Account that created the release&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;[Tfs_Collection].[Release].[tbl_Release].CreatedOn&lt;/td&gt;
-&lt;td&gt;Creation Date&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;[Tfs_Collection].[dbo].[ADObjects].DisplayName (A)&lt;/td&gt;
-&lt;td&gt;Group Approver resultant from a join&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;[Tfs_Collection].[dbo].[ADObjects].DisplayName (B)&lt;/td&gt;
-&lt;td&gt;Real Approver resultant from a join&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;[Tfs_Collection].[Release].[tbl_ReleaseEnvironment].Name&lt;/td&gt;
-&lt;td&gt;Environment Name, for example DEV&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;[Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[ApproverComment]&lt;/td&gt;
-&lt;td&gt;Approver comment for the release&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;[Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[CreatedOn]&lt;/td&gt;
-&lt;td&gt;Date that the step was started&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;[Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[ModifiedOn]&lt;/td&gt;
-&lt;td&gt;Date that the step was last modified&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id="the-query-itself"&gt;The query itself&lt;/h2&gt;
-&lt;pre&gt;&lt;code class="language-sql"&gt;	       SELECT [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[Id]
-             [Tfs_Collection].[dbo].[tbl_Projects].project_name AS 'Project'
-         ,[Tfs_Collection].[Release].[tbl_Release].Name as 'Version'
-         ,replace(replace([Tfs_Collection].[Release].[tbl_Release].[Description],char(10),''),char(13),'') AS 'Description'
-         ,C.DisplayName AS 'Creator'
-         ,[Tfs_Collection].[Release].[tbl_Release].CreatedOn as 'CreationDate'
-      ,A.DisplayName AS 'ApproverGroup'
-      ,B.DisplayName AS 'Approver'
-         ,[Tfs_Collection].[Release].[tbl_ReleaseEnvironment].Name AS 'Environment'
-      ,[ApproverComment] as 'ApproverComment'
-      ,[Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[CreatedOn]  as 'StepCreationDate'
-      ,[Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[ModifiedOn] as 'StepModDate'
-  FROM [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep]
-  INNER JOIN [Tfs_Collection].[dbo].[ADObjects] A
-  ON A.TeamFoundationId = [ApproverId]
-  INNER JOIN [Tfs_Collection].[dbo].[ADObjects] B
-  ON B.TeamFoundationId = [ActualApproverId]
-
-  INNER JOIN [Tfs_Collection].[Release].[tbl_Release]
-  ON [Tfs_Collection].[Release].[tbl_Release].[ID] = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].ReleaseID
-  AND [Tfs_Collection].[Release].[tbl_Release].[PartitionID] = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].PartitionID
-AND [Tfs_Collection].[Release].[tbl_Release].[DataspaceId] = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].DataspaceId
-
-  INNER JOIN [Tfs_Collection].[dbo].[ADObjects] C
-  ON C.TeamFoundationId = [Tfs_Collection].[Release].[tbl_Release].[CreatedBy]
-    
-    INNER JOIN [Tfs_Collection].[Release].[tbl_ReleaseEnvironment]
-  ON [Tfs_Collection].[Release].[tbl_ReleaseEnvironment].Id = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].ReleaseEnvironmentId
-AND [Tfs_Collection].[Release].[tbl_ReleaseEnvironment].DefinitionEnvironmentId = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].DefinitionEnvironmentId
-   AND [Tfs_Collection].[Release].[tbl_ReleaseEnvironment].[PartitionID] = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].PartitionID
-     AND [Tfs_Collection].[Release].[tbl_ReleaseEnvironment].[DataspaceId] = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].DataspaceId
-      AND  [Tfs_Collection].[Release].[tbl_ReleaseEnvironment].[ReleaseId] = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].ReleaseID
-
-   INNER JOIN [Tfs_Collection].[dbo].[tbl_Dataspace]
-  on [Tfs_Collection].[dbo].[tbl_Dataspace].DataspaceId  = [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].DataspaceId
-
-   INNER JOIN [Tfs_Collection].[dbo].[tbl_Projects] ON
-    [Tfs_Collection].[dbo].[tbl_Projects].Project_Id = [Tfs_Collection].[dbo].[tbl_Dataspace].DataspaceIdentifier
-
-  
- and [Tfs_Collection].[Release].[tbl_ReleaseEnvironment].Name  IN ('PROD', 'TEST','DEV')
-
-   where 
-   [Tfs_Collection].[Release].[tbl_Release].CreatedOn &amp;gt; = &amp;#64;FromDate 
-   and
-   [Tfs_Collection].[Release].[tbl_Release].CreatedOn &amp;lt; = &amp;#64;ToDate
-
-
-   order by [Tfs_Collection].[Release].[tbl_ReleaseEnvironmentStep].[CreatedOn] 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You will have to pass as parameters the &amp;#64;fromDate and &amp;#64;toDate to tailor the result and please take into account the enviroment names which are
-hard-coded in this query.&lt;/p&gt;
-&lt;p&gt;Hope you find it useful!&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;&lt;img src="/images/sqltfs.png" class="img-fluid" alt="tfssql"&gt;&lt;/p&gt;</summary>
 	</entry>
 </feed>

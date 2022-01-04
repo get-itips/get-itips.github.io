@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - Useful community tools to administer Microsoft 365</title>
+        <title>Andr&#xE9;s Gorzelany - Mark Teams notifications as read</title>
         <meta name="description" content="Get-ITips" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Useful community tools to administer Microsoft 365" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Mark Teams notifications as read" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/posts/useful-community-tools" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/clear-teams-notifications" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -98,11 +98,11 @@
 
     
 <div class="post-heading">
-    <h1>Useful community tools to administer Microsoft 365</h1>
+    <h1>Mark Teams notifications as read</h1>
     <div class="meta">        
-Published on Monday, June 28, 2021<br>    </div>
+Published on Tuesday, January 4, 2022<br>    </div>
         <div class="tags">
-                    <a role="button" href="/tags/365" class="btn btn-default btn-xs">365</a>
+                    <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams</a>
         </div>     
 </div>
                                         </div>
@@ -116,29 +116,110 @@ Published on Monday, June 28, 2021<br>    </div>
                                 <div id="content" class="col-md-12">
                                         
 
-<p>This post is intended to list all the sites/tools I use to administer Microsoft 365. I hope you find them useful:</p>
-<ul>
-<li><a href="https://msportals.io/">MSPortals</a> by Adam Fowler, it's a great site that summarizes all the different official portals created by Microsoft to administer all the Microsoft 365 solutions, it even has a search function.</li>
-<li><a href="https://changewindows.org/">ChangeWindows</a>, a very complete site that keeps track of all the releases of Windows.</li>
-<li><a href="https://www.whatismytenantid.com/">What is my Tenant ID?</a>, actually, a Microsoft Partner is behind this site, it is very useful to find your (or others) tenant ID.</li>
-<li><a href="https://m365maps.com/">M365 Maps</a>, a very useful site to understand what is really included in each Microsoft 365 license offering.</li>
-<li><a href="https://MSShells.net">MSShells</a>, this site belongs to me and as I open-sourced it, it receives contributions from the community, keeps tracks of the different versions of the official modules to administer Microsoft 365 and Azure.</li>
-</ul>
-<h3 id="bonus-track">Bonus Track:</h3>
-<p>Not really community tools as they are provided by Microsoft or Microsoft employees, however, they are useful and not so well documented:</p>
-<ul>
-<li><a href="https://o365atp.com/">ATP Safe Links decoder</a> every link that goes thru ATP is rewritten and encoded so it can be analyzed before the user is presented with the destination and real website, this handy tool can decode the ATP link so we can see the real website behind it.</li>
-<li><a href="https://mha.azurewebsites.net/">Message Header Analyzer</a> This is very useful for EXO administrators, essentially, paste the mail message header of a Microsoft 365 e-mail, and this tool will present it in a much more friendly way the information contained in it.</li>
-</ul>
-<p>Do you have other that isn't listed here? Share it with me please. Thank you!</p>
+<p>Hello!</p>
+<h1 id="introduction">Introduction</h1>
+<p>The idea behind this blog post comes from the same idea behind this other blog post <a href="https://get-itips.capazero.net/posts/extra-information-federated-teams">Getting some extra information about Teams federated users using PowerShell</a>, so you can read more details about how this is done and what it requires there.</p>
+<p>Essentially, I continued exploring client-side API calls made by the Teams client, and I decided to play around with the one that is called to mark the notifications that appear under Activity in the Teams app bar as read.</p>
+<h1 id="why">Why</h1>
+<p>Maybe you are returning from vacations/holidays and you have a lot of notifications to mark as read, there isn't currently an easy way to do this using the Teams client, you have to mark as read every single one, so you might want to clear the clutter more easily.</p>
+<h1 id="the-script">The Script</h1>
+<p>This script is a very first version, that means I would like to improve it a lot, and it is provided without any guarantee.</p>
+<pre><code class="language-powershell"># Clear all Microsoft Teams notifications
+
+Import-Module AADInternals
+
+#This will prompt for credentials so it supports MFA login
+$token = Get-AADIntAccessTokenForTeams
+
+$skypeToken = Get-AADIntSkypeToken -AccessToken $token
+
+$result=Invoke-WebRequest -UseBasicParsing -Uri &quot;https://amer.ng.msg.teams.microsoft.com/v1/users/ME/conversations/48%3Anotifications/messages?view=msnp24Equivalent|supportsMessageProperties&amp;pageSize=200&quot; `
+-Headers &#64;{
+&quot;method&quot;=&quot;GET&quot;
+  &quot;authority&quot;=&quot;amer.ng.msg.teams.microsoft.com&quot;
+  &quot;scheme&quot;=&quot;https&quot;
+  &quot;path&quot;=&quot;/v1/users/ME/conversations/48%3Anotifications/messages?view=msnp24Equivalent|supportsMessageProperties&amp;pageSize=200&quot;
+  &quot;sec-ch-ua&quot;=&quot;`&quot; Not A;Brand`&quot;;v=`&quot;99`&quot;, `&quot;Chromium`&quot;;v=`&quot;96`&quot;, `&quot;Microsoft Edge`&quot;;v=`&quot;96`&quot;&quot;
+  &quot;x-ms-session-id&quot;=&quot;ae16f178-a088-a7bb-603b-27aad38b6c88&quot;
+  &quot;behavioroverride&quot;=&quot;redirectAs404&quot;
+  &quot;x-ms-scenario-id&quot;=&quot;130&quot;
+  &quot;x-ms-client-cpm&quot;=&quot;ApplicationLaunch&quot;
+  &quot;x-ms-client-env&quot;=&quot;pds-prod-azsc-usce-01&quot;
+  &quot;x-ms-client-type&quot;=&quot;web&quot;
+  &quot;sec-ch-ua-mobile&quot;=&quot;?0&quot;
+  &quot;clientinfo&quot;=&quot;os=windows; osVer=10; proc=x86; lcid=en-us; deviceType=1; country=us; clientName=skypeteams; clientVer=1415/1.0.0.2021120940; utcOffset=-06:00; timezone=America/Costa_Rica&quot;
+  &quot;x-ms-client-version&quot;=&quot;1415/1.0.0.2021120940&quot;
+  &quot;x-ms-user-type&quot;=&quot;null&quot;
+  &quot;authentication&quot;=&quot;skypetoken=$skypeToken&quot;
+  &quot;sec-ch-ua-platform&quot;=&quot;`&quot;Windows`&quot;&quot;
+  &quot;origin&quot;=&quot;https://teams.microsoft.com&quot;
+  &quot;sec-fetch-site&quot;=&quot;same-site&quot;
+  &quot;sec-fetch-mode&quot;=&quot;cors&quot;
+  &quot;sec-fetch-dest&quot;=&quot;empty&quot;
+  &quot;referer&quot;=&quot;https://teams.microsoft.com/&quot;
+  &quot;accept-encoding&quot;=&quot;gzip, deflate, br&quot;
+  &quot;accept-language&quot;=&quot;es,es-ES;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;
+}
+
+$messages=ConvertFrom-Json -InputObject $result.Content
+
+
+$NotificationsToClear=$messages.messages | where-object {$_.properties.isread -ne &quot;True&quot;}
+
+
+foreach($notifications in $notificationsToClear)
+{
+
+$urlFQDN=&quot;https://amer.ng.msg.teams.microsoft.com&quot;
+$urlPart1=&quot;/v1/users/ME/conversations/48%3Anotifications/messages/&quot;
+$urlPart3=&quot;/properties?name=isread&quot;
+$finalUrl=$urlFQDN+$urlPart1+$notifications.Id+$urlPart3
+
+Write-Host &quot;Clearing notification&quot; $notifications.Id
+
+$result=Invoke-WebRequest -UseBasicParsing -Uri $finalUrl `
+-Method &quot;PUT&quot; `
+-Headers &#64;{
+&quot;method&quot;=&quot;PUT&quot;
+  &quot;authority&quot;=&quot;amer.ng.msg.teams.microsoft.com&quot;
+  &quot;scheme&quot;=&quot;https&quot;
+  &quot;path&quot;=$urlPart1+$notifications.Id+$urlPart3
+  &quot;sec-ch-ua&quot;=&quot;`&quot; Not A;Brand`&quot;;v=`&quot;99`&quot;, `&quot;Chromium`&quot;;v=`&quot;96`&quot;, `&quot;Microsoft Edge`&quot;;v=`&quot;96`&quot;&quot;
+  &quot;x-ms-user-type&quot;=&quot;null&quot;
+  &quot;x-ms-client-type&quot;=&quot;web&quot;
+  &quot;x-ms-client-version&quot;=&quot;1415/1.0.0.2021120940&quot;
+  &quot;authentication&quot;=&quot;skypetoken=$skypeToken&quot;
+  &quot;sec-ch-ua-platform&quot;=&quot;`&quot;Windows`&quot;&quot;
+  &quot;x-ms-scenario-id&quot;=&quot;716&quot;
+  &quot;x-ms-client-env&quot;=&quot;pckgsvc-prod-c1-usea-01&quot;
+  &quot;sec-ch-ua-mobile&quot;=&quot;?0&quot;
+  &quot;clientinfo&quot;=&quot;os=windows; osVer=10; proc=x86; lcid=en-us; deviceType=1; country=us; clientName=skypeteams; clientVer=1415/1.0.0.2021120940; utcOffset=-06:00; timezone=America/Costa_Rica&quot;
+  &quot;behavioroverride&quot;=&quot;redirectAs404&quot;
+  &quot;x-ms-client-caller&quot;=&quot;markReadStatus&quot;
+  &quot;origin&quot;=&quot;https://teams.microsoft.com&quot;
+  &quot;sec-fetch-site&quot;=&quot;same-site&quot;
+  &quot;sec-fetch-mode&quot;=&quot;cors&quot;
+  &quot;sec-fetch-dest&quot;=&quot;empty&quot;
+  &quot;referer&quot;=&quot;https://teams.microsoft.com/&quot;
+  &quot;accept-encoding&quot;=&quot;gzip, deflate, br&quot;
+  &quot;accept-language&quot;=&quot;es,es-ES;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;
+} `
+-ContentType &quot;application/json&quot; `
+-Body &quot;{`&quot;isread`&quot;:true}&quot;
+
+}
+</code></pre>
+<h1 id="next-version">Next version</h1>
+<p>There are different types of notifications, like mentions, reply, etc, this very first and raw version of the script clears all notifications however I would like to work on it to selectively clear different types of notifications (for example everything but mentions).
+I invite everyone that wants to contribute to this script to do so here in this <a href="https://github.com/get-itips/MiscScripts/blob/main/Teams/Set-NotificationsAsRead.ps1">GitHub repo</a>.</p>
 
 
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'get-itips';
-    var disqus_identifier = 'useful-community-tools';
-    var disqus_title = 'Useful community tools to administer Microsoft 365';
-    var disqus_url = 'https://get-itips.capazero.net/posts/useful-community-tools';
+    var disqus_identifier = 'clear-teams-notifications';
+    var disqus_title = 'Mark Teams notifications as read';
+    var disqus_url = 'https://get-itips.capazero.net/posts/clear-teams-notifications';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
