@@ -1,4 +1,4 @@
-Title: Getting some extra information about Teams federated users using PowerShell
+Title: Mark Teams notifications as read
 Published: 1/4/2022
 Tags: Teams
 ---
