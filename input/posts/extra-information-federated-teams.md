@@ -3,7 +3,7 @@ Published: 12/20/2021
 Tags: Teams
 ---
 
-Hello!
+**Last update:** 27th of January - 2022 Added TFL support.
 
 # Introduction
 
@@ -91,7 +91,7 @@ Here is the script, I basically modified the great output of "Copy as PowerShell
 
 $urlPart1="https://teams.microsoft.com/api/mt/part/amer-03/beta/users/"
 $userToSearch="meganb@contoso.com" #Replace this with the other party's SIP URI you want to search more information for
-$urlPart3="/externalsearchv3"
+$urlPart3="/externalsearchv3?includeTFLUsers=true"
 
 $FinalUrl=$urlPart1+$userToSearch+$urlPart3
 
@@ -112,7 +112,7 @@ $Result=Invoke-WebRequest -UseBasicParsing -Uri $finalUrl `
 "method"="GET"
   "authority"="teams.microsoft.com"
   "scheme"="https"
-  "path"="/api/mt/part/amer-03/beta/users/$userToSearch/externalsearchv3"
+  "path"="/api/mt/part/amer-03/beta/users/$userToSearch/externalsearchv3?includeTFLUsers=true"
   "sec-ch-ua"="`" Not A;Brand`";v=`"99`", `"Chromium`";v=`"96`", `"Microsoft Edge`";v=`"96`""
   "x-ms-user-type"="null"
   "x-ms-client-type"="web"
