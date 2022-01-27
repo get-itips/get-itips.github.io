@@ -116,7 +116,7 @@ Published on Monday, December 20, 2021<br>    </div>
                                 <div id="content" class="col-md-12">
                                         
 
-<p>Hello!</p>
+<p><strong>Last update:</strong> 27th of January - 2022 Added TFL support.</p>
 <h1 id="introduction">Introduction</h1>
 <p>Inspired by my friend's Alexander Holmeset excellent blog post: <a href="https://alexholmeset.blog/2021/12/13/microsoft-teams-speed-dial-contacts-provisioning/">Microsoft Teams Speed Dial Contacts Provisioning</a>, I decided to investigate some other API calls made by the Teams client (as Alexander explains, easier to see using Teams web and activating browser's developer tools) and I was interested in one in particular, a request that is made when starting a new chat with external contacts, other tenants or Skype consumer.</p>
 <p>I said, let's see how it discovers those contacts, just for fun or learning purposes, but I discovered more information is outputted than what the end user actually sees.</p>
@@ -177,7 +177,7 @@ mri               : 8:megan.bowen
 <pre><code class="language-powershell">
 $urlPart1=&quot;https://teams.microsoft.com/api/mt/part/amer-03/beta/users/&quot;
 $userToSearch=&quot;meganb&#64;contoso.com&quot; #Replace this with the other party's SIP URI you want to search more information for
-$urlPart3=&quot;/externalsearchv3&quot;
+$urlPart3=&quot;/externalsearchv3?includeTFLUsers=true&quot;
 
 $FinalUrl=$urlPart1+$userToSearch+$urlPart3
 
@@ -198,7 +198,7 @@ $Result=Invoke-WebRequest -UseBasicParsing -Uri $finalUrl `
 &quot;method&quot;=&quot;GET&quot;
   &quot;authority&quot;=&quot;teams.microsoft.com&quot;
   &quot;scheme&quot;=&quot;https&quot;
-  &quot;path&quot;=&quot;/api/mt/part/amer-03/beta/users/$userToSearch/externalsearchv3&quot;
+  &quot;path&quot;=&quot;/api/mt/part/amer-03/beta/users/$userToSearch/externalsearchv3?includeTFLUsers=true&quot;
   &quot;sec-ch-ua&quot;=&quot;`&quot; Not A;Brand`&quot;;v=`&quot;99`&quot;, `&quot;Chromium`&quot;;v=`&quot;96`&quot;, `&quot;Microsoft Edge`&quot;;v=`&quot;96`&quot;&quot;
   &quot;x-ms-user-type&quot;=&quot;null&quot;
   &quot;x-ms-client-type&quot;=&quot;web&quot;

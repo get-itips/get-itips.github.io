@@ -5,8 +5,8 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2022</copyright>
-		<pubDate>Tue, 04 Jan 2022 20:36:00 GMT</pubDate>
-		<lastBuildDate>Tue, 04 Jan 2022 20:36:00 GMT</lastBuildDate>
+		<pubDate>Thu, 27 Jan 2022 13:46:21 GMT</pubDate>
+		<lastBuildDate>Thu, 27 Jan 2022 13:46:21 GMT</lastBuildDate>
 		<item>
 			<title>Mark Teams notifications as read</title>
 			<link>https://get-itips.capazero.net/posts/clear-teams-notifications</link>
@@ -114,10 +114,10 @@ I invite everyone that wants to contribute to this script to do so here in this 
 		<item>
 			<title>Getting some extra information about Teams federated users using PowerShell</title>
 			<link>https://get-itips.capazero.net/posts/extra-information-federated-teams</link>
-			<description>&lt;p&gt;Hello!&lt;/p&gt;</description>
+			<description>&lt;p&gt;&lt;strong&gt;Last update:&lt;/strong&gt; 27th of January - 2022 Added TFL support.&lt;/p&gt;</description>
 			<guid>https://get-itips.capazero.net/posts/extra-information-federated-teams</guid>
 			<pubDate>Mon, 20 Dec 2021 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Hello!&lt;/p&gt;
+			<content:encoded>&lt;p&gt;&lt;strong&gt;Last update:&lt;/strong&gt; 27th of January - 2022 Added TFL support.&lt;/p&gt;
 &lt;h1 id="introduction"&gt;Introduction&lt;/h1&gt;
 &lt;p&gt;Inspired by my friend's Alexander Holmeset excellent blog post: &lt;a href="https://alexholmeset.blog/2021/12/13/microsoft-teams-speed-dial-contacts-provisioning/"&gt;Microsoft Teams Speed Dial Contacts Provisioning&lt;/a&gt;, I decided to investigate some other API calls made by the Teams client (as Alexander explains, easier to see using Teams web and activating browser's developer tools) and I was interested in one in particular, a request that is made when starting a new chat with external contacts, other tenants or Skype consumer.&lt;/p&gt;
 &lt;p&gt;I said, let's see how it discovers those contacts, just for fun or learning purposes, but I discovered more information is outputted than what the end user actually sees.&lt;/p&gt;
@@ -178,7 +178,7 @@ mri               : 8:megan.bowen
 &lt;pre&gt;&lt;code class="language-powershell"&gt;
 $urlPart1=&amp;quot;https://teams.microsoft.com/api/mt/part/amer-03/beta/users/&amp;quot;
 $userToSearch=&amp;quot;meganb&amp;#64;contoso.com&amp;quot; #Replace this with the other party's SIP URI you want to search more information for
-$urlPart3=&amp;quot;/externalsearchv3&amp;quot;
+$urlPart3=&amp;quot;/externalsearchv3?includeTFLUsers=true&amp;quot;
 
 $FinalUrl=$urlPart1+$userToSearch+$urlPart3
 
@@ -199,7 +199,7 @@ $Result=Invoke-WebRequest -UseBasicParsing -Uri $finalUrl `
 &amp;quot;method&amp;quot;=&amp;quot;GET&amp;quot;
   &amp;quot;authority&amp;quot;=&amp;quot;teams.microsoft.com&amp;quot;
   &amp;quot;scheme&amp;quot;=&amp;quot;https&amp;quot;
-  &amp;quot;path&amp;quot;=&amp;quot;/api/mt/part/amer-03/beta/users/$userToSearch/externalsearchv3&amp;quot;
+  &amp;quot;path&amp;quot;=&amp;quot;/api/mt/part/amer-03/beta/users/$userToSearch/externalsearchv3?includeTFLUsers=true&amp;quot;
   &amp;quot;sec-ch-ua&amp;quot;=&amp;quot;`&amp;quot; Not A;Brand`&amp;quot;;v=`&amp;quot;99`&amp;quot;, `&amp;quot;Chromium`&amp;quot;;v=`&amp;quot;96`&amp;quot;, `&amp;quot;Microsoft Edge`&amp;quot;;v=`&amp;quot;96`&amp;quot;&amp;quot;
   &amp;quot;x-ms-user-type&amp;quot;=&amp;quot;null&amp;quot;
   &amp;quot;x-ms-client-type&amp;quot;=&amp;quot;web&amp;quot;

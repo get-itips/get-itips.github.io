@@ -4,7 +4,7 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2022</rights>
-	<updated>2022-01-04T20:36:00Z</updated>
+	<updated>2022-01-27T13:46:21Z</updated>
 	<subtitle>Get-ITips</subtitle>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/clear-teams-notifications" />
@@ -115,7 +115,7 @@ I invite everyone that wants to contribute to this script to do so here in this 
 		<id>https://get-itips.capazero.net/posts/extra-information-federated-teams</id>
 		<title>Getting some extra information about Teams federated users using PowerShell</title>
 		<updated>2021-12-20T00:00:00Z</updated>
-		<content>&lt;p&gt;Hello!&lt;/p&gt;
+		<content>&lt;p&gt;&lt;strong&gt;Last update:&lt;/strong&gt; 27th of January - 2022 Added TFL support.&lt;/p&gt;
 &lt;h1 id="introduction"&gt;Introduction&lt;/h1&gt;
 &lt;p&gt;Inspired by my friend's Alexander Holmeset excellent blog post: &lt;a href="https://alexholmeset.blog/2021/12/13/microsoft-teams-speed-dial-contacts-provisioning/"&gt;Microsoft Teams Speed Dial Contacts Provisioning&lt;/a&gt;, I decided to investigate some other API calls made by the Teams client (as Alexander explains, easier to see using Teams web and activating browser's developer tools) and I was interested in one in particular, a request that is made when starting a new chat with external contacts, other tenants or Skype consumer.&lt;/p&gt;
 &lt;p&gt;I said, let's see how it discovers those contacts, just for fun or learning purposes, but I discovered more information is outputted than what the end user actually sees.&lt;/p&gt;
@@ -176,7 +176,7 @@ mri               : 8:megan.bowen
 &lt;pre&gt;&lt;code class="language-powershell"&gt;
 $urlPart1=&amp;quot;https://teams.microsoft.com/api/mt/part/amer-03/beta/users/&amp;quot;
 $userToSearch=&amp;quot;meganb&amp;#64;contoso.com&amp;quot; #Replace this with the other party's SIP URI you want to search more information for
-$urlPart3=&amp;quot;/externalsearchv3&amp;quot;
+$urlPart3=&amp;quot;/externalsearchv3?includeTFLUsers=true&amp;quot;
 
 $FinalUrl=$urlPart1+$userToSearch+$urlPart3
 
@@ -197,7 +197,7 @@ $Result=Invoke-WebRequest -UseBasicParsing -Uri $finalUrl `
 &amp;quot;method&amp;quot;=&amp;quot;GET&amp;quot;
   &amp;quot;authority&amp;quot;=&amp;quot;teams.microsoft.com&amp;quot;
   &amp;quot;scheme&amp;quot;=&amp;quot;https&amp;quot;
-  &amp;quot;path&amp;quot;=&amp;quot;/api/mt/part/amer-03/beta/users/$userToSearch/externalsearchv3&amp;quot;
+  &amp;quot;path&amp;quot;=&amp;quot;/api/mt/part/amer-03/beta/users/$userToSearch/externalsearchv3?includeTFLUsers=true&amp;quot;
   &amp;quot;sec-ch-ua&amp;quot;=&amp;quot;`&amp;quot; Not A;Brand`&amp;quot;;v=`&amp;quot;99`&amp;quot;, `&amp;quot;Chromium`&amp;quot;;v=`&amp;quot;96`&amp;quot;, `&amp;quot;Microsoft Edge`&amp;quot;;v=`&amp;quot;96`&amp;quot;&amp;quot;
   &amp;quot;x-ms-user-type&amp;quot;=&amp;quot;null&amp;quot;
   &amp;quot;x-ms-client-type&amp;quot;=&amp;quot;web&amp;quot;
@@ -225,7 +225,7 @@ $Result=Invoke-WebRequest -UseBasicParsing -Uri $finalUrl `
 
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>&lt;p&gt;Hello!&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;&lt;strong&gt;Last update:&lt;/strong&gt; 27th of January - 2022 Added TFL support.&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/you-no-longer-have-access-to-planner" />
