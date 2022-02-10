@@ -4,8 +4,116 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2022</rights>
-	<updated>2022-01-27T15:02:38Z</updated>
+	<updated>2022-02-10T13:56:26Z</updated>
 	<subtitle>Get-ITips</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/leave-from-meeting-chat" />
+		<id>https://get-itips.capazero.net/posts/leave-from-meeting-chat</id>
+		<title>How to leave a Teams meeting chat, even if you are the organizer</title>
+		<updated>2022-02-10T00:00:00Z</updated>
+		<content>&lt;p&gt;#Introduction&lt;/p&gt;
+&lt;p&gt;I noticed that, if you schedule a Teams Meeting, (and you are the organizer), these are the options available for the meeting chat/conversation:&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/NoLeaveOption.png" class="img-fluid" alt="Teams Meetings No Leave Option" /&gt;&lt;/p&gt;
+&lt;p&gt;See? No &lt;strong&gt;Leave&lt;/strong&gt; option.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Did you know? Leave option will show up to attendes only if the meeting has &amp;gt; 2 participants&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/LeaveOption.png" class="img-fluid" alt="Teams Meetings Leave Option" /&gt;&lt;/p&gt;
+&lt;h1 id="the-problem"&gt;The problem?&lt;/h1&gt;
+&lt;p&gt;What about if, for some reason, you are not anymore in the topic, you switched roles in your company, or you just want to leave the conversation for good?&lt;/p&gt;
+&lt;p&gt;Sure, you can mute or hide the conversation, but it will show up again if someone writes into the meeting chat.&lt;/p&gt;
+&lt;p&gt;So, I investigated a little bit with Developer tools, as I did in &lt;a href="https://get-itips.capazero.net/posts/extra-information-federated-teams"&gt;Getting some extra information about Teams federated users using PowerShell&lt;/a&gt; and &lt;a href="https://get-itips.capazero.net/posts/clear-teams-notifications"&gt;Mark Teams notifications as read&lt;/a&gt; to see what happens when a non-organizer leaves a Meeting chat/conversation and found out that a REST API is called to do that, so decided to give it a try and force an organizer to Leave a Teams meeting chat.&lt;/p&gt;
+&lt;h1 id="prerequisites"&gt;PreRequisites&lt;/h1&gt;
+&lt;p&gt;The tricky part is that we need to specify two things in the URL&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Some sort of thread ID created for the meeting&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Our Teams User ID&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Sample URL&lt;/em&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;https://amer.ng.msg.teams.microsoft.com/v1/threads/19:meeting_MjRkYTA1ZWItZjVhYi00MDVjWJiZDQtMDQwZGU3OTkwZTIz&amp;#64;thread.v2/members/8:orgid:cb13db92-6e3a-4f30-a4a1-3be0d94d4ede 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So how do we get these values? Currently, I am trying to figure out a scripted way to do this, but for now, we can extract the thread ID related to the meeting by editing the meeting itself from Teams web, look in the address bar and copy and paste the whole URL to your favorite text editor.&lt;/p&gt;
+&lt;p&gt;Then, grab everything between the &lt;strong&gt;19:meeting&lt;/strong&gt; and &lt;strong&gt;&amp;#64;thread.v2&lt;/strong&gt;, (including those strings), you will end up with something similar to this&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;19:meeting_NTNjZGZmODItYjc0NS00yLTkyOWMtZmRhOWEwNDc2ZWEy&amp;#64;thread.v2 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, let’s get our user id, the id of the organizer and for this, I used Teams PowerShell, but there are probably other options.&lt;/p&gt;
+&lt;p&gt;I run&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;Get-TeamUser -GroupId 13854e5-baf1-403e-ad3f-b26687383541 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Using a &lt;code&gt;GroupId&lt;/code&gt; of a team where the organizer belongs, and in the results, the column on the left will show you the &lt;code&gt;UserId&lt;/code&gt; that we need, something like&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;cb13db92-6e3a-4f30-a4a1-3be0d94d4ede&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Ok, now we have everything we need, this is the script, go and replace the thread ID and userId in the lines that begin with &lt;code&gt;Invoke-WebRequest&lt;/code&gt; and &lt;code&gt;path&lt;/code&gt;, you have to provide the credentials of the organizer when asked&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;Import-Module AADInternals  
+
+#This will prompt for credentials so it supports MFA login  
+
+$token = Get-AADIntAccessTokenForTeams  
+
+$skypeToken = Get-AADIntSkypeToken -AccessToken $token 
+
+Invoke-WebRequest -UseBasicParsing -Uri &amp;quot;https://amer.ng.msg.teams.microsoft.com/v1/threads/19:meeting_MjRkYTA1ZWItZjVhYi00MDVjLWJiZDQtMDQwZGU3OTkwZTIz&amp;#64;thread.v2/members/8:orgid:cb13db92-6e3a-4f30-a4a1-3be0d94d4ede&amp;quot; ` 
+
+-Method &amp;quot;DELETE&amp;quot; ` 
+
+-Headers &amp;#64;{ 
+
+&amp;quot;method&amp;quot;=&amp;quot;DELETE&amp;quot; 
+
+  &amp;quot;authority&amp;quot;=&amp;quot;amer.ng.msg.teams.microsoft.com&amp;quot; 
+
+  &amp;quot;scheme&amp;quot;=&amp;quot;https&amp;quot; 
+
+  &amp;quot;path&amp;quot;=&amp;quot;/v1/threads/19:meeting_MjRkYTA1ZWItZjVhYi00MDVjLWJiZDQtMDQwZGU3OTkwZTIz&amp;#64;thread.v2/members/8:orgid:cb13db92-6e3a-4f30-a4a1-3be0d94d4ede&amp;quot; 
+
+  &amp;quot;sec-ch-ua&amp;quot;=&amp;quot;`&amp;quot; Not A;Brand`&amp;quot;;v=`&amp;quot;99`&amp;quot;, `&amp;quot;Chromium`&amp;quot;;v=`&amp;quot;98`&amp;quot;, `&amp;quot;Microsoft Edge`&amp;quot;;v=`&amp;quot;98`&amp;quot;&amp;quot; 
+
+  &amp;quot;x-ms-session-id&amp;quot;=&amp;quot;edba78e0-8e34-767a-2aae-fcb1e3d8bb68&amp;quot; 
+
+  &amp;quot;behavioroverride&amp;quot;=&amp;quot;redirectAs404&amp;quot; 
+
+  &amp;quot;x-ms-scenario-id&amp;quot;=&amp;quot;738&amp;quot; 
+
+  &amp;quot;x-ms-client-env&amp;quot;=&amp;quot;pds-prod-comm-usce-01&amp;quot; 
+
+  &amp;quot;x-ms-client-type&amp;quot;=&amp;quot;web&amp;quot; 
+
+  &amp;quot;sec-ch-ua-mobile&amp;quot;=&amp;quot;?0&amp;quot; 
+
+  &amp;quot;clientinfo&amp;quot;=&amp;quot;os=windows; osVer=10; proc=x86; lcid=es-es; deviceType=1; country=es; clientName=skypeteams; clientVer=1415/1.0.0.2022020411; utcOffset=-06:00; timezone=America/Costa_Rica&amp;quot; 
+
+  &amp;quot;x-ms-client-version&amp;quot;=&amp;quot;1415/1.0.0.2022020411&amp;quot; 
+
+  &amp;quot;x-ms-user-type&amp;quot;=&amp;quot;null&amp;quot; 
+
+  &amp;quot;authentication&amp;quot;=&amp;quot;skypetoken=$skypeToken&amp;quot; 
+
+  &amp;quot;sec-ch-ua-platform&amp;quot;=&amp;quot;`&amp;quot;Windows`&amp;quot;&amp;quot; 
+
+  &amp;quot;origin&amp;quot;=&amp;quot;https://teams.microsoft.com&amp;quot; 
+
+  &amp;quot;sec-fetch-site&amp;quot;=&amp;quot;same-site&amp;quot; 
+
+  &amp;quot;sec-fetch-mode&amp;quot;=&amp;quot;cors&amp;quot; 
+
+  &amp;quot;sec-fetch-dest&amp;quot;=&amp;quot;empty&amp;quot; 
+
+  &amp;quot;referer&amp;quot;=&amp;quot;https://teams.microsoft.com/&amp;quot; 
+
+  &amp;quot;accept-encoding&amp;quot;=&amp;quot;gzip, deflate, br&amp;quot; 
+
+  &amp;quot;accept-language&amp;quot;=&amp;quot;es&amp;quot; 
+
+} 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;(This script is a very first version, that means I would like to improve it, and it is provided without any guarantee.)&lt;/p&gt;
+&lt;p&gt;Once run, you will receive a 200 status code HTTP output, and this will appear now in the Meeting chat/conversation&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/Removed.png" class="img-fluid" alt="Removed from Teams Meetings Chat" /&gt;&lt;/p&gt;
+&lt;h1 id="conclusion"&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;This might be useful for very specific cases, and, until Microsoft provides a UI for an organizer to leave a Teams meeting chat for good, we can use this little script.
+If, for some reason, you want to return to the Meeting chat, you can ask a member of the Meeting chat (roster) to add you again&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;#Introduction&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/clear-teams-notifications" />
 		<id>https://get-itips.capazero.net/posts/clear-teams-notifications</id>
@@ -1125,36 +1233,5 @@ Type 'help' to get help.
 &lt;p&gt;I want to end this article with an anecdote, the other day I asked my sister in law (a centennial) if she had a LinkedIn profile and she replied: Link what?&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;Usually, when someone adds me as a contact on LinkedIn, I expect a chat message including some introductory reason on why this person thinks it will be productive to add me as his/her contact, however, most of the time, that does not happens, so I make the first move and chat this person to find out: who are you? how did you found me? what is your role and how do you think we can work or benefit together in our professional lives?&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.capazero.net/posts/ms-700" />
-		<id>https://get-itips.capazero.net/posts/ms-700</id>
-		<title>MS-700 Managing Microsoft Teams exam Study Guide</title>
-		<updated>2019-12-13T00:00:00Z</updated>
-		<content>&lt;p&gt;Hello,&lt;/p&gt;
-&lt;p&gt;I have just came back from the Test Center where I took the MS-700 Managing Microsoft Teams (beta) exam, I still do not if I passed it (EDIT: I passed!), because, if you have taken beta exams before you might know that, results are given to you once it becomes official.&lt;/p&gt;
-&lt;p&gt;Besides that, I would like to &lt;em&gt;emphasize on what you should focus&lt;/em&gt; if you want to take this exam:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;All types of policies of Teams, Team Policies, App Setup policies, Messaging policies, Meeting policies, Calling policy and Live Events policies&lt;/li&gt;
-&lt;li&gt;Org-Wide Settings versus specific settings/policies&lt;/li&gt;
-&lt;li&gt;Analytics &amp;amp; Reports / Call Quality Dashboard / Network Planner&lt;/li&gt;
-&lt;li&gt;Guest access&lt;/li&gt;
-&lt;li&gt;Coexistence mode with SfB, Teams Upgrade&lt;/li&gt;
-&lt;li&gt;Retention policies&lt;/li&gt;
-&lt;li&gt;Meeting settings&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;To be honest, I expected way more questions &lt;em&gt;about telephony&lt;/em&gt; but only a couple, maybe an specific exam about Phone System/Telephony is coming soon.&lt;/p&gt;
-&lt;p&gt;The format is the usual Microsoft has us used to, questions where we can not go back, scenario questions and classic questions where we can go back, I left some feedback on some questions where I thought that &lt;em&gt;some information was missing&lt;/em&gt; to be able to give an answer, this might be expected on a beta exam ;)&lt;/p&gt;
-&lt;h2 id="study-resources"&gt;Study Resources&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;[Microsoft Ignite 2019] &lt;a href="https://myignite.techcommunity.microsoft.com/sessions/85219?source=sessions"&gt;Exam Prep session&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[Microsoft Learn] &lt;a href="https://docs.microsoft.com/en-us/learn/paths/m365-manage-team-collaboration/"&gt;Manage Team Collaboration with Microsoft Teams&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[Microsoft Learn] &lt;a href="https://docs.microsoft.com/en-us/learn/paths/m365-teams-upgrade/"&gt;Upgrade Microsoft Teams&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[docs] &lt;a href="https://docs.microsoft.com/en-us/MicrosoftTeams/Microsoft-Teams"&gt;Official docs Documentation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Your own demo tenant, play with the features, policies and settings.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Hope this quick guide helps anyone that will give a shot to this beta exam, let me know your thoughts too leaving a message here!&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;Hello,&lt;/p&gt;</summary>
 	</entry>
 </feed>

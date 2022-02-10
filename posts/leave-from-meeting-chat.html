@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - Planner</title>
+        <title>Andr&#xE9;s Gorzelany - How to leave a Teams meeting chat, even if you are the organizer</title>
         <meta name="description" content="Get-ITips" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Planner" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - How to leave a Teams meeting chat, even if you are the organizer" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/tags/Planner" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/leave-from-meeting-chat" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -95,9 +95,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>Planner</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>How to leave a Teams meeting chat, even if you are the organizer</h1>
+    <div class="meta">        
+Published on Thursday, February 10, 2022<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -106,48 +114,134 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-sm-8 right-border col-sm-height">
-                    <div class="post-list">
-            <a href="/posts/you-no-longer-have-access-to-planner">
-                <h3 class="post-title">You no longer have access to &lt;Guid&gt; on Planner</h3>
-            </a>
-            <p class="post-meta">Posted on Friday, November 12, 2021</p>      
-        </div>   
+                                        
+
+<p>#Introduction</p>
+<p>I noticed that, if you schedule a Teams Meeting, (and you are the organizer), these are the options available for the meeting chat/conversation:</p>
+<p><img src="/images/NoLeaveOption.png" class="img-fluid" alt="Teams Meetings No Leave Option" /></p>
+<p>See? No <strong>Leave</strong> option.</p>
+<p><em>Did you know? Leave option will show up to attendes only if the meeting has &gt; 2 participants</em></p>
+<p><img src="/images/LeaveOption.png" class="img-fluid" alt="Teams Meetings Leave Option" /></p>
+<h1 id="the-problem">The problem?</h1>
+<p>What about if, for some reason, you are not anymore in the topic, you switched roles in your company, or you just want to leave the conversation for good?</p>
+<p>Sure, you can mute or hide the conversation, but it will show up again if someone writes into the meeting chat.</p>
+<p>So, I investigated a little bit with Developer tools, as I did in <a href="https://get-itips.capazero.net/posts/extra-information-federated-teams">Getting some extra information about Teams federated users using PowerShell</a> and <a href="https://get-itips.capazero.net/posts/clear-teams-notifications">Mark Teams notifications as read</a> to see what happens when a non-organizer leaves a Meeting chat/conversation and found out that a REST API is called to do that, so decided to give it a try and force an organizer to Leave a Teams meeting chat.</p>
+<h1 id="prerequisites">PreRequisites</h1>
+<p>The tricky part is that we need to specify two things in the URL</p>
+<ul>
+<li><p>Some sort of thread ID created for the meeting</p>
+</li>
+<li><p>Our Teams User ID</p>
+</li>
+</ul>
+<p><em>Sample URL</em></p>
+<pre><code class="language-powershell">https://amer.ng.msg.teams.microsoft.com/v1/threads/19:meeting_MjRkYTA1ZWItZjVhYi00MDVjWJiZDQtMDQwZGU3OTkwZTIz&#64;thread.v2/members/8:orgid:cb13db92-6e3a-4f30-a4a1-3be0d94d4ede 
+</code></pre>
+<p>So how do we get these values? Currently, I am trying to figure out a scripted way to do this, but for now, we can extract the thread ID related to the meeting by editing the meeting itself from Teams web, look in the address bar and copy and paste the whole URL to your favorite text editor.</p>
+<p>Then, grab everything between the <strong>19:meeting</strong> and <strong>&#64;thread.v2</strong>, (including those strings), you will end up with something similar to this</p>
+<pre><code class="language-powershell">19:meeting_NTNjZGZmODItYjc0NS00yLTkyOWMtZmRhOWEwNDc2ZWEy&#64;thread.v2 
+</code></pre>
+<p>Now, let’s get our user id, the id of the organizer and for this, I used Teams PowerShell, but there are probably other options.</p>
+<p>I run</p>
+<pre><code class="language-powershell">Get-TeamUser -GroupId 13854e5-baf1-403e-ad3f-b26687383541 
+</code></pre>
+<p>Using a <code>GroupId</code> of a team where the organizer belongs, and in the results, the column on the left will show you the <code>UserId</code> that we need, something like</p>
+<p><code>cb13db92-6e3a-4f30-a4a1-3be0d94d4ede</code></p>
+<p>Ok, now we have everything we need, this is the script, go and replace the thread ID and userId in the lines that begin with <code>Invoke-WebRequest</code> and <code>path</code>, you have to provide the credentials of the organizer when asked</p>
+<pre><code class="language-powershell">Import-Module AADInternals  
+
+#This will prompt for credentials so it supports MFA login  
+
+$token = Get-AADIntAccessTokenForTeams  
+
+$skypeToken = Get-AADIntSkypeToken -AccessToken $token 
+
+Invoke-WebRequest -UseBasicParsing -Uri &quot;https://amer.ng.msg.teams.microsoft.com/v1/threads/19:meeting_MjRkYTA1ZWItZjVhYi00MDVjLWJiZDQtMDQwZGU3OTkwZTIz&#64;thread.v2/members/8:orgid:cb13db92-6e3a-4f30-a4a1-3be0d94d4ede&quot; ` 
+
+-Method &quot;DELETE&quot; ` 
+
+-Headers &#64;{ 
+
+&quot;method&quot;=&quot;DELETE&quot; 
+
+  &quot;authority&quot;=&quot;amer.ng.msg.teams.microsoft.com&quot; 
+
+  &quot;scheme&quot;=&quot;https&quot; 
+
+  &quot;path&quot;=&quot;/v1/threads/19:meeting_MjRkYTA1ZWItZjVhYi00MDVjLWJiZDQtMDQwZGU3OTkwZTIz&#64;thread.v2/members/8:orgid:cb13db92-6e3a-4f30-a4a1-3be0d94d4ede&quot; 
+
+  &quot;sec-ch-ua&quot;=&quot;`&quot; Not A;Brand`&quot;;v=`&quot;99`&quot;, `&quot;Chromium`&quot;;v=`&quot;98`&quot;, `&quot;Microsoft Edge`&quot;;v=`&quot;98`&quot;&quot; 
+
+  &quot;x-ms-session-id&quot;=&quot;edba78e0-8e34-767a-2aae-fcb1e3d8bb68&quot; 
+
+  &quot;behavioroverride&quot;=&quot;redirectAs404&quot; 
+
+  &quot;x-ms-scenario-id&quot;=&quot;738&quot; 
+
+  &quot;x-ms-client-env&quot;=&quot;pds-prod-comm-usce-01&quot; 
+
+  &quot;x-ms-client-type&quot;=&quot;web&quot; 
+
+  &quot;sec-ch-ua-mobile&quot;=&quot;?0&quot; 
+
+  &quot;clientinfo&quot;=&quot;os=windows; osVer=10; proc=x86; lcid=es-es; deviceType=1; country=es; clientName=skypeteams; clientVer=1415/1.0.0.2022020411; utcOffset=-06:00; timezone=America/Costa_Rica&quot; 
+
+  &quot;x-ms-client-version&quot;=&quot;1415/1.0.0.2022020411&quot; 
+
+  &quot;x-ms-user-type&quot;=&quot;null&quot; 
+
+  &quot;authentication&quot;=&quot;skypetoken=$skypeToken&quot; 
+
+  &quot;sec-ch-ua-platform&quot;=&quot;`&quot;Windows`&quot;&quot; 
+
+  &quot;origin&quot;=&quot;https://teams.microsoft.com&quot; 
+
+  &quot;sec-fetch-site&quot;=&quot;same-site&quot; 
+
+  &quot;sec-fetch-mode&quot;=&quot;cors&quot; 
+
+  &quot;sec-fetch-dest&quot;=&quot;empty&quot; 
+
+  &quot;referer&quot;=&quot;https://teams.microsoft.com/&quot; 
+
+  &quot;accept-encoding&quot;=&quot;gzip, deflate, br&quot; 
+
+  &quot;accept-language&quot;=&quot;es&quot; 
+
+} 
+</code></pre>
+<p>(This script is a very first version, that means I would like to improve it, and it is provided without any guarantee.)</p>
+<p>Once run, you will receive a 200 status code HTTP output, and this will appear now in the Meeting chat/conversation</p>
+<p><img src="/images/Removed.png" class="img-fluid" alt="Removed from Teams Meetings Chat" /></p>
+<h1 id="conclusion">Conclusion</h1>
+<p>This might be useful for very specific cases, and, until Microsoft provides a UI for an organizer to leave a Teams meeting chat for good, we can use this little script.
+If, for some reason, you want to return to the Meeting chat, you can ask a member of the Meeting chat (roster) to add you again</p>
 
 
-            <nav>
-                <ul class="pager">
-                    <li class="previous">                
-                    </li>
-                    <li class="next">
-                    </li>
-                </ul>
-            </nav>
-            <hr class="visible-xs-block" />
-        </div>
-		
-        <div class="col-sm-4 col-sm-height">
-                <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams (13)</a>
-                <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-xs">Sharepoint (5)</a>
-                <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer (4)</a>
-                <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-xs">TeamFoundationServer (4)</a>
-                <a role="button" href="/tags/365" class="btn btn-default btn-xs">365 (2)</a>
-                <a role="button" href="/tags/Skype4B" class="btn btn-default btn-xs">Skype4B (2)</a>
-                <a role="button" href="/tags/Ignite" class="btn btn-default btn-xs">Ignite (2)</a>
-                <a role="button" href="/tags/Planner" class="btn btn-primary btn-xs">Planner (1)</a>
-                <a role="button" href="/tags/Windows" class="btn btn-default btn-xs">Windows (1)</a>
-                <a role="button" href="/tags/Azure" class="btn btn-default btn-xs">Azure (1)</a>
-                <a role="button" href="/tags/Exams" class="btn btn-default btn-xs">Exams (1)</a>
-                <a role="button" href="/tags/Misc" class="btn btn-default btn-xs">Misc (1)</a>
-                <a role="button" href="/tags/GitHub" class="btn btn-default btn-xs">GitHub (1)</a>
-                <a role="button" href="/tags/General" class="btn btn-default btn-xs">General (1)</a>
-                <a role="button" href="/tags/SSL" class="btn btn-default btn-xs">SSL (1)</a>
-                <a role="button" href="/tags/Powershell" class="btn btn-default btn-xs">Powershell (1)</a>
-        </div>
-    </div>
-</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'leave-from-meeting-chat';
+    var disqus_title = 'How to leave a Teams meeting chat, even if you are the organizer';
+    var disqus_url = 'https://get-itips.capazero.net/posts/leave-from-meeting-chat';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
                                 </div>
                         </div>
                 </div>
