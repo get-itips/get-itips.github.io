@@ -4,7 +4,7 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2022</rights>
-	<updated>2022-02-10T14:35:42Z</updated>
+	<updated>2022-02-10T14:37:23Z</updated>
 	<subtitle>Get-ITips</subtitle>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/leave-from-meeting-chat" />
@@ -51,7 +51,7 @@ $token = Get-AADIntAccessTokenForTeams
 
 $skypeToken = Get-AADIntSkypeToken -AccessToken $token 
 
-Invoke-WebRequest -UseBasicParsing -Uri &amp;quot;https://amer.ng.msg.teams.microsoft.com/v1/threads/19:meeting_MjRkYTA1ZWItZjVhYi00MDVjLWJiZDQtMDQwZGU3OTkwZTIz&amp;#64;thread.v2/members/8:orgid:cb13db92-6e3a-4f30-a4a1-3be0d94d4ede&amp;quot; ` 
+Invoke-WebRequest -UseBasicParsing -Uri &amp;quot;https://amer.ng.msg.teams.microsoft.com/v1/threads/&amp;lt;MEETING_ID_GOES_HERE&amp;gt;/members/8:orgid:&amp;lt;YOUR_USERID&amp;gt;&amp;quot; ` 
 
 -Method &amp;quot;DELETE&amp;quot; ` 
 
@@ -63,7 +63,7 @@ Invoke-WebRequest -UseBasicParsing -Uri &amp;quot;https://amer.ng.msg.teams.micr
 
   &amp;quot;scheme&amp;quot;=&amp;quot;https&amp;quot; 
 
-  &amp;quot;path&amp;quot;=&amp;quot;/v1/threads/19:meeting_MjRkYTA1ZWItZjVhYi00MDVjLWJiZDQtMDQwZGU3OTkwZTIz&amp;#64;thread.v2/members/8:orgid:cb13db92-6e3a-4f30-a4a1-3be0d94d4ede&amp;quot; 
+  &amp;quot;path&amp;quot;=&amp;quot;/v1/threads/&amp;lt;MEETING_ID_GOES_HERE&amp;gt;/members/8:orgid:&amp;lt;YOUR_USERID&amp;gt;&amp;quot; 
 
   &amp;quot;sec-ch-ua&amp;quot;=&amp;quot;`&amp;quot; Not A;Brand`&amp;quot;;v=`&amp;quot;99`&amp;quot;, `&amp;quot;Chromium`&amp;quot;;v=`&amp;quot;98`&amp;quot;, `&amp;quot;Microsoft Edge`&amp;quot;;v=`&amp;quot;98`&amp;quot;&amp;quot; 
 
