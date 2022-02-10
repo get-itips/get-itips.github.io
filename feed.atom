@@ -4,14 +4,14 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2022</rights>
-	<updated>2022-02-10T14:00:27Z</updated>
+	<updated>2022-02-10T14:01:07Z</updated>
 	<subtitle>Get-ITips</subtitle>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/leave-from-meeting-chat" />
 		<id>https://get-itips.capazero.net/posts/leave-from-meeting-chat</id>
 		<title>How to leave a Teams meeting chat, even if you are the organizer</title>
 		<updated>2022-02-10T00:00:00Z</updated>
-		<content>&lt;p&gt;#Introduction&lt;/p&gt;
+		<content>&lt;h1 id="introduction"&gt;Introduction&lt;/h1&gt;
 &lt;p&gt;I noticed that, if you schedule a Teams Meeting, (and you are the organizer), these are the options available for the meeting chat/conversation:&lt;/p&gt;
 &lt;p&gt;&lt;img src="/images/NoLeaveOption.png" class="img-fluid" alt="Teams Meetings No Leave Option" /&gt;&lt;/p&gt;
 &lt;p&gt;See? No &lt;strong&gt;Leave&lt;/strong&gt; option.&lt;/p&gt;
@@ -112,7 +112,7 @@ Invoke-WebRequest -UseBasicParsing -Uri &amp;quot;https://amer.ng.msg.teams.micr
 &lt;p&gt;This might be useful for very specific cases, and, until Microsoft provides a UI for an organizer to leave a Teams meeting chat for good, we can use this little script.
 If, for some reason, you want to return to the Meeting chat, you can ask a member of the Meeting chat (roster) to add you again&lt;/p&gt;
 </content>
-		<summary>&lt;p&gt;#Introduction&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;I noticed that, if you schedule a Teams Meeting, (and you are the organizer), these are the options available for the meeting chat/conversation:&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/clear-teams-notifications" />
