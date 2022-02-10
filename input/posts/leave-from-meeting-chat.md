@@ -3,7 +3,7 @@ Published: 2/10/2022
 Tags: Teams
 ---
 
-#Introduction
+# Introduction
 
 I noticed that, if you schedule a Teams Meeting, (and you are the organizer), these are the options available for the meeting chat/conversation: 
 
