@@ -69,7 +69,7 @@ $token = Get-AADIntAccessTokenForTeams
 
 $skypeToken = Get-AADIntSkypeToken -AccessToken $token 
 
-Invoke-WebRequest -UseBasicParsing -Uri "https://amer.ng.msg.teams.microsoft.com/v1/threads/19:meeting_MjRkYTA1ZWItZjVhYi00MDVjLWJiZDQtMDQwZGU3OTkwZTIz@thread.v2/members/8:orgid:cb13db92-6e3a-4f30-a4a1-3be0d94d4ede" ` 
+Invoke-WebRequest -UseBasicParsing -Uri "https://amer.ng.msg.teams.microsoft.com/v1/threads/<MEETING_ID_GOES_HERE>/members/8:orgid:<YOUR_USERID>" ` 
 
 -Method "DELETE" ` 
 
@@ -81,7 +81,7 @@ Invoke-WebRequest -UseBasicParsing -Uri "https://amer.ng.msg.teams.microsoft.com
 
   "scheme"="https" 
 
-  "path"="/v1/threads/19:meeting_MjRkYTA1ZWItZjVhYi00MDVjLWJiZDQtMDQwZGU3OTkwZTIz@thread.v2/members/8:orgid:cb13db92-6e3a-4f30-a4a1-3be0d94d4ede" 
+  "path"="/v1/threads/<MEETING_ID_GOES_HERE>/members/8:orgid:<YOUR_USERID>" 
 
   "sec-ch-ua"="`" Not A;Brand`";v=`"99`", `"Chromium`";v=`"98`", `"Microsoft Edge`";v=`"98`"" 
 
