@@ -4,19 +4,15 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2022</rights>
-	<updated>2022-04-27T17:28:42Z</updated>
+	<updated>2022-04-27T17:37:40Z</updated>
 	<subtitle>Get-ITips</subtitle>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/shared-channels-101" />
 		<id>https://get-itips.capazero.net/posts/shared-channels-101</id>
 		<title>Enabling Teams Shared Channels 101</title>
 		<updated>2022-04-27T00:00:00Z</updated>
-		<content>&lt;p&gt;Teams Shared Channels is a great new feature that is still in Public Preview, I don’t want to repeat what other great resources already say:&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://www.michev.info/Blog/Post/3681/cross-tenant-access-policy-xtap-and-the-graph-api"&gt;https://www.michev.info/Blog/Post/3681/cross-tenant-access-policy-xtap-and-the-graph-api&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://practical365.com/cross-tenant-access-policies/"&gt;https://practical365.com/cross-tenant-access-policies/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/azure/active-directory/external-identities/b2b-direct-connect-overview"&gt;https://docs.microsoft.com/en-us/azure/active-directory/external-identities/b2b-direct-connect-overview&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/azure/active-directory/external-identities/cross-tenant-access-settings-b2b-direct-connect"&gt;https://docs.microsoft.com/en-us/azure/active-directory/external-identities/cross-tenant-access-settings-b2b-direct-connect&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;The objective of this post is to create a concise guide to follow in order to enable Shared Channels in your Tenant&lt;/p&gt;
+		<content>&lt;p&gt;#Background&lt;/p&gt;
+&lt;p&gt;Teams Shared Channels is a great new feature that is still in Public Preview, the goal of this post is to create a concise guide to follow in order to enable Shared Channels in your Tenant&lt;/p&gt;
 &lt;h1 id="azure-ad-cross-tenant-access-policies"&gt;Azure AD Cross Tenant Access Policies&lt;/h1&gt;
 &lt;p&gt;These are the basis of Teams Shared Channels and we must begin configuring them in order to enable Teams Shared Channels later.&lt;/p&gt;
 &lt;ol&gt;
@@ -37,7 +33,12 @@
 &lt;li&gt;Inbound access is configured when the direction of the collaboration is ToMyTenancy, in other words when we want to invite someone from the other organization to a Shared channel created on our tenant.&lt;/li&gt;
 &lt;li&gt;If you want your users to be able to participate in the other organization’s shared channels, configure the same settings under inherited from default in Outbound access column.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This configuration can be viewed with the Graph PowerShell cmdlet &lt;strong&gt;Get-MgPolicyCrossTenantAccessPolicy&lt;/strong&gt; (Microsoft.Graph.Identity.SignIns) | Microsoft Docs and the Exchange Online PowerShell cmdlet &lt;strong&gt;Get-CrossTenantAccessPolicy&lt;/strong&gt;, although not yet so user-friendly.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This configuration can be viewed with the Graph PowerShell cmdlet &lt;strong&gt;Get-MgPolicyCrossTenantAccessPolicy&lt;/strong&gt; (Microsoft.Graph.Identity.SignIns) and the Exchange Online PowerShell cmdlet &lt;strong&gt;Get-CrossTenantAccessPolicy&lt;/strong&gt;, although not yet so user-friendly.&lt;/p&gt;
+&lt;p&gt;Check this great resources in case you want to understand more about these policies:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.michev.info/Blog/Post/3681/cross-tenant-access-policy-xtap-and-the-graph-api"&gt;https://www.michev.info/Blog/Post/3681/cross-tenant-access-policy-xtap-and-the-graph-api&lt;/a&gt;
+&lt;a href="https://practical365.com/cross-tenant-access-policies/"&gt;https://practical365.com/cross-tenant-access-policies/&lt;/a&gt;
+&lt;a href="https://docs.microsoft.com/en-us/azure/active-directory/external-identities/b2b-direct-connect-overview"&gt;https://docs.microsoft.com/en-us/azure/active-directory/external-identities/b2b-direct-connect-overview&lt;/a&gt;
+&lt;a href="https://docs.microsoft.com/en-us/azure/active-directory/external-identities/cross-tenant-access-settings-b2b-direct-connect"&gt;https://docs.microsoft.com/en-us/azure/active-directory/external-identities/cross-tenant-access-settings-b2b-direct-connect&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id="teams-admin-center"&gt;Teams Admin Center&lt;/h1&gt;
 &lt;h2 id="teams-policies"&gt;Teams policies&lt;/h2&gt;
 &lt;ol&gt;
@@ -63,7 +64,7 @@
 &lt;/ol&gt;
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Is not necessary to load Teams using the Public Preview version to later interact with the Channel once it is created.&lt;/p&gt;
 </content>
-		<summary>&lt;p&gt;Teams Shared Channels is a great new feature that is still in Public Preview, I don’t want to repeat what other great resources already say:&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;#Background&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/leave-from-meeting-chat" />

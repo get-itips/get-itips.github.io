@@ -116,12 +116,8 @@ Published on Wednesday, April 27, 2022<br>    </div>
                                 <div id="content" class="col-md-12">
                                         
 
-<p>Teams Shared Channels is a great new feature that is still in Public Preview, I don’t want to repeat what other great resources already say:</p>
-<p><a href="https://www.michev.info/Blog/Post/3681/cross-tenant-access-policy-xtap-and-the-graph-api">https://www.michev.info/Blog/Post/3681/cross-tenant-access-policy-xtap-and-the-graph-api</a></p>
-<p><a href="https://practical365.com/cross-tenant-access-policies/">https://practical365.com/cross-tenant-access-policies/</a></p>
-<p><a href="https://docs.microsoft.com/en-us/azure/active-directory/external-identities/b2b-direct-connect-overview">https://docs.microsoft.com/en-us/azure/active-directory/external-identities/b2b-direct-connect-overview</a></p>
-<p><a href="https://docs.microsoft.com/en-us/azure/active-directory/external-identities/cross-tenant-access-settings-b2b-direct-connect">https://docs.microsoft.com/en-us/azure/active-directory/external-identities/cross-tenant-access-settings-b2b-direct-connect</a></p>
-<p>The objective of this post is to create a concise guide to follow in order to enable Shared Channels in your Tenant</p>
+<p>#Background</p>
+<p>Teams Shared Channels is a great new feature that is still in Public Preview, the goal of this post is to create a concise guide to follow in order to enable Shared Channels in your Tenant</p>
 <h1 id="azure-ad-cross-tenant-access-policies">Azure AD Cross Tenant Access Policies</h1>
 <p>These are the basis of Teams Shared Channels and we must begin configuring them in order to enable Teams Shared Channels later.</p>
 <ol>
@@ -142,7 +138,12 @@ Published on Wednesday, April 27, 2022<br>    </div>
 <li>Inbound access is configured when the direction of the collaboration is ToMyTenancy, in other words when we want to invite someone from the other organization to a Shared channel created on our tenant.</li>
 <li>If you want your users to be able to participate in the other organization’s shared channels, configure the same settings under inherited from default in Outbound access column.</li>
 </ol>
-<p><strong>Note:</strong> This configuration can be viewed with the Graph PowerShell cmdlet <strong>Get-MgPolicyCrossTenantAccessPolicy</strong> (Microsoft.Graph.Identity.SignIns) | Microsoft Docs and the Exchange Online PowerShell cmdlet <strong>Get-CrossTenantAccessPolicy</strong>, although not yet so user-friendly.</p>
+<p><strong>Note:</strong> This configuration can be viewed with the Graph PowerShell cmdlet <strong>Get-MgPolicyCrossTenantAccessPolicy</strong> (Microsoft.Graph.Identity.SignIns) and the Exchange Online PowerShell cmdlet <strong>Get-CrossTenantAccessPolicy</strong>, although not yet so user-friendly.</p>
+<p>Check this great resources in case you want to understand more about these policies:</p>
+<p><a href="https://www.michev.info/Blog/Post/3681/cross-tenant-access-policy-xtap-and-the-graph-api">https://www.michev.info/Blog/Post/3681/cross-tenant-access-policy-xtap-and-the-graph-api</a>
+<a href="https://practical365.com/cross-tenant-access-policies/">https://practical365.com/cross-tenant-access-policies/</a>
+<a href="https://docs.microsoft.com/en-us/azure/active-directory/external-identities/b2b-direct-connect-overview">https://docs.microsoft.com/en-us/azure/active-directory/external-identities/b2b-direct-connect-overview</a>
+<a href="https://docs.microsoft.com/en-us/azure/active-directory/external-identities/cross-tenant-access-settings-b2b-direct-connect">https://docs.microsoft.com/en-us/azure/active-directory/external-identities/cross-tenant-access-settings-b2b-direct-connect</a></p>
 <h1 id="teams-admin-center">Teams Admin Center</h1>
 <h2 id="teams-policies">Teams policies</h2>
 <ol>
