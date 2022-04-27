@@ -5,8 +5,67 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2022</copyright>
-		<pubDate>Thu, 10 Feb 2022 14:40:35 GMT</pubDate>
-		<lastBuildDate>Thu, 10 Feb 2022 14:40:35 GMT</lastBuildDate>
+		<pubDate>Wed, 27 Apr 2022 17:28:42 GMT</pubDate>
+		<lastBuildDate>Wed, 27 Apr 2022 17:28:42 GMT</lastBuildDate>
+		<item>
+			<title>Enabling Teams Shared Channels 101</title>
+			<link>https://get-itips.capazero.net/posts/shared-channels-101</link>
+			<description>&lt;p&gt;Teams Shared Channels is a great new feature that is still in Public Preview, I don’t want to repeat what other great resources already say:&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/shared-channels-101</guid>
+			<pubDate>Wed, 27 Apr 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Teams Shared Channels is a great new feature that is still in Public Preview, I don’t want to repeat what other great resources already say:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.michev.info/Blog/Post/3681/cross-tenant-access-policy-xtap-and-the-graph-api"&gt;https://www.michev.info/Blog/Post/3681/cross-tenant-access-policy-xtap-and-the-graph-api&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://practical365.com/cross-tenant-access-policies/"&gt;https://practical365.com/cross-tenant-access-policies/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/azure/active-directory/external-identities/b2b-direct-connect-overview"&gt;https://docs.microsoft.com/en-us/azure/active-directory/external-identities/b2b-direct-connect-overview&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/azure/active-directory/external-identities/cross-tenant-access-settings-b2b-direct-connect"&gt;https://docs.microsoft.com/en-us/azure/active-directory/external-identities/cross-tenant-access-settings-b2b-direct-connect&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The objective of this post is to create a concise guide to follow in order to enable Shared Channels in your Tenant&lt;/p&gt;
+&lt;h1 id="azure-ad-cross-tenant-access-policies"&gt;Azure AD Cross Tenant Access Policies&lt;/h1&gt;
+&lt;p&gt;These are the basis of Teams Shared Channels and we must begin configuring them in order to enable Teams Shared Channels later.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Browse to &lt;a href="https://aad.portal.azure.com/"&gt;https://aad.portal.azure.com/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Click on &lt;strong&gt;Azure Active Directory&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Click on &lt;strong&gt;External Identities&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Click on &lt;strong&gt;Cross-Tenant access settings (preview)&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Click &lt;strong&gt;Add Organization&lt;/strong&gt;, this would be the information of the other organization we would like to interact with.&lt;/li&gt;
+&lt;li&gt;Enter the &lt;strong&gt;Tenant ID or domain name&lt;/strong&gt;, if you use the latter, it is in the form of tenantname.onmicrosoft.com&lt;/li&gt;
+&lt;li&gt;It should resolve the Name and Tenant ID, click &lt;strong&gt;Add&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;A new entry should be added on the list and a default of &amp;quot;&lt;strong&gt;Inherited from default&lt;/strong&gt;&amp;quot; in &lt;strong&gt;Inbound Access&lt;/strong&gt; and &lt;strong&gt;Outbound access&lt;/strong&gt; columns should be displayed.&lt;/li&gt;
+&lt;li&gt;We are going to customize per organization instead of using the defaults, but you can also customize the defaults. Click on the &lt;strong&gt;Inherited from default&lt;/strong&gt; in the &lt;strong&gt;inbound access&lt;/strong&gt; column&lt;/li&gt;
+&lt;li&gt;Click &lt;strong&gt;B2B Direct connect&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Click &lt;strong&gt;Customize settings&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Verify &lt;strong&gt;Allow Access&lt;/strong&gt; and &lt;strong&gt;All External users and groups&lt;/strong&gt; are selected (Although it can be customized to scope to certain users and groups), and Click &lt;strong&gt;Save&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Click &lt;strong&gt;Applications&lt;/strong&gt; and verify &lt;strong&gt;Allow Access&lt;/strong&gt; and &lt;strong&gt;all applications&lt;/strong&gt; are selected (although it can be customized to certain applications), click &lt;strong&gt;Save&lt;/strong&gt; if you had to modify any setting here.&lt;/li&gt;
+&lt;li&gt;Go back to the &lt;strong&gt;External identities&lt;/strong&gt; screen clicking on &lt;strong&gt;External Identities&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Inbound access is configured when the direction of the collaboration is ToMyTenancy, in other words when we want to invite someone from the other organization to a Shared channel created on our tenant.&lt;/li&gt;
+&lt;li&gt;If you want your users to be able to participate in the other organization’s shared channels, configure the same settings under inherited from default in Outbound access column.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This configuration can be viewed with the Graph PowerShell cmdlet &lt;strong&gt;Get-MgPolicyCrossTenantAccessPolicy&lt;/strong&gt; (Microsoft.Graph.Identity.SignIns) | Microsoft Docs and the Exchange Online PowerShell cmdlet &lt;strong&gt;Get-CrossTenantAccessPolicy&lt;/strong&gt;, although not yet so user-friendly.&lt;/p&gt;
+&lt;h1 id="teams-admin-center"&gt;Teams Admin Center&lt;/h1&gt;
+&lt;h2 id="teams-policies"&gt;Teams policies&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Browse to &lt;a href="https://admin.teams.microsoft.com/"&gt;https://admin.teams.microsoft.com/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Click on &lt;strong&gt;Teams – Teams policies&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Click on the &lt;strong&gt;Global (org-wide default)&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Verify that &lt;strong&gt;Create shared channels&lt;/strong&gt; and &lt;strong&gt;Join external shared channels&lt;/strong&gt; is &lt;strong&gt;enabled&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;You can also create a new policy if you don’t want to use the Global one&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="teams-update-policies"&gt;Teams update policies&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Click on &lt;strong&gt;Teams – Teams update policies&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Click on the &lt;strong&gt;Global (org-wide default)&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Verify that under the &lt;strong&gt;Show preview features&lt;/strong&gt; combo, &lt;strong&gt;Enabled&lt;/strong&gt; is selected&lt;/li&gt;
+&lt;li&gt;Click &lt;strong&gt;Apply&lt;/strong&gt; if necessary.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="teams-client"&gt;Teams client&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Click the &lt;strong&gt;…&lt;/strong&gt; in the Teams desktop client&lt;/li&gt;
+&lt;li&gt;Select &lt;strong&gt;About – Public Preview version&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Accept the agreement&lt;/li&gt;
+&lt;li&gt;You should now be able to create a Shared Channel&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Is not necessary to load Teams using the Public Preview version to later interact with the Channel once it is created.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>How to leave a Teams meeting chat, even if you are the organizer</title>
 			<link>https://get-itips.capazero.net/posts/leave-from-meeting-chat</link>
@@ -1214,25 +1273,6 @@ Type 'help' to get help.
 &lt;pre&gt;&lt;code&gt;https://statics.teams.cdn.office.net/production-windows-x64/1.3.00.4461/Teams_windows_x64.msi
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Hope this is useful for anyone.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>What's missing from LinkedIn</title>
-			<link>https://get-itips.capazero.net/posts/what-is-missing-from-linkedin</link>
-			<description>&lt;p&gt;Usually, when someone adds me as a contact on LinkedIn, I expect a chat message including some introductory reason on why this person thinks it will be productive to add me as his/her contact, however, most of the time, that does not happens, so I make the first move and chat this person to find out: who are you? how did you found me? what is your role and how do you think we can work or benefit together in our professional lives?&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/what-is-missing-from-linkedin</guid>
-			<pubDate>Tue, 04 Feb 2020 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Usually, when someone adds me as a contact on LinkedIn, I expect a chat message including some introductory reason on why this person thinks it will be productive to add me as his/her contact, however, most of the time, that does not happens, so I make the first move and chat this person to find out: who are you? how did you found me? what is your role and how do you think we can work or benefit together in our professional lives?&lt;/p&gt;
-&lt;p&gt;Most of the time, I don't get a reply back, some other times, I just get some basic reply and in the least case, I do get an interesting exchange where we both could profit in the future. Does that ring a bell for you?&lt;/p&gt;
-&lt;p&gt;This has been a long standing issue of LinkedIn since it was created, it is no news, a lot of people are only interested in growing its quantity of connections and not its quality, maybe that is the reason the follow system was added, which I appraise, it is an ideal way of getting news about someone's activity: why adding someone to your network when you do not expect doing business with?&lt;/p&gt;
-&lt;h2 id="the-other-rising-issue"&gt;The other rising issue&lt;/h2&gt;
-&lt;p&gt;LinkedIn should buy a hiring talent platform like UpWork or at least, incorporate some of its functionality.&lt;/p&gt;
-&lt;p&gt;Let's say that the connection works and you are hired or hire someone for a project, that is the end of the story on LinkedIn, you will have to move to another platform, another silo to agree on the terms of the contract, track the project progress and tasks and qualify the work of the other party.&lt;/p&gt;
-&lt;p&gt;Why would I need to do this outside of LinkedIn if I got started on LinkedIn? That situation is a lost opportunity for everyone involved, even the most important professional network to date.&lt;/p&gt;
-&lt;p&gt;Profiles should be re-designed completely.&lt;/p&gt;
-&lt;p&gt;They do not give you the chance to clearly communicate that you work independent/freelancer or even as a digital nomad. They expect you to work for a company on a fixed location, also, there is not a field to inform your current time zone.&lt;/p&gt;
-&lt;p&gt;Times are changing... no, excuse me, times already changed, I love LinkedIn, but let me tell you that those old structures should not be the only option anymore.&lt;/p&gt;
-&lt;p&gt;I want to end this article with an anecdote, the other day I asked my sister in law (a centennial) if she had a LinkedIn profile and she replied: Link what?&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>
