@@ -5,8 +5,40 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2022</copyright>
-		<pubDate>Wed, 27 Apr 2022 18:20:08 GMT</pubDate>
-		<lastBuildDate>Wed, 27 Apr 2022 18:20:08 GMT</lastBuildDate>
+		<pubDate>Wed, 11 May 2022 16:22:33 GMT</pubDate>
+		<lastBuildDate>Wed, 11 May 2022 16:22:33 GMT</lastBuildDate>
+		<item>
+			<title>The Microsoft Exchange Unified Messaging Call Router service rejected the call for the following reason</title>
+			<link>https://get-itips.capazero.net/posts/um-call-rejected</link>
+			<description>&lt;p&gt;In the process of adding an Exchange Server 2019 to a current Exchange organization with Exchange Server 2013, Auto Attendant/UM stopped working, investigating event viewer logs
+in Exchange Server 2013 server, I found this event entry (Event Id 1647)&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/um-call-rejected</guid>
+			<pubDate>Wed, 11 May 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;In the process of adding an Exchange Server 2019 to a current Exchange organization with Exchange Server 2013, Auto Attendant/UM stopped working, investigating event viewer logs
+in Exchange Server 2013 server, I found this event entry (Event Id 1647)&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;The Microsoft Exchange Unified Messaging Call Router service rejected the call for the following reason: 15647;source=&amp;quot;ex2013.contoso.net&amp;quot;;reason=&amp;quot;Access to Active Directory error occured.&amp;quot; Microsoft.Exchange.UM.UMCore.CallRejectedException: The Mailbox server with the FQDN ex2019.contoso.net couldn't be located in Active Directory.
+   at Microsoft.Exchange.UM.UMCore.EnterpriseRedirectionTarget.GetRoutingInformation(String serverFqdn, Boolean isSecuredCall, String&amp;amp; routingFqdn, Int32&amp;amp; routingPort)
+   at Microsoft.Exchange.UM.UMCore.EnterpriseRedirectionTarget.GetBackEndBrickRedirectionTarget(ADUser user, IRoutingContext context)
+   at Microsoft.Exchange.UM.UMCore.EnterpriseRedirectionTarget.GetForNonUserSpecificCall(OrganizationId orgId, IRoutingContext context)
+   at Microsoft.Exchange.UM.UMCore.AutoAttendantCallHandler.HandleCall(CafeRoutingContext context)
+   at Microsoft.Exchange.UM.UMCore.RouterCallHandler.InternalHandle(ICallHandler[] handlers, CafeRoutingContext context)
+   at Microsoft.Exchange.UM.UcmaPlatform.UcmaCallRouterPlatform.TryHandleIncomingCall(CallReceivedEventArgs`1 args, Exception&amp;amp; error, Boolean&amp;amp; isDiagnosticCall)
+   at Microsoft.Exchange.UM.UcmaPlatform.UcmaUtils.&amp;lt;&amp;gt;c__DisplayClassf.&amp;lt;ProcessPlatformRequestAndReportErrors&amp;gt;b__d()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The error might be misleading as it implies some Active Directory connection issue, but it was mentioning the newly incorporated Exchange Server 2019 and I thought, why?&lt;/p&gt;
+&lt;p&gt;I then remember I migrated System Mailboxes to Exchange 2019 box, especially, these two, that have UM-related capabilities:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;Name                  : SystemMailbox{bb558c35-97f1-4cb9-8ff7-d53741dc928c}
+PersistedCapabilities : {OrganizationCapabilityUMGrammarReady, OrganizationCapabilityPstProvider,
+                        OrganizationCapabilityMessageTracking, OrganizationCapabilityMailRouting,
+                        OrganizationCapabilityClientExtensions, OrganizationCapabilityGMGen,
+                        OrganizationCapabilityOABGen, OrganizationCapabilityUMGrammar}
+
+Name                  : SystemMailbox{e0dc1c29-89c3-4034-b678-e6c29d823ed9}
+PersistedCapabilities : {OrganizationCapabilityUMDataStorage}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Boom! that might be it... so I moved them back to Exchange 2013 mailbox database and AutoAttendant/UM started to work again.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Enabling Teams Shared Channels 101</title>
 			<link>https://get-itips.capazero.net/posts/shared-channels-101</link>
@@ -1252,28 +1284,6 @@ Type 'help' to get help.
 &lt;p&gt;again, a lot of logging in the console, but once connected, everything seems to work the same as with Windows Powershell&lt;/p&gt;
 &lt;p&gt;&lt;img src="/images/teams_pscore_5.png" class="img-fluid" alt="connectMsTeamsDeviceAuth" /&gt;&lt;/p&gt;
 &lt;p&gt;This is a big step into modernizing Microsoft Teams PowerShell module, it will surely help to integrate the module to newer methods of automatization, from any Operating System, I salute the Product Team for all the hard work done, hopefully, the Credential error will be fixed soon.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Getting past Teams MSI versions</title>
-			<link>https://get-itips.capazero.net/posts/teams-msi-links</link>
-			<description>&lt;p&gt;If you use the Microsoft Teams msi version and are looking for a past version for any reason, you can use this method, "hacking" into the following url, replace the required strings and get the desired version of the msi&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/teams-msi-links</guid>
-			<pubDate>Fri, 12 Jun 2020 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;If you use the Microsoft Teams msi version and are looking for a past version for any reason, you can use this method, &amp;quot;hacking&amp;quot; into the following url, replace the required strings and get the desired version of the msi&lt;/p&gt;
-&lt;h2 id="for-32-bit-version"&gt;For 32-bit version&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;https://statics.teams.cdn.office.net/production-windows/VERSION/Teams_windows.msi
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;For example&lt;/em&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;https://statics.teams.cdn.office.net/production-windows/1.3.00.4461/Teams_windows.msi
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="for-64-bit-version"&gt;For 64-bit version&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;https://statics.teams.cdn.office.net/production-windows-x64/VERSION/Teams_windows_x64.msi
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;For example&lt;/em&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;https://statics.teams.cdn.office.net/production-windows-x64/1.3.00.4461/Teams_windows_x64.msi
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Hope this is useful for anyone.&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>

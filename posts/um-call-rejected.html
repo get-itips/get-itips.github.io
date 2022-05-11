@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - Windows</title>
+        <title>Andr&#xE9;s Gorzelany - The Microsoft Exchange Unified Messaging Call Router service rejected the call for the following reason</title>
         <meta name="description" content="Get-ITips" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Windows" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - The Microsoft Exchange Unified Messaging Call Router service rejected the call for the following reason" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/tags/Windows" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/um-call-rejected" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -95,9 +95,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>Windows</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>The Microsoft Exchange Unified Messaging Call Router service rejected the call for the following reason</h1>
+    <div class="meta">        
+Published on Wednesday, May 11, 2022<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -106,48 +114,57 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-sm-8 right-border col-sm-height">
-                    <div class="post-list">
-            <a href="/posts/data-collector-cortex">
-                <h3 class="post-title">The Data Collector Set or one of its dependencies is already in use</h3>
-            </a>
-            <p class="post-meta">Posted on Tuesday, August 3, 2021</p>      
-        </div>   
+                                        
+
+<p>In the process of adding an Exchange Server 2019 to a current Exchange organization with Exchange Server 2013, Auto Attendant/UM stopped working, investigating event viewer logs
+in Exchange Server 2013 server, I found this event entry (Event Id 1647)</p>
+<pre><code class="language-powershell">The Microsoft Exchange Unified Messaging Call Router service rejected the call for the following reason: 15647;source=&quot;ex2013.contoso.net&quot;;reason=&quot;Access to Active Directory error occured.&quot; Microsoft.Exchange.UM.UMCore.CallRejectedException: The Mailbox server with the FQDN ex2019.contoso.net couldn't be located in Active Directory.
+   at Microsoft.Exchange.UM.UMCore.EnterpriseRedirectionTarget.GetRoutingInformation(String serverFqdn, Boolean isSecuredCall, String&amp; routingFqdn, Int32&amp; routingPort)
+   at Microsoft.Exchange.UM.UMCore.EnterpriseRedirectionTarget.GetBackEndBrickRedirectionTarget(ADUser user, IRoutingContext context)
+   at Microsoft.Exchange.UM.UMCore.EnterpriseRedirectionTarget.GetForNonUserSpecificCall(OrganizationId orgId, IRoutingContext context)
+   at Microsoft.Exchange.UM.UMCore.AutoAttendantCallHandler.HandleCall(CafeRoutingContext context)
+   at Microsoft.Exchange.UM.UMCore.RouterCallHandler.InternalHandle(ICallHandler[] handlers, CafeRoutingContext context)
+   at Microsoft.Exchange.UM.UcmaPlatform.UcmaCallRouterPlatform.TryHandleIncomingCall(CallReceivedEventArgs`1 args, Exception&amp; error, Boolean&amp; isDiagnosticCall)
+   at Microsoft.Exchange.UM.UcmaPlatform.UcmaUtils.&lt;&gt;c__DisplayClassf.&lt;ProcessPlatformRequestAndReportErrors&gt;b__d()
+</code></pre>
+<p>The error might be misleading as it implies some Active Directory connection issue, but it was mentioning the newly incorporated Exchange Server 2019 and I thought, why?</p>
+<p>I then remember I migrated System Mailboxes to Exchange 2019 box, especially, these two, that have UM-related capabilities:</p>
+<pre><code class="language-powershell">Name                  : SystemMailbox{bb558c35-97f1-4cb9-8ff7-d53741dc928c}
+PersistedCapabilities : {OrganizationCapabilityUMGrammarReady, OrganizationCapabilityPstProvider,
+                        OrganizationCapabilityMessageTracking, OrganizationCapabilityMailRouting,
+                        OrganizationCapabilityClientExtensions, OrganizationCapabilityGMGen,
+                        OrganizationCapabilityOABGen, OrganizationCapabilityUMGrammar}
+
+Name                  : SystemMailbox{e0dc1c29-89c3-4034-b678-e6c29d823ed9}
+PersistedCapabilities : {OrganizationCapabilityUMDataStorage}
+</code></pre>
+<p>Boom! that might be it... so I moved them back to Exchange 2013 mailbox database and AutoAttendant/UM started to work again.</p>
 
 
-            <nav>
-                <ul class="pager">
-                    <li class="previous">                
-                    </li>
-                    <li class="next">
-                    </li>
-                </ul>
-            </nav>
-            <hr class="visible-xs-block" />
-        </div>
-		
-        <div class="col-sm-4 col-sm-height">
-                <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams (14)</a>
-                <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer (5)</a>
-                <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-xs">Sharepoint (5)</a>
-                <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-xs">TeamFoundationServer (4)</a>
-                <a role="button" href="/tags/365" class="btn btn-default btn-xs">365 (2)</a>
-                <a role="button" href="/tags/Skype4B" class="btn btn-default btn-xs">Skype4B (2)</a>
-                <a role="button" href="/tags/Ignite" class="btn btn-default btn-xs">Ignite (2)</a>
-                <a role="button" href="/tags/Planner" class="btn btn-default btn-xs">Planner (1)</a>
-                <a role="button" href="/tags/Windows" class="btn btn-primary btn-xs">Windows (1)</a>
-                <a role="button" href="/tags/Azure" class="btn btn-default btn-xs">Azure (1)</a>
-                <a role="button" href="/tags/Exams" class="btn btn-default btn-xs">Exams (1)</a>
-                <a role="button" href="/tags/Misc" class="btn btn-default btn-xs">Misc (1)</a>
-                <a role="button" href="/tags/GitHub" class="btn btn-default btn-xs">GitHub (1)</a>
-                <a role="button" href="/tags/General" class="btn btn-default btn-xs">General (1)</a>
-                <a role="button" href="/tags/SSL" class="btn btn-default btn-xs">SSL (1)</a>
-                <a role="button" href="/tags/Powershell" class="btn btn-default btn-xs">Powershell (1)</a>
-        </div>
-    </div>
-</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'um-call-rejected';
+    var disqus_title = 'The Microsoft Exchange Unified Messaging Call Router service rejected the call for the following reason';
+    var disqus_url = 'https://get-itips.capazero.net/posts/um-call-rejected';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
                                 </div>
                         </div>
                 </div>
