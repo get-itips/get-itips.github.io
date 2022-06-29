@@ -1,0 +1,537 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+
+        <title>Andr&#xE9;s Gorzelany - Cmdlets run by the Hybrid Configuration Wizard</title>
+        <meta name="description" content="Get-ITips" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+
+        <link type="application/rss+xml" rel="alternate" title="Andr&#xE9;s Gorzelany" href="/feed.rss" />
+                <link type="application/atom+xml" rel="alternate" title="Andr&#xE9;s Gorzelany" href="/feed.atom" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+        <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/assets/css/highlight.css" rel="stylesheet">
+        <link href="/assets/css/clean-blog.css" rel="stylesheet" />
+        <link href="/assets/css/master.css" rel="stylesheet" />
+        <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+        <link href="/assets/css/override.css" rel="stylesheet" />
+
+
+        <meta name="application-name" content="Andr&#xE9;s Gorzelany" />
+        <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
+        <meta name="msapplication-starturl" content="/" />
+
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Cmdlets run by the Hybrid Configuration Wizard" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/hcw-cmdlets" />
+        <!-- TODO: More social graph meta tags -->
+
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>     
+        <script src="/assets/js/highlight.pack.js"></script>   
+        <script src="/assets/js/clean-blog.js"></script>
+        <script src="/assets/js/d3.v3.min.js"></script>
+        <script src="/assets/js/trianglify.min.js"></script>
+        <script src="/assets/js/Please-compressed.js"></script>
+        <script src="/assets/js/background-check.min.js"></script>
+                
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+                <script src="/assets/js/html5shiv.js"></script>
+                <script src="/assets/js/respond.min.js"></script>
+        <![endif]-->
+        
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M2L12JFRKM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M2L12JFRKM');
+</script>
+
+        </head>
+        <body>
+                
+                <!-- Navigation -->
+                <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+                        <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header page-scroll">
+                                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        </button>
+                                        <a class="navbar-brand" href="/">Andr&#xE9;s Gorzelany</a>
+                                </div>
+                        
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="navbar-collapse">
+                                        <ul class="nav navbar-nav navbar-right">
+                                                        <li><a href="/posts">Archive</a></li>
+        <li><a href="/tags">Tags</a></li>
+        <li><a href="/about">About Me</a></li>
+ 
+                                        </ul>
+                                </div>
+                                <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container -->
+                </nav>
+                
+                <!-- Page Header -->
+                <header class="intro-header" id="intro-header">
+                        <div class="container">
+                                <div class="row">
+                                        <div class="col-md-12">
+
+    
+<div class="post-heading">
+    <h1>Cmdlets run by the Hybrid Configuration Wizard</h1>
+    <div class="meta">        
+Published on Wednesday, June 29, 2022<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer</a>
+        </div>     
+</div>
+                                        </div>
+                                </div>
+                        </div>
+                </header>
+                
+                <!-- Main Content -->
+                <div class="container">
+                        <div class="row">
+                                <div id="content" class="col-md-12">
+                                        
+
+<p>Based on several runs of the Hybrid Configuration Wizard from different deployments, these appear to be the cmdlets ran either against On-Premises (Exchange Server) and against the Tenant (Exchange Online).
+I'll update these if I found any missing cmdlets, and I also would like to split them between Minimal and Full hybrid options.</p>
+<h1 id="classic-or-modern-full">Classic or Modern Full</h1>
+<h2 id="get-cmdlets">Get- cmdlets</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Cmdlet</th>
+<th>Where</th>
+<th>Parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Get-ExchangeServer</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-MailboxDatabase</td>
+<td>Exchange Server</td>
+<td>-IncludePreExchange2013: $true</td>
+</tr>
+<tr>
+<td>Get-OrganizationConfig</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-HybridConfiguration</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-AcceptedDomain</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-FederatedOrganizationIdentifier</td>
+<td>Exchange Server</td>
+<td>-IncludeExtendedDomainInfo: $false</td>
+</tr>
+<tr>
+<td>Get-FederationTrust</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-WebServicesVirtualDirectory</td>
+<td>Exchange Server</td>
+<td>-ADPropertiesOnly: $true</td>
+</tr>
+<tr>
+<td>Get-RemoteDomain</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-OrganizationConfig</td>
+<td>Exchange Online</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-OnPremisesOrganization</td>
+<td>Exchange Online</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-AcceptedDomain</td>
+<td>Exchange Online</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-MigrationEndpoint</td>
+<td>Exchange Online</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-ExchangeCertificate</td>
+<td>Exchange Server</td>
+<td>-Server <ExchangeHost></td>
+</tr>
+<tr>
+<td>Get-RemoteDomain</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-EmailAddressPolicy</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-OrganizationRelationship</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-OrganizationConfig</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-OrganizationRelationship</td>
+<td>Exchange Online</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-OwaVirtualDirectory</td>
+<td>Exchange Server</td>
+<td>-ADPropertiesOnly: $true</td>
+</tr>
+<tr>
+<td>Get-AvailabilityAddressSpace</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-SendConnector</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-ReceiveConnector</td>
+<td>Exchange Server</td>
+<td>-Server <ExchangeHost></td>
+</tr>
+<tr>
+<td>Get-FederationInformation*1</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-FederationTrust*1</td>
+<td>Exchange Server</td>
+<td>-Identity 'Microsoft Federation Gateway'</td>
+</tr>
+<tr>
+<td>Get-FederationTrust*1</td>
+<td>Exchange Online</td>
+<td>-Identity MicrosoftOnline</td>
+</tr>
+<tr>
+<td>Get-OutboundConnector</td>
+<td>Exchange Online</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-InboundConnector</td>
+<td>Exchange Online</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-IntraOrganizationConfiguration</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-IntraOrganizationConfiguration</td>
+<td>Exchange Online</td>
+<td>-OrganizationGuid '<guid>'</td>
+</tr>
+<tr>
+<td>Get-IntraOrganizationConnector</td>
+<td>Exchange Online</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-IntraOrganizationConnector</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-AuthConfig</td>
+<td>Exchange Server</td>
+<td></td>
+</tr>
+<tr>
+<td>Get-ActiveSyncVirtualDirectory</td>
+<td>Exchange Server</td>
+<td>-ADPropertiesOnly: $true</td>
+</tr>
+<tr>
+<td>Get-PartnerApplication</td>
+<td>Exchange Server</td>
+<td>-Identity 'Exchange Online'</td>
+</tr>
+</tbody>
+</table>
+<h2 id="new-set-update-cmdlets">New-, Set- &amp; Update- cmdlets</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Cmdlet</th>
+<th>Where</th>
+<th>Parameters (Example)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Update-EmailAddressPolicy</td>
+<td>Exchange Server</td>
+<td>-Identity 'Default Policy' -UpdateSecondaryAddressesOnly: $true</td>
+</tr>
+<tr>
+<td>New/Set-HybridConfiguration</td>
+<td>Exchange Server</td>
+<td>-ClientAccessServers $null -ExternalIPAddresses $null -Domains 'contoso.com','fabrikam.com' -OnPremisesSmartHost 'mail.contoso.com' -TLSCertificateName '<I>CN=WorldSSL DV CA, O=Sàrl, C=LU&lt;S&gt;CN=mail.contoso.com' -SendingTransportServers EXC01 -ReceivingTransportServers EXC01 -EdgeTransportServers $null -Features FreeBusy,MoveMailbox,Mailtips,MessageTracking,OwaRedirection,OnlineArchive,SecureMail,Photos</td>
+</tr>
+<tr>
+<td>Set-EmailAddressPolicy</td>
+<td>Exchange Server</td>
+<td>-Identity 'Default Policy' -ForceUpgrade: $true -EnabledEmailAddressTemplates 'SMTP:&#64;contoso.com','X400:c=US;a= ;p=Contoso;o=Contoso;','smtp:%m&#64;contoso.mail.onmicrosoft.com'</td>
+</tr>
+<tr>
+<td>New/Set-OrganizationRelationship</td>
+<td>Exchange Server</td>
+<td>-FreeBusyAccessEnabled: $true -FreeBusyAccessLevel LimitedDetails -MailTipsAccessEnabled: $true -MailTipsAccessLevel All -DeliveryReportEnabled: $true -PhotosEnabled: $true -TargetOwaURL '<a href="https://outlook.office.com/mail%27">https://outlook.office.com/mail'</a> -Identity 'On-premises to O365 - 6fc3a33e-3ca2-4528-8e3c-75e5d4e9db76'</td>
+</tr>
+<tr>
+<td>New/Set-OrganizationRelationship</td>
+<td>Exchange Online</td>
+<td>-FreeBusyAccessEnabled: $true -FreeBusyAccessLevel LimitedDetails -TargetSharingEpr $null -MailTipsAccessEnabled: $true -MailTipsAccessLevel All -DeliveryReportEnabled: $true -PhotosEnabled: $true -TargetOwaURL '<a href="https://mail.contoso.com/owa%27">https://mail.contoso.com/owa'</a> -Identity 'O365 to On-premises - 6fc3a33e-3ca2-4528-8e3c-75e5d4e9db76'</td>
+</tr>
+<tr>
+<td>New/Set-SendConnector</td>
+<td>Exchange Server</td>
+<td>-Name 'Outbound to Office 365 - 6fc3a33e-3ca2-4528-8e3c-75e5d4e9db76' -AddressSpaces 'smtp:contoso.mail.onmicrosoft.com;1' -DNSRoutingEnabled: $true -ErrorPolicies Default -Fqdn 'mail.contoso.com' -RequireTLS: $true -IgnoreSTARTTLS: $false -SourceTransportServers EXC01 -SmartHosts $null -TLSAuthLevel DomainValidation -DomainSecureEnabled: $false -TLSDomain 'mail.protection.outlook.com' -CloudServicesMailEnabled: $true -TLSCertificateName '<I>CN=Go mommy Secure Certificate Authority - G2, OU=<a href="http://certs.gomommy.com/repository/,">http://certs.gomommy.com/repository/,</a> O=&quot;Gomommy.com, Inc.&quot;, L=Scottsdale, S=Arizona, C=US&lt;S&gt;CN=mail.contoso.com' -Identity 'Outbound to Office 365 - 6fc3a33e-3ca2-4528-8e3c-75e5d4e9db76'</td>
+</tr>
+<tr>
+<td>Set-ReceiveConnector</td>
+<td>Exchange Server</td>
+<td>-AuthMechanism 'Tls, Integrated, BasicAuth, BasicAuthRequireTLS, ExchangeServer' -Bindings '[<span>]:25','0.0.0.0:25' -Fqdn 'EXC01.contoso.com' -PermissionGroups 'AnonymousUsers, ExchangeServers, ExchangeLegacyServers' -RemoteIPRanges '</span>-ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff','0.0.0.0-255.255.255.255' -RequireTLS: $false -TLSDomainCapabilities 'mail.protection.outlook.com:AcceptCloudServicesMail' -TLSCertificateName '<I>CN=Go mommy Secure Certificate Authority - G2, OU=<a href="http://certs.gomommy.com/repository/,">http://certs.gomommy.com/repository/,</a> O=&quot;Gomommy.com, Inc.&quot;, L=Scottsdale, S=Arizona, C=US&lt;\S&gt;CN=mail.contoso.com' -TransportRole FrontendTransport -Identity 'EXC01\Default Frontend EXC01'</td>
+</tr>
+<tr>
+<td>New/Set-OutboundConnector</td>
+<td>Exchange Online</td>
+<td>-Name 'Outbound to 6fc3a33e-3ca2-4528-8e3c-75e5d4e9db76' -RecipientDomains 'contoso.com','fabrikam.com' -SmartHosts 'mail.contoso.com' -ConnectorSource HybridWizard -ConnectorType OnPremises -TLSSettings DomainValidation -TLSDomain 'mail.contoso.com' -CloudServicesMailEnabled: $true -RouteAllMessagesViaOnPremises: $false -UseMxRecord: $false -IsTransportRuleScoped: $false -Identity 'Outbound to 6fc3a33e-3ca2-4528-8e3c-75e5d4e9db76'</td>
+</tr>
+<tr>
+<td>New/Set-InboundConnector</td>
+<td>Exchange Online</td>
+<td>-Name 'Inbound from 6fc3a33e-3ca2-4528-8e3c-75e5d4e9db76' -CloudServicesMailEnabled: $true -ConnectorSource HybridWizard -ConnectorType OnPremises -RequireTLS: $true -SenderDomains '<em>' -SenderIPAddresses $null -RestrictDomainsToIPAddresses: $false -TLSSenderCertificateName '</em>.contoso.com' -AssociatedAcceptedDomains $null</td>
+</tr>
+<tr>
+<td>Set-OnPremisesOrganization</td>
+<td>Exchange Online</td>
+<td>-HybridDomains 'contoso.com','fabrikam.com' -InboundConnector 'Inbound from 6fc3a33e-3ca2-4528-8e3c-75e5d4e9db76' -OutboundConnector 'Outbound to 6fc3a33e-3ca2-4528-8e3c-75e5d4e9db76' -OrganizationRelationship 'O365 to On-premises - 6fc3a33e-3ca2-4528-8e3c-75e5d4e9db76'</td>
+</tr>
+<tr>
+<td>New/Set-PartnerApplication</td>
+<td>Exchange Server</td>
+<td>-Identity 'Exchange Online' -Enabled: $true</td>
+</tr>
+<tr>
+<td>New-RemoteDomain</td>
+<td>Exchange Server</td>
+<td>-Name 'Hybrid Domain - contoso.mail.onmicrosoft.com'</td>
+</tr>
+<tr>
+<td>New-AcceptedDomain</td>
+<td>Exchange Server</td>
+<td>-DomainName 'contoso.mail.onmicrosoft.com' -Name 'contoso.mail.onmicrosoft.com'</td>
+</tr>
+<tr>
+<td>New-IntraOrganizationConnector</td>
+<td>Exchange Server</td>
+<td>-Name 'HybridIOC - <guid>' -DiscoveryEndpoint '<a href="https://autodiscover-s.outlook.com/autodiscover/autodiscover.svc%27">https://autodiscover-s.outlook.com/autodiscover/autodiscover.svc'</a> -TargetAddressDomains 'contoso.mail.onmicrosoft.com' -Enabled: $true</td>
+</tr>
+<tr>
+<td>New-IntraOrganizationConnector</td>
+<td>Exchange Online</td>
+<td>-Name 'HybridIOC - <guid>' -DiscoveryEndpoint '<a href="https://mail.contoso.com/autodiscover/autodiscover.svc%27">https://mail.contoso.com/autodiscover/autodiscover.svc'</a> -TargetAddressDomains 'contoso.com','fabrikam.com' -Enabled: $true</td>
+</tr>
+<tr>
+<td>New-AuthServer</td>
+<td>Exchange Server</td>
+<td>-Name 'ACS - <guid>' -AuthMetadataUrl '<a href="https://accounts.accesscontrol.windows.net/22e190d2-28f3-4a09-898f-f7bb4c477af7/metadata/json/1%27">https://accounts.accesscontrol.windows.net/22e190d2-28f3-4a09-898f-f7bb4c477af7/metadata/json/1'</a> -DomainName 'contoso.com','contoso.mail.onmicrosoft.com'</td>
+</tr>
+<tr>
+<td>New-AuthServer</td>
+<td>Exchange Server</td>
+<td>-Name 'EvoSts - <guid>' -AuthMetadataUrl '<a href="https://login.windows.net/contoso.onmicrosoft.com/federationmetadata/2007-06/federationmetadata.xml%27">https://login.windows.net/contoso.onmicrosoft.com/federationmetadata/2007-06/federationmetadata.xml'</a> -Type AzureAD</td>
+</tr>
+<tr>
+<td>New-FederationTrust*1</td>
+<td>Exchange Server</td>
+<td>-Name 'Microsoft Federation Gateway' -Thumbprint <thumbprint></td>
+</tr>
+<tr>
+<td>Set-FederatedOrganizationIdentifier</td>
+<td>Exchange Server</td>
+<td>-AccountNamespace 'contoso.com' -DelegationFederationTrust 'Microsoft Federation Gateway' -Enabled: $true -DefaultDomain $null</td>
+</tr>
+<tr>
+<td>Set-FederatedOrganizationIdentifier</td>
+<td>Exchange Online</td>
+<td>-DefaultDomain 'contoso.mail.onmicrosoft.com' -Enabled: $true</td>
+</tr>
+</tbody>
+</table>
+<p>*1 Apparently only if Exchange 2010 is present in the Exchange Organization</p>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'hcw-cmdlets';
+    var disqus_title = 'Cmdlets run by the Hybrid Configuration Wizard';
+    var disqus_url = 'https://get-itips.capazero.net/posts/hcw-cmdlets';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                                </div>
+                        </div>
+                </div>
+                
+                <hr>
+                
+                <!-- Footer -->
+                <footer>
+                        <div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+
+            <ul class="list-inline">
+                <li>
+                    <a href="https://twitter.com/andresgorzelany" target="_blank" title="Twitter Profile">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/get-itips" target="_blank" title="Github Profile">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/andresgorzelany/" target="_blank" title="LinkedIn Profile">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+
+            <p class="copyright text-muted">
+                    <a href="/feed.rss" class="btn-rss">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                        </span> RSS Feed
+                    </a>
+                                    <a href="/feed.atom" class="btn-rss">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                        </span> Atom Feed
+                    </a>
+                <br />
+                Copyright © 2022 by Andres Gorzelany
+                <br />
+                <strong><a href="https://wyam.io" target="_blank">Generated by Wyam</a></strong>
+            </p>
+        </div>
+    </div>
+</div>
+
+                </footer> 
+
+                
+                <script>hljs.initHighlightingOnLoad();</script>
+
+                        <script type="text/javascript">                
+                                // Header background                        
+                                var colors = Please.make_color({
+                                        colors_returned: 3,
+                                        saturation: .6
+                                });
+                                var t = new Trianglify({
+                                        x_gradient: colors,
+                                        y_gradient: ["#FFFFFF"]
+                                });
+                                var header = document.getElementById("intro-header");
+                                var pattern = t.generate(header.clientWidth, header.clientHeight);
+                                header.setAttribute('style', 'background-image: ' + pattern.dataUrl);                        
+                        </script>
+
+                <script>
+                        BackgroundCheck.init({
+                                targets: '.intro-header,.navbar',
+                                images: '.intro-header'
+                        });
+                </script>
+        </body>
+</html>
+
