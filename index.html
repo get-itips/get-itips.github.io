@@ -114,6 +114,13 @@
 <div class="row">
     <div class="col-sm-8 right-border">
                 <div class="post-preview">
+                    <a href="/posts/wmsvc-sha256-exchange">
+                        <h2 class="post-title">Renewing Web Management Service certificate from SHA1 to SHA256 in Exchange Server</h2>
+                    </a>
+                    <p class="post-meta">Posted on Thursday, July 7, 2022</p>
+<p>The <a href="https://microsoft.github.io/CSS-Exchange/Diagnostics/HealthChecker/">Exchange Health Checker</a> checks for the presence of SHA1 signed certificates in the output of Get-ExchangeCertificate, upon checking on a customer where I ran the script, a warning was raised about SHA1 certificates being present, the only SHA1-signed certificate was the one that Exchange creates for the Web Management service of IIS (WMSvc) when installing Exchange. This certificate can be SHA1-signed if, at the time of the setup, Exchange did not create certificates with a signature algorithm of SHA256.</p>                </div>       
+                    <hr /> 
+                <div class="post-preview">
                     <a href="/posts/hcw-cmdlets">
                         <h2 class="post-title">Cmdlets run by the Hybrid Configuration Wizard</h2>
                     </a>
@@ -128,13 +135,6 @@ I'll update these if I found any missing cmdlets, and I also would like to split
                     <p class="post-meta">Posted on Wednesday, May 11, 2022</p>
 <p>In the process of adding an Exchange Server 2019 to a current Exchange organization with Exchange Server 2013, Auto Attendant/UM stopped working, investigating event viewer logs
 in Exchange Server 2013 server, I found this event entry (Event Id 1647)</p>                </div>       
-                    <hr /> 
-                <div class="post-preview">
-                    <a href="/posts/shared-channels-101">
-                        <h2 class="post-title">Enabling Teams Shared Channels 101</h2>
-                    </a>
-                    <p class="post-meta">Posted on Wednesday, April 27, 2022</p>
-<p>#Background</p>                </div>       
         <ul class="pager">
             <li class="previous">                
             </li>
@@ -148,15 +148,15 @@ in Exchange Server 2013 server, I found this event entry (Event Id 1647)</p>    
             <h5>Tags</h5>
             <div>
                     <a role="button" href="/tags/Teams" class="btn btn-default btn-sm"> Teams (14)</a>
-                    <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-sm"> ExchangeServer (6)</a>
+                    <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-sm"> ExchangeServer (7)</a>
                     <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-sm"> Sharepoint (5)</a>
                     <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-sm"> TeamFoundationServer (4)</a>
-                    <a role="button" href="/tags/Skype4B" class="btn btn-default btn-sm"> Skype4B (2)</a>
                     <a role="button" href="/tags/365" class="btn btn-default btn-sm"> 365 (2)</a>
                     <a role="button" href="/tags/Ignite" class="btn btn-default btn-sm"> Ignite (2)</a>
-                    <a role="button" href="/tags/Azure" class="btn btn-default btn-sm"> Azure (1)</a>
-                    <a role="button" href="/tags/GitHub" class="btn btn-default btn-sm"> GitHub (1)</a>
+                    <a role="button" href="/tags/Skype4B" class="btn btn-default btn-sm"> Skype4B (2)</a>
                     <a role="button" href="/tags/Misc" class="btn btn-default btn-sm"> Misc (1)</a>
+                    <a role="button" href="/tags/Planner" class="btn btn-default btn-sm"> Planner (1)</a>
+                    <a role="button" href="/tags/General" class="btn btn-default btn-sm"> General (1)</a>
             </div>
             <ul class="pager">
                 <li class="next">
@@ -167,10 +167,10 @@ in Exchange Server 2013 server, I found this event entry (Event Id 1647)</p>    
             <hr />
             <h5>Older Posts</h5>
             <ul class="list-unstyled">
+                    <li><a href="/posts/shared-channels-101">Enabling Teams Shared Channels 101</a></li>
                     <li><a href="/posts/leave-from-meeting-chat">How to leave a Teams meeting chat, even if you are the organizer</a></li>
                     <li><a href="/posts/clear-teams-notifications">Mark Teams notifications as read</a></li>
                     <li><a href="/posts/extra-information-federated-teams">Getting some extra information about Teams federated users using PowerShell</a></li>
-                    <li><a href="/posts/you-no-longer-have-access-to-planner">You no longer have access to &lt;Guid&gt; on Planner</a></li>
             </ul>
                 <ul class="pager">
                     <li class="next">

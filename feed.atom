@@ -4,8 +4,54 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2022</rights>
-	<updated>2022-06-29T16:48:21Z</updated>
+	<updated>2022-07-08T03:12:59Z</updated>
 	<subtitle>Get-ITips</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/wmsvc-sha256-exchange" />
+		<id>https://get-itips.capazero.net/posts/wmsvc-sha256-exchange</id>
+		<title>Renewing Web Management Service certificate from SHA1 to SHA256 in Exchange Server</title>
+		<updated>2022-07-07T00:00:00Z</updated>
+		<content>&lt;h1 id="background"&gt;Background&lt;/h1&gt;
+&lt;p&gt;The &lt;a href="https://microsoft.github.io/CSS-Exchange/Diagnostics/HealthChecker/"&gt;Exchange Health Checker&lt;/a&gt; checks for the presence of SHA1 signed certificates in the output of Get-ExchangeCertificate, upon checking on a customer where I ran the script, a warning was raised about SHA1 certificates being present, the only SHA1-signed certificate was the one that Exchange creates for the Web Management service of IIS (WMSvc) when installing Exchange. This certificate can be SHA1-signed if, at the time of the setup, Exchange did not create certificates with a signature algorithm of SHA256.&lt;/p&gt;
+&lt;p&gt;It seems that &lt;a href="https://blog.rmilne.ca/2016/07/20/exchange-self-signed-sha2-certificates/"&gt;starting from CU13&lt;/a&gt; of Exchange 2013 and Exchange 2016 CU2, self-signed certificates created using New-ExchangeCertificate started to be created using SHA256.&lt;/p&gt;
+&lt;h1 id="checking-if-using-sha1-for-wmsvc-service"&gt;Checking if using SHA1 for WMSvc service&lt;/h1&gt;
+&lt;p&gt;If you are not sure, confirm that you are indeed using a SHA1-signed certificate for WMSvc&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open &lt;em&gt;IIS Manager&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Click on the name of the server in the left pane&lt;/li&gt;
+&lt;li&gt;2-Click on &lt;em&gt;Management Service&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Take note of the name of the SSL certificate (this will be the friendly name in the &lt;em&gt;Certificates&lt;/em&gt; snap-in)&lt;/li&gt;
+&lt;li&gt;Open &lt;em&gt;mmc.exe&lt;/em&gt; and add the &lt;em&gt;certificates Snap-In&lt;/em&gt; for &lt;em&gt;local computer&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Search for the certificate, it will be something like “WMSvc - ServerName” in the personal store, open the properties of the certificate&lt;/li&gt;
+&lt;li&gt;Click the &lt;em&gt;Details&lt;/em&gt; tab&lt;/li&gt;
+&lt;li&gt;Check if &lt;em&gt;signature algorithm&lt;/em&gt; field is SHA1&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id="getting-a-new-self-signed-certificate-sha256-signed"&gt;Getting a new self-signed certificate SHA256-signed&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;Prerequisite:&lt;/strong&gt; You must be running Exchange 2013 CU13 or later or Exchange 2016 CU2, Exchange 2019 creates SHA2 certificates from RTM&lt;/p&gt;
+&lt;p&gt;Open Exchange Management Shell and run this cmdlet to create a new self-signed certificate&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-powershell"&gt;New-ExchangeCertificate -SubjectName &amp;quot;cn=WMSvc-SHA2-SERVERNAME&amp;quot; -FriendlyName &amp;quot;WMSVC-SHA2&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Replace SERVERNAME in the cmdlet with the actual name of your Exchange Server&lt;/p&gt;
+&lt;h1 id="verify-the-new-certificate-was-generated-and-trust-it"&gt;Verify the new certificate was generated and trust it&lt;/h1&gt;
+&lt;p&gt;If you still have the certificates snap-in open, you will now have a &lt;em&gt;Issued to&lt;/em&gt; certificate with the subject name we used in the step above.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Right-click &amp;amp; copy this certificate&lt;/li&gt;
+&lt;li&gt;Select &lt;em&gt;Trusted Root Certification Authorities&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Right-click &amp;amp; paste this certificate&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Swapping the certificate used by WMSvc service&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open &lt;em&gt;IIS Manager&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Click on the name of the server in the left pane&lt;/li&gt;
+&lt;li&gt;2-Click on &lt;em&gt;Management Service&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;In the &lt;em&gt;Actions&lt;/em&gt; pane, click &lt;em&gt;Stop&lt;/em&gt;, accept any warning&lt;/li&gt;
+&lt;li&gt;Now you can select different certificate in the &lt;em&gt;SSL Certificate&lt;/em&gt; drop-down, choose the newly generated cert&lt;/li&gt;
+&lt;li&gt;In the &lt;em&gt;Actions&lt;/em&gt; pane, click &lt;em&gt;Start&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;That should be it, you will now have a Web Management Service running a SHA2 signed certificate and the health checker should not raise you this warning.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;The &lt;a href="https://microsoft.github.io/CSS-Exchange/Diagnostics/HealthChecker/"&gt;Exchange Health Checker&lt;/a&gt; checks for the presence of SHA1 signed certificates in the output of Get-ExchangeCertificate, upon checking on a customer where I ran the script, a warning was raised about SHA1 certificates being present, the only SHA1-signed certificate was the one that Exchange creates for the Web Management service of IIS (WMSvc) when installing Exchange. This certificate can be SHA1-signed if, at the time of the setup, Exchange did not create certificates with a signature algorithm of SHA256.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/hcw-cmdlets" />
 		<id>https://get-itips.capazero.net/posts/hcw-cmdlets</id>
@@ -1463,105 +1509,5 @@ Import-PsSession $sfbSession
 &lt;p&gt;That should be enough for it to make it work as before, I tested it and it worked for me, please be aware that this is provided as is without any guarantee, let me know if it works four you!&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;&lt;img src="/images/TeamsS4BReconnect.png" class="img-fluid" alt="introimage"&gt;&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.capazero.net/posts/teams-preview-wsl" />
-		<id>https://get-itips.capazero.net/posts/teams-preview-wsl</id>
-		<title>Running Teams PowerShell GA module and Preview module side by side using WSL</title>
-		<updated>2020-08-12T00:00:00Z</updated>
-		<content>&lt;p&gt;&lt;img src="/images/TeamsWSL.png" class="img-fluid" alt="introimage" /&gt;&lt;/p&gt;
-&lt;h1 id="introduction"&gt;Introduction&lt;/h1&gt;
-&lt;p&gt;This is somewhat related to my last post, titled &lt;a href="https://get-itips.capazero.net/posts/teams-ps-for-pscore"&gt;Teams PowerShell module is now compatible with PowerShell Core!&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;As a Docs contributor I have to constantly test a lot of PowerShell modules, specially, the Teams PowerShell module, and, as the line between the General Availability version and the Preview version of the module is a little blurry, users ask questions all the time, which feature, cmdlet or parameter is in which module version.&lt;/p&gt;
-&lt;p&gt;I've been running an Azure VM installed with the Preview version of the PowerShell module, however it takes some time to start it, RDP into it and finally use the module, so I thought how awesome could be to run both versions of this PowerShell module on the same computer, as you can not do that natively in the same Operating System installation, I decided to take advantage of WSL (Windows Subsystem for Linux) to accomplish that.&lt;/p&gt;
-&lt;h1 id="credits"&gt;Credits&lt;/h1&gt;
-&lt;p&gt;I used several blog and Docs articles to get this working so this is mainly a post to summarize them all, I must give the credit to:&lt;/p&gt;
-&lt;p&gt;Official Docs article located here &lt;a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10"&gt;Windows Subsystem for Linux Installation Guide for Windows 10&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Saggie Haim Blog article &lt;a href="https://www.saggiehaim.net/powershell/install-powershell-7-on-wsl-and-ubuntu/"&gt;Install PowerShell 7 On WSL and Ubuntu&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Sebastiaan Dammann Blog article &lt;a href="https://damsteen.nl/blog/2018/08/29/installing-wsl-manually-on-non-system-drive"&gt;How-to: Installing WSL manually on a non-system drive&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Special thanks to &lt;a href="https://twitter.com/unixterminal"&gt;Hayden Barnes&lt;/a&gt; for the Ubuntu 20.04 image link!&lt;/p&gt;
-&lt;h1 id="install-wsl"&gt;Install WSL&lt;/h1&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Restart and set WSL2 as default WSL version&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;wsl --set-default-version 2
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;if you receive an error in this step &lt;em&gt;WSL 2 requires an update to its kernel component. For information please visit &lt;a href="https://aka.ms/wsl2kernel"&gt;https://aka.ms/wsl2kernel&lt;/a&gt;&lt;/em&gt; follow the steps outlined in that URL before continuing.&lt;/p&gt;
-&lt;h1 id="install-linux-distribution-for-wsl"&gt;Install Linux Distribution for WSL&lt;/h1&gt;
-&lt;p&gt;I didn't want the Linux installation to be on the System Drive so I created a folder on D: drive and CD into it for the next steps and also I chose Ubuntu 20.04-LTS as the Linux distro however you can choose whatever distro you like that is supported by PowerShell Core.&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;Invoke-WebRequest -Uri https://aka.ms/wslubuntu2004 -OutFile D:\wsl\Ubuntu.appx -UseBasicParsing
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This step will take some time to download the Linux distro, once it finishes, let's rename the downloaded image&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;cd D:\wsl\
-Rename-Item .\Ubuntu.appx Ubuntu.zip
-Expand-Archive .\Ubuntu.zip -Verbose
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;now let's install Ubuntu calling the setup binary&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;.\ubuntu2004.exe
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;It will ask  you for a UNIX username, a password for it and if everything goes well you should see something like this as the setup will directly get you into the Linux virtual machine&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Welcome to Ubuntu 20.04 LTS (GNU/Linux 4.19.104-microsoft-standard x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-
-  System information as of Wed Aug 12 19:17:05 -03 2020
-
-  System load:  1.67               Processes:             8
-  Usage of /:   0.4% of 250.98GB   Users logged in:       0
-  Memory usage: 1%                 IPv4 address for eth0: 172.26.225.227
-  Swap usage:   0%
-
-0 updates can be installed immediately.
-0 of these updates are security updates.
-
-yourUser&amp;#64;yourHostname: $
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Do not exit Ubuntu and run the next section inside of it.&lt;/p&gt;
-&lt;h1 id="powershell-core-installation"&gt;PowerShell Core installation&lt;/h1&gt;
-&lt;p&gt;Create a directory for PowerShell install and change to it&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;yourUser&amp;#64;yourHostname: $ sudo mkdir /usr/share/PowerShell
-yourUser&amp;#64;yourHostname: $ cd /usr/share/PowerShell
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Let's download the current stable release available (check &lt;a href="https://github.com/PowerShell/PowerShell/releases/"&gt;https://github.com/PowerShell/PowerShell/releases/&lt;/a&gt; for updated versions)&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;yourUser&amp;#64;yourHostname: $ sudo wget https://github.com/PowerShell/PowerShell/releases/download/v7.0.3/powershell-7.0.3-linux-x64.tar.gz
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Expand this archive&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;yourUser&amp;#64;yourHostname: $ sudo tar xzvf powershell-7.0.3-linux-x64.tar.gz
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Add the PowerShell directory to the PATH environment variable&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;yourUser&amp;#64;yourHostname: $ cd #HOME
-yourUser&amp;#64;yourHostname: $ nano .profile
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;add to the end&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;PATH=&amp;quot;$PATH:/usr/share/PowerShell&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;save it and exit nano (at least it is not VIm!)&lt;/p&gt;
-&lt;p&gt;exit Ubuntu&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;yourUser&amp;#64;yourHostname: $ exit
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="microsoft-teams-preview-module-installation"&gt;Microsoft Teams Preview module installation&lt;/h1&gt;
-&lt;p&gt;If you are like me and use Windows Terminal, it will automatically recognize the installation and add it to the available Shell options, in case you do not, fire up the Ubuntu 20-04 LTS WSL running&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;.\ubuntu2004.exe
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;now run&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;yourUser&amp;#64;yourHostname: $ pwsh
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;that should get you to PowerShell 7.0.3 on Linux, you should see&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;PowerShell 7.0.3
-Copyright (c) Microsoft Corporation. All rights reserved.
-
-https://aka.ms/powershell
-Type 'help' to get help.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;now, let's install the currently most updated version of the Preview module (1.1.-3 preview at the time of writing this blog post but you can check &lt;a href="https://www.powershellgallery.com/packages/MicrosoftTeams/"&gt;https://www.powershellgallery.com/packages/MicrosoftTeams/&lt;/a&gt; for updates, remember, they have the -preview tag in the name)&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;PS /mnt/c/Users/agorz&amp;gt; Install-Module MicrosoftTeams -AllowPrerelease -RequiredVersion 1.1.3-preview
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Accept the installation from an untrusted repository and if everything goes well, you should be able to use Teams PowerShell Preview as explained &lt;a href="https://get-itips.capazero.net/posts/teams-ps-for-pscore"&gt;here&lt;/a&gt;.&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;&lt;img src="/images/TeamsWSL.png" class="img-fluid" alt="introimage"&gt;&lt;/p&gt;</summary>
 	</entry>
 </feed>
