@@ -25,6 +25,12 @@ SQL Server's Azure AD Connect uses named pipes as protocol, so we need to take t
 C:\Users\[Account Running Microsoft Azure AD Sync Service]\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\ADSync2019
 ```
 
+also found on this path
+
+```
+C:\Windows\ServiceProfiles\ADSync\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\ADSync2019
+```
+
 find a line similar to:
 
 ```
