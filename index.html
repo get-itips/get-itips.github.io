@@ -114,6 +114,17 @@
 <div class="row">
     <div class="col-sm-8 right-border">
                 <div class="post-preview">
+                    <a href="/posts/azure-ad-connect-db-query">
+                        <h2 class="post-title">How to export Azure AD Connect metaverse using sqlcmd</h2>
+                    </a>
+                    <p class="post-meta">Posted on Tuesday, September 6, 2022</p>
+<p>The Synchronization Service Manager app is good to review the status and check the configuration of synchronization to and from an Azure AD tenant,
+and it also includes a Metaverse Search option where you can query the SQL database that Azure AD Connect uses.
+One of the things that is recommended in a swing migration is to compare the number of objects between installations, however this UI does not handle correctly
+a big number objects, I found that if you click <em>Search</em> on the <em>Metaverse Search</em> option, with 50,000 items or more, and then you try to copy all the results (I do this to
+understand which accounts will not be part of the new installation, hence, deleted from Azure AD), the UI will hang.</p>                </div>       
+                    <hr /> 
+                <div class="post-preview">
                     <a href="/posts/wmsvc-sha256-exchange">
                         <h2 class="post-title">Renewing Web Management Service certificate from SHA1 to SHA256 in Exchange Server</h2>
                     </a>
@@ -127,14 +138,6 @@
                     <p class="post-meta">Posted on Wednesday, June 29, 2022</p>
 <p>Based on several runs of the Hybrid Configuration Wizard from different deployments, these appear to be the cmdlets ran either against On-Premises (Exchange Server) and against the Tenant (Exchange Online).
 I'll update these if I found any missing cmdlets, and I also would like to split them between Minimal and Full hybrid options.</p>                </div>       
-                    <hr /> 
-                <div class="post-preview">
-                    <a href="/posts/um-call-rejected">
-                        <h2 class="post-title">The Microsoft Exchange Unified Messaging Call Router service rejected the call for the following reason</h2>
-                    </a>
-                    <p class="post-meta">Posted on Wednesday, May 11, 2022</p>
-<p>In the process of adding an Exchange Server 2019 to a current Exchange organization with Exchange Server 2013, Auto Attendant/UM stopped working, investigating event viewer logs
-in Exchange Server 2013 server, I found this event entry (Event Id 1647)</p>                </div>       
         <ul class="pager">
             <li class="previous">                
             </li>
@@ -152,11 +155,11 @@ in Exchange Server 2013 server, I found this event entry (Event Id 1647)</p>    
                     <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-sm"> Sharepoint (5)</a>
                     <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-sm"> TeamFoundationServer (4)</a>
                     <a role="button" href="/tags/Skype4B" class="btn btn-default btn-sm"> Skype4B (2)</a>
-                    <a role="button" href="/tags/Ignite" class="btn btn-default btn-sm"> Ignite (2)</a>
                     <a role="button" href="/tags/365" class="btn btn-default btn-sm"> 365 (2)</a>
-                    <a role="button" href="/tags/Exams" class="btn btn-default btn-sm"> Exams (1)</a>
-                    <a role="button" href="/tags/General" class="btn btn-default btn-sm"> General (1)</a>
-                    <a role="button" href="/tags/SSL" class="btn btn-default btn-sm"> SSL (1)</a>
+                    <a role="button" href="/tags/Ignite" class="btn btn-default btn-sm"> Ignite (2)</a>
+                    <a role="button" href="/tags/Azure" class="btn btn-default btn-sm"> Azure (2)</a>
+                    <a role="button" href="/tags/Misc" class="btn btn-default btn-sm"> Misc (1)</a>
+                    <a role="button" href="/tags/Planner" class="btn btn-default btn-sm"> Planner (1)</a>
             </div>
             <ul class="pager">
                 <li class="next">
@@ -167,10 +170,10 @@ in Exchange Server 2013 server, I found this event entry (Event Id 1647)</p>    
             <hr />
             <h5>Older Posts</h5>
             <ul class="list-unstyled">
+                    <li><a href="/posts/um-call-rejected">The Microsoft Exchange Unified Messaging Call Router service rejected the call for the following reason</a></li>
                     <li><a href="/posts/shared-channels-101">Enabling Teams Shared Channels 101</a></li>
                     <li><a href="/posts/leave-from-meeting-chat">How to leave a Teams meeting chat, even if you are the organizer</a></li>
                     <li><a href="/posts/clear-teams-notifications">Mark Teams notifications as read</a></li>
-                    <li><a href="/posts/extra-information-federated-teams">Getting some extra information about Teams federated users using PowerShell</a></li>
             </ul>
                 <ul class="pager">
                     <li class="next">

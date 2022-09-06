@@ -4,8 +4,52 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2022</rights>
-	<updated>2022-07-08T03:15:51Z</updated>
+	<updated>2022-09-06T16:42:15Z</updated>
 	<subtitle>Get-ITips</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/azure-ad-connect-db-query" />
+		<id>https://get-itips.capazero.net/posts/azure-ad-connect-db-query</id>
+		<title>How to export Azure AD Connect metaverse using sqlcmd</title>
+		<updated>2022-09-06T00:00:00Z</updated>
+		<content>&lt;h1 id="introduction"&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;The Synchronization Service Manager app is good to review the status and check the configuration of synchronization to and from an Azure AD tenant,
+and it also includes a Metaverse Search option where you can query the SQL database that Azure AD Connect uses.
+One of the things that is recommended in a swing migration is to compare the number of objects between installations, however this UI does not handle correctly
+a big number objects, I found that if you click &lt;em&gt;Search&lt;/em&gt; on the &lt;em&gt;Metaverse Search&lt;/em&gt; option, with 50,000 items or more, and then you try to copy all the results (I do this to
+understand which accounts will not be part of the new installation, hence, deleted from Azure AD), the UI will hang.&lt;/p&gt;
+&lt;h1 id="analysis"&gt;Analysis&lt;/h1&gt;
+&lt;p&gt;So I needed a way to query the objects but using the command line, I didn't want to install SQL Management Studio on the Azure AD Connect Server.&lt;/p&gt;
+&lt;p&gt;First of all, we need to get the named pipes connection string, (these instructions are if using the LocalDB version of SQL Server's Azure AD Connect, otherwise, if using an standalone SQL
+Server you would already know the server name, instance name and protocol).&lt;/p&gt;
+&lt;h1 id="the-solution"&gt;The Solution?&lt;/h1&gt;
+&lt;p&gt;SQL Server's Azure AD Connect uses named pipes as protocol, so we need to take that into account, open the error.log file that is present in&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;C:\Users\[Account Running Microsoft Azure AD Sync Service]\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\ADSync2019
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;also found on this path&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;C:\Windows\ServiceProfiles\ADSync\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\ADSync2019
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;find a line similar to:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Server local connection provider is ready to accept connection on [ \\.\pipe\LOCALDB#SHEA4A65\tsql\query ].
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;take note of the whole pipe \.\pipe\LOCALDB#SHEA4A65\tsql\query (it differs from installation to installation, yours will be different)&lt;/p&gt;
+&lt;p&gt;then, open a command prompt and run this command, making the required adjustments&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-cmd"&gt;sqlcmd -S np:\\.\pipe\LOCALDB#SHEA4A65\tsql\query -d &amp;quot;ADSync&amp;quot; -E -Q &amp;quot;select displayName FROM [ADSync].[dbo].[mms_metaverse]&amp;quot; -o &amp;quot;ExportAADC.txt&amp;quot; -h-1 -w 200
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This command connects to the specified named pipe (-S np:\.\pipe\LOCALDB#SHEA4A65\tsql\query), against the specified database (-d &amp;quot;ADSync&amp;quot;), runs the specified T-SQL
+(-Q &amp;quot;select displayName FROM [ADSync].[dbo].[mms_metaverse]&amp;quot;) and produces the specified output text file (-o &amp;quot;ExportAADC.txt&amp;quot;)
+This command will produce a text file with the output of the query, unfortunately, a lot of white lines will be present on the file, you can remove them easily using&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Edit -&amp;gt; Line operations -&amp;gt; Remove Empty Lines (Containing Blank characters)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;option from Notepad++.&lt;/p&gt;
+&lt;h1 id="conclusion"&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;This method is useful if you do not want to add any other piece of software in the server, which it is usually not recommended or easy in customer's installations, sqlcmd comes with the Azure AD Connect installation and is right there.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;The Synchronization Service Manager app is good to review the status and check the configuration of synchronization to and from an Azure AD tenant,
+and it also includes a Metaverse Search option where you can query the SQL database that Azure AD Connect uses.
+One of the things that is recommended in a swing migration is to compare the number of objects between installations, however this UI does not handle correctly
+a big number objects, I found that if you click &lt;em&gt;Search&lt;/em&gt; on the &lt;em&gt;Metaverse Search&lt;/em&gt; option, with 50,000 items or more, and then you try to copy all the results (I do this to
+understand which accounts will not be part of the new installation, hence, deleted from Azure AD), the UI will hang.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/wmsvc-sha256-exchange" />
 		<id>https://get-itips.capazero.net/posts/wmsvc-sha256-exchange</id>
@@ -1391,123 +1435,5 @@ Visibility                        Property   string Visibility {get;set;}
 &lt;p&gt;That's all for part 1 of these series, in part 2, I'll keep exploring what these cmdlets can provide to Teams Administrators.&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;&lt;img src="/images/TeamsPNP.png" class="img-fluid" alt="introimage"&gt;&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.capazero.net/posts/s4b-reconnect-teams" />
-		<id>https://get-itips.capazero.net/posts/s4b-reconnect-teams</id>
-		<title>Enable-CsOnlineSessionForReconnection... on Teams PowerShell 1.1.6</title>
-		<updated>2020-09-17T00:00:00Z</updated>
-		<content>&lt;p&gt;&lt;img src="/images/TeamsS4BReconnect.png" class="img-fluid" alt="introimage" /&gt;&lt;/p&gt;
-&lt;p&gt;Microsoft has just released &lt;a href="https://www.powershellgallery.com/packages/MicrosoftTeams/1.1.6"&gt;Teams PowerShell module version 1.1.6&lt;/a&gt;, a version that includes the Skype for Business Online Connector built-in, so, it is a requirement to uninstall it, if you had it installed on your computer.&lt;/p&gt;
-&lt;p&gt;Thanks to a great &lt;a href="https://twitter.com/AlexHolmeset"&gt;Alexander Holmeset&lt;/a&gt;'s heads-up, that identified that a very handy PowerShell cmdlet called  &lt;strong&gt;Enable-CsOnlineSessionForReconnection&lt;/strong&gt;, was not anymore present, I decided to investigate if we could get the functionality back, more information on this cmdlet on this &lt;a href="https://ucstatus.com/2019/11/25/skypeonlineconnector-session-reconnection/"&gt;excellent blog post&lt;/a&gt; by Randy Chapman, but essentially, it allows you to reconnect the Skype For Business session automatically when it time-outs after an hour.&lt;/p&gt;
-&lt;p&gt;So I downloaded the Skype for Business Online Connector bits on another computer and tried to find where was it, finally found it inside C:\Program Files\Common Files\Skype for Business Online\Modules\SkypeOnlineConnector\SkypeOnlineConnectorStartup.psm1 and decided to give it a try &amp;quot;as is&amp;quot;, but it threw some errors and did not work as expected, so I realized I had to make some adjustments to it, specifically the way it recognizes if the module is already loaded.&lt;/p&gt;
-&lt;p&gt;Here is the script, based on the original function, save it as Enable-CsOnlineSessionForReconnection.ps1&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;$global:CsOnlineSessionInputParams=$UserCredential
-$modules = Get-Module tmp_*
-$csModuleUrl = &amp;quot;/OcsPowershellOAuth&amp;quot;
-$isSfbPsModuleFound = $false;
-
-    foreach ($module in $modules)
-    {
-        [string] $moduleUrl = $module.Description
-        [int] $queryStringIndex = $moduleUrl.IndexOf(&amp;quot;?&amp;quot;)
-
-        if ($queryStringIndex -gt 0)
-        {
-            $moduleUrl = $moduleUrl.SubString(0,$queryStringIndex)
-        }
-
-        if ($moduleUrl.Contains($csModuleUrl))
-        {
-            $isSfbPsModuleFound = $true
-            &amp;amp; $module { ${function:Get-PSImplicitRemotingSession} = `
-            {
-                param(
-                    [Parameter(Mandatory = $true, Position = 0)]
-                    [string]
-                    $commandName
-                )
-
-                if (($script:PSSession -eq $null) -or ($script:PSSession.Runspace.RunspaceStateInfo.State -ne 'Opened'))
-                {
-                    Set-PSImplicitRemotingSession `
-                        (&amp;amp; $script:GetPSSession `
-                            -InstanceId $script:PSSession.InstanceId.Guid `
-                            -ErrorAction SilentlyContinue )
-                }
-                if (($script:PSSession -ne $null) -and ($script:PSSession.Runspace.RunspaceStateInfo.State -eq 'Disconnected'))
-                {
-                    # If we are handed a disconnected session, try re-connecting it before creating a new session.
-                    Set-PSImplicitRemotingSession `
-                        (&amp;amp; $script:ConnectPSSession `
-                            -Session $script:PSSession `
-                            -ErrorAction SilentlyContinue)
-                }
-                if (($script:PSSession -eq $null) -or ($script:PSSession.Runspace.RunspaceStateInfo.State -ne 'Opened'))
-                {
-                    Write-PSImplicitRemotingMessage ('Recreating a new remote powershell session (implicit) for command: &amp;quot;{0}&amp;quot; ...' -f $commandName)
-
-                    if ((Test-Path variable:global:CsOnlineSessionInputParams) -ne $true)
-                    {
-                        throw 'Unable find input parameters from global scope, will not be able to recreate session'
-                    }
-
-                    if ((Test-Path variable:global:CsOnlineSessionRetryAttempt) -ne $true)
-                    {
-                        $global:CsOnlineSessionRetryAttempt = 1
-                    }
-                    else
-                    {
-                        $global:CsOnlineSessionRetryAttempt = $global:CsOnlineSessionRetryAttempt + 1
-                    }
-
-                    $session = New-CsOnlineSession -Credential &amp;#64;global:CsOnlineSessionInputParams
-
-                    if ($session -ne $null)
-                    {
-                        Set-PSImplicitRemotingSession -CreatedByModule $true -PSSession $session
-                    }
-
-                    #note - this magic string has to be same as above, search for this string above, it will become clear
-                    #because this will be in callback handler, I am not putting this into const variable
-                    $sfbPsSessionPrefix = &amp;quot;SfBPowerShellSession_&amp;quot;
-                    #sessions originally created will have the below one
-                    $sfbPsSessionRegEx1 = $sfbPsSessionPrefix + &amp;quot;*&amp;quot;
-                    #sessions created later will get their name changed by powershell during Set-PSImplicitRemotingSession
-                    #and so it will have names like &amp;quot;Session for implicit remoting module at C:\Users\&amp;lt;user&amp;gt;\AppData\Local\Temp\tmp_tsdvdhga.20e\tmp_tsdvdhga.20e.psm1&amp;quot;
-                    #tmp_tsdvdhga.20e being the module name
-                    $sfbPsSessionRegEx2 = Get-PSImplicitRemotingModuleName
-                    $sfbPsSessionRegEx2 = &amp;quot;*&amp;quot; + $sfbPsSessionRegEx2 + &amp;quot;*&amp;quot;
-                    #delete broken sessions - begin
-                    $psBroken = Get-PSSession | where-object {($_.Name -like $sfbPsSessionRegEx1 -or $_.Name -like $sfbPsSessionRegEx2) -and $_.State -like &amp;quot;*Broken*&amp;quot;}
-                    $psClosed = Get-PSSession | where-object {($_.Name -like $sfbPsSessionRegEx1 -or $_.Name -like $sfbPsSessionRegEx2) -and $_.State -like &amp;quot;*Closed*&amp;quot;}
-
-                    $psBroken | Remove-PSSession;
-                    $psClosed | Remove-PSSession;
-                    #delete broken sessions - end
-                }
-                if (($script:PSSession -eq $null) -or ($script:PSSession.Runspace.RunspaceStateInfo.State -ne 'Opened'))
-                {
-                    throw 'No session has been associated with this implicit remoting module'
-                }
-
-                return [Management.Automation.Runspaces.PSSession]$script:PSSession
-            }}
-        }
-    }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;and use it like this&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-powershell"&gt;$userCredential = Get-Credential
-#Connect to Microsoft Teams
-Connect-MicrosoftTeams -Credential $credential
-
-$sfbSession = New-CsOnlineSession -Credential $userCredential
-Import-PsSession $sfbSession
-
-.\Enable-CsOnlineSessionForReconnection.ps1
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;That should be enough for it to make it work as before, I tested it and it worked for me, please be aware that this is provided as is without any guarantee, let me know if it works four you!&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;&lt;img src="/images/TeamsS4BReconnect.png" class="img-fluid" alt="introimage"&gt;&lt;/p&gt;</summary>
 	</entry>
 </feed>

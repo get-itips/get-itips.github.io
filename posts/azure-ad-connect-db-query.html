@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - ExchangeServer</title>
+        <title>Andr&#xE9;s Gorzelany - How to export Azure AD Connect metaverse using sqlcmd</title>
         <meta name="description" content="Get-ITips" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - ExchangeServer" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - How to export Azure AD Connect metaverse using sqlcmd" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/tags/ExchangeServer" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/azure-ad-connect-db-query" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -95,9 +95,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>ExchangeServer</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>How to export Azure AD Connect metaverse using sqlcmd</h1>
+    <div class="meta">        
+Published on Tuesday, September 6, 2022<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/Azure" class="btn btn-default btn-xs">Azure</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -106,84 +114,66 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-sm-8 right-border col-sm-height">
-                    <div class="post-list">
-            <a href="/posts/wmsvc-sha256-exchange">
-                <h3 class="post-title">Renewing Web Management Service certificate from SHA1 to SHA256 in Exchange Server</h3>
-            </a>
-            <p class="post-meta">Posted on Thursday, July 7, 2022</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/hcw-cmdlets">
-                <h3 class="post-title">Cmdlets run by the Hybrid Configuration Wizard</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, June 29, 2022</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/um-call-rejected">
-                <h3 class="post-title">The Microsoft Exchange Unified Messaging Call Router service rejected the call for the following reason</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, May 11, 2022</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/hafnium-resources">
-                <h3 class="post-title">HAFNIUM Exchange Server exploits - Resources</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, March 10, 2021</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/csv-adPerm">
-                <h3 class="post-title">Powershell Script to CSV all AD Permissions for a particular Receive Connector</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, February 8, 2017</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/handy-handshake">
-                <h3 class="post-title">Handy SMTP Handshake for testing with Telnet</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, February 8, 2017</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/copy-block-list">
-                <h3 class="post-title">Copy IP Block List from one Server to Another</h3>
-            </a>
-            <p class="post-meta">Posted on Tuesday, June 14, 2016</p>      
-        </div>   
+                                        
+
+<h1 id="introduction">Introduction</h1>
+<p>The Synchronization Service Manager app is good to review the status and check the configuration of synchronization to and from an Azure AD tenant,
+and it also includes a Metaverse Search option where you can query the SQL database that Azure AD Connect uses.
+One of the things that is recommended in a swing migration is to compare the number of objects between installations, however this UI does not handle correctly
+a big number objects, I found that if you click <em>Search</em> on the <em>Metaverse Search</em> option, with 50,000 items or more, and then you try to copy all the results (I do this to
+understand which accounts will not be part of the new installation, hence, deleted from Azure AD), the UI will hang.</p>
+<h1 id="analysis">Analysis</h1>
+<p>So I needed a way to query the objects but using the command line, I didn't want to install SQL Management Studio on the Azure AD Connect Server.</p>
+<p>First of all, we need to get the named pipes connection string, (these instructions are if using the LocalDB version of SQL Server's Azure AD Connect, otherwise, if using an standalone SQL
+Server you would already know the server name, instance name and protocol).</p>
+<h1 id="the-solution">The Solution?</h1>
+<p>SQL Server's Azure AD Connect uses named pipes as protocol, so we need to take that into account, open the error.log file that is present in</p>
+<pre><code>C:\Users\[Account Running Microsoft Azure AD Sync Service]\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\ADSync2019
+</code></pre>
+<p>also found on this path</p>
+<pre><code>C:\Windows\ServiceProfiles\ADSync\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\ADSync2019
+</code></pre>
+<p>find a line similar to:</p>
+<pre><code>Server local connection provider is ready to accept connection on [ \\.\pipe\LOCALDB#SHEA4A65\tsql\query ].
+</code></pre>
+<p>take note of the whole pipe \.\pipe\LOCALDB#SHEA4A65\tsql\query (it differs from installation to installation, yours will be different)</p>
+<p>then, open a command prompt and run this command, making the required adjustments</p>
+<pre><code class="language-cmd">sqlcmd -S np:\\.\pipe\LOCALDB#SHEA4A65\tsql\query -d &quot;ADSync&quot; -E -Q &quot;select displayName FROM [ADSync].[dbo].[mms_metaverse]&quot; -o &quot;ExportAADC.txt&quot; -h-1 -w 200
+</code></pre>
+<p>This command connects to the specified named pipe (-S np:\.\pipe\LOCALDB#SHEA4A65\tsql\query), against the specified database (-d &quot;ADSync&quot;), runs the specified T-SQL
+(-Q &quot;select displayName FROM [ADSync].[dbo].[mms_metaverse]&quot;) and produces the specified output text file (-o &quot;ExportAADC.txt&quot;)
+This command will produce a text file with the output of the query, unfortunately, a lot of white lines will be present on the file, you can remove them easily using</p>
+<pre><code>Edit -&gt; Line operations -&gt; Remove Empty Lines (Containing Blank characters)
+</code></pre>
+<p>option from Notepad++.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>This method is useful if you do not want to add any other piece of software in the server, which it is usually not recommended or easy in customer's installations, sqlcmd comes with the Azure AD Connect installation and is right there.</p>
 
 
-            <nav>
-                <ul class="pager">
-                    <li class="previous">                
-                    </li>
-                    <li class="next">
-                    </li>
-                </ul>
-            </nav>
-            <hr class="visible-xs-block" />
-        </div>
-		
-        <div class="col-sm-4 col-sm-height">
-                <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams (14)</a>
-                <a role="button" href="/tags/ExchangeServer" class="btn btn-primary btn-xs">ExchangeServer (7)</a>
-                <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-xs">Sharepoint (5)</a>
-                <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-xs">TeamFoundationServer (4)</a>
-                <a role="button" href="/tags/Azure" class="btn btn-default btn-xs">Azure (2)</a>
-                <a role="button" href="/tags/365" class="btn btn-default btn-xs">365 (2)</a>
-                <a role="button" href="/tags/Skype4B" class="btn btn-default btn-xs">Skype4B (2)</a>
-                <a role="button" href="/tags/Ignite" class="btn btn-default btn-xs">Ignite (2)</a>
-                <a role="button" href="/tags/Planner" class="btn btn-default btn-xs">Planner (1)</a>
-                <a role="button" href="/tags/Windows" class="btn btn-default btn-xs">Windows (1)</a>
-                <a role="button" href="/tags/Exams" class="btn btn-default btn-xs">Exams (1)</a>
-                <a role="button" href="/tags/Misc" class="btn btn-default btn-xs">Misc (1)</a>
-                <a role="button" href="/tags/GitHub" class="btn btn-default btn-xs">GitHub (1)</a>
-                <a role="button" href="/tags/General" class="btn btn-default btn-xs">General (1)</a>
-                <a role="button" href="/tags/SSL" class="btn btn-default btn-xs">SSL (1)</a>
-                <a role="button" href="/tags/Powershell" class="btn btn-default btn-xs">Powershell (1)</a>
-        </div>
-    </div>
-</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'azure-ad-connect-db-query';
+    var disqus_title = 'How to export Azure AD Connect metaverse using sqlcmd';
+    var disqus_url = 'https://get-itips.capazero.net/posts/azure-ad-connect-db-query';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
                                 </div>
                         </div>
                 </div>
