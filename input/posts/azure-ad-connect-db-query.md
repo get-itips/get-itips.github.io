@@ -1,5 +1,5 @@
 Title: How to export Azure AD Connect metaverse using sqlcmd
-Published: 9/5/2022
+Published: 9/6/2022
 Tags: Azure
 ---
 
