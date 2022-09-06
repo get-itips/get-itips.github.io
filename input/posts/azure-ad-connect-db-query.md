@@ -9,7 +9,7 @@ The Synchronization Service Manager app is good to review the status and check t
 and it also includes a Metaverse Search option where you can query the SQL database that Azure AD Connect uses.
 One of the things that is recommended in a swing migration is to compare the number of objects between installations, however this UI does not handle correctly 
 a big number objects, I found that if you click _Search_ on the _Metaverse Search_ option, with 50,000 items or more, and then you try to copy all the results (I do this to 
-understand which accounts will not be part of the new installation, for example, on a swing migration from 1.6 to 2.x), the UI will hang.
+understand which accounts will not be part of the new installation, hence, deleted from Azure AD), the UI will hang.
 
 # Analysis
 
@@ -42,15 +42,20 @@ take note of the whole pipe \\.\pipe\LOCALDB#SHEA4A65\tsql\query (it differs fro
 then, open a command prompt and run this command, making the required adjustments
 
 ```cmd
-sqlcmd -S np:\\.\pipe\LOCALDB#SHEA4A65\tsql\query -d "ADSync" -E -Q "select cn FROM [ADSync].[dbo].[mms_metaverse]" -o "ExportAADC.txt" -h-1 -w 200
+sqlcmd -S np:\\.\pipe\LOCALDB#SHEA4A65\tsql\query -d "ADSync" -E -Q "select displayName FROM [ADSync].[dbo].[mms_metaverse]" -o "ExportAADC.txt" -h-1 -w 200
 ```
 This command connects to the specified named pipe (-S np:\\.\pipe\LOCALDB#SHEA4A65\tsql\query), against the specified database (-d "ADSync"), runs the specified T-SQL
-(-Q "select cn FROM [ADSync].[dbo].[mms_metaverse]") and produces the specified output text file (-o "ExportAADC.txt")
+(-Q "select displayName FROM [ADSync].[dbo].[mms_metaverse]") and produces the specified output text file (-o "ExportAADC.txt")
 This command will produce a text file with the output of the query, unfortunately, a lot of white lines will be present on the file, you can remove them easily using
 
 ```
 Edit -> Line operations -> Remove Empty Lines (Containing Blank characters)
 ```
 
-option from Notepad++
+option from Notepad++.
+
+# Conclusion
+
+This method is useful if you do not want to add any other piece of software in the server, which it is usually not recommended or easy in customer's installations, sqlcmd comes with the Azure AD Connect installation and is right there.
+
 
