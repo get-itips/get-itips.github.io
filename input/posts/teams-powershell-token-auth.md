@@ -3,7 +3,13 @@ Published: 6/9/2021
 Tags: Teams
 ---
 
-Early in May, a new entry was added to the [Official Docs article](https://docs.microsoft.com/microsoftteams/teams-powershell-release-notes) for the Microsoft Teams PowerShell module Release notes, we could read:
+**October 2022 Update**
+The Teams PowerShell module has been updated a lot since I made this post, 4.7.1-preview version of the module finally adds support for Token-Based Authentication.
+The [Connect-MicrosoftTeams](https://learn.microsoft.com/en-us/powershell/module/teams/connect-microsoftteams?view=teams-ps?WT.mc_id=M365-MVP-5004663) article has been updated to list the required permissions, but still lists the delegated ones, so a new article has been introduced for [Application-based authentication](https://learn.microsoft.com/en-us/MicrosoftTeams/teams-powershell-application-authentication?view=teams-ps?WT.mc_id=M365-MVP-5004663).
+
+**You should follow those guidelines now to setup Certificate-based Authentication as this post is now outdated.**
+
+**Early in May 2022**, a new entry was added to the [Official Docs article](https://docs.microsoft.com/microsoftteams/teams-powershell-release-notes) for the Microsoft Teams PowerShell module Release notes, we could read:
 
 >- Updates for AccessToken login with Connect-MicrosoftTeams
 >- Unified token array instead of resource specific access token parameters
