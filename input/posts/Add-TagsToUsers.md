@@ -1,5 +1,5 @@
-Title: Add tags to team members 
-Published: 10/18/2022
+Title: Automate adding tags to team members
+Published: 10/19/2022
 Tags: Teams
 ---
 
