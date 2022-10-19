@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - Powershell</title>
+        <title>Andr&#xE9;s Gorzelany - Automate adding tags to team members</title>
         <meta name="description" content="Get-ITips" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Powershell" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Automate adding tags to team members" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/tags/Powershell" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/Add-TagsToUsers" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -95,9 +95,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>Powershell</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>Automate adding tags to team members</h1>
+    <div class="meta">        
+Published on Wednesday, October 19, 2022<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -106,48 +114,136 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-sm-8 right-border col-sm-height">
-                    <div class="post-list">
-            <a href="/posts/connect-sql-posh">
-                <h3 class="post-title">Connect to SQL using Powershell</h3>
-            </a>
-            <p class="post-meta">Posted on Tuesday, June 28, 2016</p>      
-        </div>   
+                                        
+
+<p>Hello!</p>
+<h1 id="introduction">Introduction</h1>
+<p>I see that there is no way to ease the job of adding a tag to multiple users at the same time without having to look for the user in the edit tag window, so if you have
+a large list of team members and you want to add the tag to a lot of them or all, it is a little tedious, so exploring the API as
+these other posts <a href="https://get-itips.capazero.net/posts/extra-information-federated-teams">Getting some extra information about Teams federated users using PowerShell</a> and
+<a href="https://get-itips.capazero.net/posts/clear-teams-notifications">Mark Teams notifications as read</a> we can script this calling the chat service API.</p>
+<h1 id="requirements">Requirements</h1>
+<h2 id="tag-name">Tag name</h2>
+<p>The tag you want to add to users doesn't need to be already created, this also means that, for example you make a typo specifying the tag name, it will be created, so make sure
+you type the right tag name.</p>
+<h2 id="the-teams-object-id">The team's object id</h2>
+<p>Every entity in Teams is represented by an MRI, in this case we would need to grab the object id part of the mri from the URL.</p>
+<p>Instructions</p>
+<ol>
+<li>Open Teams using the Web browser</li>
+<li>Click on the three &quot;...&quot; and Manage team</li>
+<li>Look at the address bar, for example <a href="https://teams.microsoft.com/_#/teamDashboard/Sales%20and%20Marketing/19:PwiCdKrPbQ2IyrQy7W2EVrXpHTAA3G00WuHUgP6PY1&#64;thread.tacv2/td.members">https://teams.microsoft.com/_#/teamDashboard/Sales%20and%20Marketing/19:PwiCdKrPbQ2IyrQy7W2EVrXpHTAA3G00WuHUgP6PY1&#64;thread.tacv2/td.members</a></li>
+<li>Copy everything between &quot;:&quot; and &quot;&#64;&quot;</li>
+</ol>
+<h2 id="the-userids">The UserIds</h2>
+<p>You can grab the user ids, using the official Microsoft Teams PowerShell module, using the <code>Get-TeamUser</code> cmdlet, take note of the UserId you need (corresponding to the user
+you need to assign a tag to).</p>
+<h2 id="the-csv-file">The CSV file</h2>
+<p>The format of the csv file is this</p>
+<pre><code>objectid;userId;tag
+</code></pre>
+<p>for example</p>
+<pre><code>objectid;userId;tag
+PwiCdKrPbQ2IyrQy7W2EVrXpHTAA3G00WuHUgP6PY1;e69b51ea-2d84-4881-a7df-99f651c62d68;ITPro
+PwiCdKrPbQ2IyrQy7W2EVrXpHTAA3G00WuHUgP6PY1;2e59f376-9231-44b6-8654-e53f866daa65;ITPro
+</code></pre>
+<h1 id="the-script">The script</h1>
+<pre><code class="language-powershell">function Add-TagsToUsers{
+
+  #CSV file containing the team objectId, user id and tag name
+  $userAndTags=&quot;usersAndTags.csv&quot;
+  $csv = Import-CSV -Delimiter &quot;;&quot; -Path $userAndTags
+
+  #Authentication
+  ## Let's load the great AADInternals module
+  Import-Module AADInternals
+  #Let's request a chat service token
+  $token = Get-AADIntAccessToken -Resource https://chatsvcagg.teams.microsoft.com -ClientId &quot;1fec8e78-bce4-4aaf-ab1b-5451cc387264&quot;
+
+  #Some variable definitions - Do not change this
+  $urlPart1=&quot;https://teams.microsoft.com/api/csa/amer/api/v1/teams/19:&quot;
+  $urlPart3=&quot;&#64;thread.tacv2/memberTags/?action=add&quot;
+
+  #For each entry in the csv we will try to add the user to the tag
+  foreach($entry in $csv){
+
+      $objectId=$entry.objectId
+      $userId=$entry.userId
+      $tag=$entry.tag
+
+      $uri = $urlPart1+$objectId+$urlPart3
+      Write-Verbose $uri
+      $body = &quot;{`&quot;tagNames`&quot;:[`&quot;$tag`&quot;],`&quot;memberIds`&quot;:[`&quot;8:orgid:$userId`&quot;]}&quot;  
+      Write-Verbose $body  
+      $path=&quot;/api/csa/amer/api/v1/teams/19:$objectId&#64;thread.tacv2/memberTags/?action=add&quot;
+      Write-Verbose $path
+      $guid=(New-Guid).Guid
+      
+      $Result=Invoke-WebRequest -UseBasicParsing -Uri $uri `
+      -Method &quot;POST&quot; `
+      -Headers &#64;{
+      &quot;authority&quot;=&quot;teams.microsoft.com&quot;
+        &quot;method&quot;=&quot;POST&quot;
+        &quot;path&quot;=$path
+        &quot;scheme&quot;=&quot;https&quot;
+        &quot;accept&quot;=&quot;json&quot;
+        &quot;accept-encoding&quot;=&quot;gzip, deflate, br&quot;
+        &quot;accept-language&quot;=&quot;es,es-ES;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;
+        &quot;authorization&quot;=&quot;Bearer $token&quot;
+        &quot;origin&quot;=&quot;https://teams.microsoft.com&quot;
+        &quot;referer&quot;=&quot;https://teams.microsoft.com/_&quot;
+        &quot;sec-ch-ua&quot;=&quot;`&quot;Chromium`&quot;;v=`&quot;106`&quot;, `&quot;Microsoft Edge`&quot;;v=`&quot;106`&quot;, `&quot;Not;A=Brand`&quot;;v=`&quot;99`&quot;&quot;
+        &quot;sec-ch-ua-mobile&quot;=&quot;?0&quot;
+        &quot;sec-ch-ua-platform&quot;=&quot;`&quot;Windows`&quot;&quot;
+        &quot;sec-fetch-dest&quot;=&quot;empty&quot;
+        &quot;sec-fetch-mode&quot;=&quot;cors&quot;
+        &quot;sec-fetch-site&quot;=&quot;same-origin&quot;
+        &quot;x-ms-client-env&quot;=&quot;pds-prod-c1-ussc-01&quot;
+        &quot;x-ms-client-type&quot;=&quot;web&quot;
+        &quot;x-ms-client-version&quot;=&quot;1415/1.0.0.2022092126&quot;
+        &quot;x-ms-scenario-id&quot;=&quot;511&quot;
+        &quot;x-ms-session-id&quot;=$guid
+        &quot;x-ms-user-type&quot;=&quot;null&quot;
+        &quot;x-ringoverride&quot;=&quot;general&quot;
+      } `
+      -ContentType &quot;application/json&quot; `
+      -Body $body `
+
+      $Result
+  }
+
+}
+Add-TagsToUsers
+</code></pre>
+<p>The script uses the great AADInternals module to ease the token retrieval and then mimics what the Teams client does when adding tags to users.
+Once run, you should have all the users you specified in the csv file with the specified tag in the specified team.</p>
+<p>I invite everyone that wants to contribute to this script to do so here in this <a href="https://github.com/get-itips/MiscScripts/blob/dev/Teams/Add-TagsToUsers.ps1">GitHub repo</a>.</p>
 
 
-            <nav>
-                <ul class="pager">
-                    <li class="previous">                
-                    </li>
-                    <li class="next">
-                    </li>
-                </ul>
-            </nav>
-            <hr class="visible-xs-block" />
-        </div>
-		
-        <div class="col-sm-4 col-sm-height">
-                <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams (15)</a>
-                <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer (7)</a>
-                <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-xs">Sharepoint (5)</a>
-                <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-xs">TeamFoundationServer (4)</a>
-                <a role="button" href="/tags/Azure" class="btn btn-default btn-xs">Azure (2)</a>
-                <a role="button" href="/tags/365" class="btn btn-default btn-xs">365 (2)</a>
-                <a role="button" href="/tags/Skype4B" class="btn btn-default btn-xs">Skype4B (2)</a>
-                <a role="button" href="/tags/Ignite" class="btn btn-default btn-xs">Ignite (2)</a>
-                <a role="button" href="/tags/Planner" class="btn btn-default btn-xs">Planner (1)</a>
-                <a role="button" href="/tags/Windows" class="btn btn-default btn-xs">Windows (1)</a>
-                <a role="button" href="/tags/Exams" class="btn btn-default btn-xs">Exams (1)</a>
-                <a role="button" href="/tags/Misc" class="btn btn-default btn-xs">Misc (1)</a>
-                <a role="button" href="/tags/GitHub" class="btn btn-default btn-xs">GitHub (1)</a>
-                <a role="button" href="/tags/General" class="btn btn-default btn-xs">General (1)</a>
-                <a role="button" href="/tags/SSL" class="btn btn-default btn-xs">SSL (1)</a>
-                <a role="button" href="/tags/Powershell" class="btn btn-primary btn-xs">Powershell (1)</a>
-        </div>
-    </div>
-</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'Add-TagsToUsers';
+    var disqus_title = 'Automate adding tags to team members';
+    var disqus_url = 'https://get-itips.capazero.net/posts/Add-TagsToUsers';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
                                 </div>
                         </div>
                 </div>
