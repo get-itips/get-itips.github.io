@@ -3,19 +3,21 @@ Published: 11/24/2022
 Tags: Teams
 ---
 
-#Introduction
+# Introduction
 
 Upon customer request, I needed to investigate how to restrict the resource account used by a Microsoft Teams Rooms device, the goal was to prevent this account from logging in from other devices than the MTR device, I think that is not so crazy request, right?
 
 In this blog post, that I hope it becomes a blog series, I want to share my findings about this, and also thank [Randy Chapman](https://twitter.com/randychapman), [Linus Cansby](https://twitter.com/LCansby), [Graham Walsh](https://twitter.com/thegrahamwalsh) for providing some more information. 
 
-According to Microsoft, _Filter for devices_, which is a _Conditional Access Policy_ condition, is **supported** in Microsoft Teams Rooms on Android and on Windows. See here [Supported Conditional Access and Intune device compliance policies for Microsoft Teams Rooms and Teams Android Devices](https://learn.microsoft.com/microsoftteams/rooms/supported-ca-and-compliance-policies?tabs=mtr-w) 
+# What are our options?
+
+According to Microsoft, _Filter for devices_, which is a _Conditional Access Policy_ condition, is **supported** in Microsoft Teams Rooms on Android and on Windows. See here [Supported Conditional Access and Intune device compliance policies for Microsoft Teams Rooms and Teams Android Devices](https://learn.microsoft.com/microsoftteams/rooms/supported-ca-and-compliance-policies?WT.mc_id=M365-MVP-5004663) 
 
 However, we also found this statement 
 
 > You can't use a resource account to apply device-level conditional access policies in Azure Active Directory and Endpoint Manager as device info is not passed when using this grant type. 
 
-[Authentication in Microsoft Teams Rooms on Windows - Microsoft Teams | Microsoft Learn](https://learn.microsoft.com/microsoftteams/rooms/rooms-authentication)
+[Authentication in Microsoft Teams Rooms on Windows - Microsoft Teams | Microsoft Learn](https://learn.microsoft.com/microsoftteams/rooms/rooms-authentication?WT.mc_id=M365-MVP-5004663)
 
 So if we read both those pages, it is a little contradictory, right? Is it or is it not supported to use _filter for devices_? 
 
@@ -27,8 +29,10 @@ Decided to give it a try [Azure AD Registering the device](https://support.micro
 
 So, that leaves me with the MTRoA devices, the idea, was to create a Conditional Access Policy like this: 
 
+# The Conditional Access Policy
+
 - **Users**: The specific resource account 
-- **Cloud Apps**: All cloud apps (or at least, Exchange Online, Microsoft Teams, and SharePoint Online as explained here [Conditional Access and compliance best practices for Microsoft Teams Rooms - Microsoft Teams | Microsoft Learn](https://learn.microsoft.com/en-us/microsoftteams/rooms/conditional-access-and-compliance-for-devices)) 
+- **Cloud Apps**: All cloud apps (or at least, Exchange Online, Microsoft Teams, and SharePoint Online as explained here [Conditional Access and compliance best practices for Microsoft Teams Rooms - Microsoft Teams | Microsoft Learn](https://learn.microsoft.com/en-us/microsoftteams/rooms/conditional-access-and-compliance-for-devices?WT.mc_id=M365-MVP-5004663)) 
 - **Conditions** : **Filter for Devices**: _Exclude filtered devices_, Configure: Yes, Exclude filtered devices from policy: deviceId Equals e592fe64-fd2b-4ced-ae96-91657183cdb8 
 - **Grant**: Block access 
 
@@ -40,7 +44,9 @@ These devices showed as Azure AD Registered by default and upon testing, they se
 
 ![TMR Android Sign In event](/images/MTR_Android_SignIn.png) 
 
-So, we could use CAPs with Android-based MTR devices without any other intervention (like AADJ/Enrolling, see https://techcommunity.microsoft.com/t5/intune-customer-success/enrolling-microsoft-teams-rooms-on-windows-devices-with/ba-p/3246986 ) 
+So, we could use CAPs with Android-based MTR devices without any other intervention (like AADJ/Enrolling, see [Enrolling Microsoft Teams Rooms on Windows devices with Microsoft Endpoint Manager](https://techcommunity.microsoft.com/t5/intune-customer-success/enrolling-microsoft-teams-rooms-on-windows-devices-with/ba-p/3246986?WT.mc_id=M365-MVP-5004663)) in case you can't use Endpoint Manager/Intune for any reason.
+
+# The end?
 
 Hope these findings are useful and saves time for someone, as this took me a good couple of days to find out and test.
 
