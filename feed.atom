@@ -4,30 +4,32 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2022</rights>
-	<updated>2022-11-24T21:34:07Z</updated>
+	<updated>2022-11-24T21:41:27Z</updated>
 	<subtitle>Get-ITips</subtitle>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/tmr-conditional-access" />
 		<id>https://get-itips.capazero.net/posts/tmr-conditional-access</id>
 		<title>Using Conditional Access Policies with Microsoft Teams Rooms devices - Part 1</title>
 		<updated>2022-11-24T00:00:00Z</updated>
-		<content>&lt;p&gt;#Introduction&lt;/p&gt;
+		<content>&lt;h1 id="introduction"&gt;Introduction&lt;/h1&gt;
 &lt;p&gt;Upon customer request, I needed to investigate how to restrict the resource account used by a Microsoft Teams Rooms device, the goal was to prevent this account from logging in from other devices than the MTR device, I think that is not so crazy request, right?&lt;/p&gt;
 &lt;p&gt;In this blog post, that I hope it becomes a blog series, I want to share my findings about this, and also thank &lt;a href="https://twitter.com/randychapman"&gt;Randy Chapman&lt;/a&gt;, &lt;a href="https://twitter.com/LCansby"&gt;Linus Cansby&lt;/a&gt;, &lt;a href="https://twitter.com/thegrahamwalsh"&gt;Graham Walsh&lt;/a&gt; for providing some more information.&lt;/p&gt;
-&lt;p&gt;According to Microsoft, &lt;em&gt;Filter for devices&lt;/em&gt;, which is a &lt;em&gt;Conditional Access Policy&lt;/em&gt; condition, is &lt;strong&gt;supported&lt;/strong&gt; in Microsoft Teams Rooms on Android and on Windows. See here &lt;a href="https://learn.microsoft.com/microsoftteams/rooms/supported-ca-and-compliance-policies?tabs=mtr-w"&gt;Supported Conditional Access and Intune device compliance policies for Microsoft Teams Rooms and Teams Android Devices&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="what-are-our-options"&gt;What are our options?&lt;/h1&gt;
+&lt;p&gt;According to Microsoft, &lt;em&gt;Filter for devices&lt;/em&gt;, which is a &lt;em&gt;Conditional Access Policy&lt;/em&gt; condition, is &lt;strong&gt;supported&lt;/strong&gt; in Microsoft Teams Rooms on Android and on Windows. See here &lt;a href="https://learn.microsoft.com/microsoftteams/rooms/supported-ca-and-compliance-policies?WT.mc_id=M365-MVP-5004663"&gt;Supported Conditional Access and Intune device compliance policies for Microsoft Teams Rooms and Teams Android Devices&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;However, we also found this statement&lt;/p&gt;
 &lt;blockquote class="blockquote"&gt;
 &lt;p&gt;You can't use a resource account to apply device-level conditional access policies in Azure Active Directory and Endpoint Manager as device info is not passed when using this grant type.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;a href="https://learn.microsoft.com/microsoftteams/rooms/rooms-authentication"&gt;Authentication in Microsoft Teams Rooms on Windows - Microsoft Teams | Microsoft Learn&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://learn.microsoft.com/microsoftteams/rooms/rooms-authentication?WT.mc_id=M365-MVP-5004663"&gt;Authentication in Microsoft Teams Rooms on Windows - Microsoft Teams | Microsoft Learn&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;So if we read both those pages, it is a little contradictory, right? Is it or is it not supported to use &lt;em&gt;filter for devices&lt;/em&gt;?&lt;/p&gt;
 &lt;p&gt;So, upon testing, I found out that Microsoft Teams Rooms devices based on windows &lt;strong&gt;do not send the device information on the sign-in event&lt;/strong&gt; of the Microsoft Resource Account (Room Mailbox), see here an example:&lt;/p&gt;
 &lt;p&gt;&lt;img src="/images/MTR_Windows_SignIn.png" class="img-fluid" alt="TMR Windows Sign In event" /&gt;&lt;/p&gt;
 &lt;p&gt;Decided to give it a try &lt;a href="https://support.microsoft.com/en-us/account-billing/register-your-personal-device-on-your-work-or-school-network-8803dd61-a613-45e3-ae6c-bd1ab25bf8a8"&gt;Azure AD Registering the device&lt;/a&gt;, also with no luck. Then, I received confirmation from Microsoft that the device needs to be AADJ (Azure AD Joined/Enrolled) to send this information, I still could verify this but I hope I can do it for my 2nd blog post of these series.&lt;/p&gt;
 &lt;p&gt;So, that leaves me with the MTRoA devices, the idea, was to create a Conditional Access Policy like this:&lt;/p&gt;
+&lt;h1 id="the-conditional-access-policy"&gt;The Conditional Access Policy&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Users&lt;/strong&gt;: The specific resource account&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Cloud Apps&lt;/strong&gt;: All cloud apps (or at least, Exchange Online, Microsoft Teams, and SharePoint Online as explained here &lt;a href="https://learn.microsoft.com/en-us/microsoftteams/rooms/conditional-access-and-compliance-for-devices"&gt;Conditional Access and compliance best practices for Microsoft Teams Rooms - Microsoft Teams | Microsoft Learn&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cloud Apps&lt;/strong&gt;: All cloud apps (or at least, Exchange Online, Microsoft Teams, and SharePoint Online as explained here &lt;a href="https://learn.microsoft.com/en-us/microsoftteams/rooms/conditional-access-and-compliance-for-devices?WT.mc_id=M365-MVP-5004663"&gt;Conditional Access and compliance best practices for Microsoft Teams Rooms - Microsoft Teams | Microsoft Learn&lt;/a&gt;)&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Conditions&lt;/strong&gt; : &lt;strong&gt;Filter for Devices&lt;/strong&gt;: &lt;em&gt;Exclude filtered devices&lt;/em&gt;, Configure: Yes, Exclude filtered devices from policy: deviceId Equals e592fe64-fd2b-4ced-ae96-91657183cdb8&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Grant&lt;/strong&gt;: Block access&lt;/li&gt;
 &lt;/ul&gt;
@@ -35,11 +37,12 @@
 &lt;p&gt;As said, this unfortunately din’t work with a MTRoW, as-is or Azure AD Registered, but what about Microsoft Teams Rooms on Android?&lt;/p&gt;
 &lt;p&gt;These devices showed as Azure AD Registered by default and upon testing, they send the device information upon sign-in.&lt;/p&gt;
 &lt;p&gt;&lt;img src="/images/MTR_Android_SignIn.png" class="img-fluid" alt="TMR Android Sign In event" /&gt;&lt;/p&gt;
-&lt;p&gt;So, we could use CAPs with Android-based MTR devices without any other intervention (like AADJ/Enrolling, see &lt;a href="https://techcommunity.microsoft.com/t5/intune-customer-success/enrolling-microsoft-teams-rooms-on-windows-devices-with/ba-p/3246986"&gt;https://techcommunity.microsoft.com/t5/intune-customer-success/enrolling-microsoft-teams-rooms-on-windows-devices-with/ba-p/3246986&lt;/a&gt; )&lt;/p&gt;
+&lt;p&gt;So, we could use CAPs with Android-based MTR devices without any other intervention (like AADJ/Enrolling, see &lt;a href="https://techcommunity.microsoft.com/t5/intune-customer-success/enrolling-microsoft-teams-rooms-on-windows-devices-with/ba-p/3246986?WT.mc_id=M365-MVP-5004663"&gt;Enrolling Microsoft Teams Rooms on Windows devices with Microsoft Endpoint Manager&lt;/a&gt;) in case you can't use Endpoint Manager/Intune for any reason.&lt;/p&gt;
+&lt;h1 id="the-end"&gt;The end?&lt;/h1&gt;
 &lt;p&gt;Hope these findings are useful and saves time for someone, as this took me a good couple of days to find out and test.&lt;/p&gt;
 &lt;p&gt;I expect to continue sharing my findings with the community in a 2nd part of this blog post.&lt;/p&gt;
 </content>
-		<summary>&lt;p&gt;#Introduction&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;Upon customer request, I needed to investigate how to restrict the resource account used by a Microsoft Teams Rooms device, the goal was to prevent this account from logging in from other devices than the MTR device, I think that is not so crazy request, right?&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/Add-TagsToUsers" />

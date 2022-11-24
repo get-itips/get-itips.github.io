@@ -116,23 +116,25 @@ Published on Thursday, November 24, 2022<br>    </div>
                                 <div id="content" class="col-md-12">
                                         
 
-<p>#Introduction</p>
+<h1 id="introduction">Introduction</h1>
 <p>Upon customer request, I needed to investigate how to restrict the resource account used by a Microsoft Teams Rooms device, the goal was to prevent this account from logging in from other devices than the MTR device, I think that is not so crazy request, right?</p>
 <p>In this blog post, that I hope it becomes a blog series, I want to share my findings about this, and also thank <a href="https://twitter.com/randychapman">Randy Chapman</a>, <a href="https://twitter.com/LCansby">Linus Cansby</a>, <a href="https://twitter.com/thegrahamwalsh">Graham Walsh</a> for providing some more information.</p>
-<p>According to Microsoft, <em>Filter for devices</em>, which is a <em>Conditional Access Policy</em> condition, is <strong>supported</strong> in Microsoft Teams Rooms on Android and on Windows. See here <a href="https://learn.microsoft.com/microsoftteams/rooms/supported-ca-and-compliance-policies?tabs=mtr-w">Supported Conditional Access and Intune device compliance policies for Microsoft Teams Rooms and Teams Android Devices</a></p>
+<h1 id="what-are-our-options">What are our options?</h1>
+<p>According to Microsoft, <em>Filter for devices</em>, which is a <em>Conditional Access Policy</em> condition, is <strong>supported</strong> in Microsoft Teams Rooms on Android and on Windows. See here <a href="https://learn.microsoft.com/microsoftteams/rooms/supported-ca-and-compliance-policies?WT.mc_id=M365-MVP-5004663">Supported Conditional Access and Intune device compliance policies for Microsoft Teams Rooms and Teams Android Devices</a></p>
 <p>However, we also found this statement</p>
 <blockquote class="blockquote">
 <p>You can't use a resource account to apply device-level conditional access policies in Azure Active Directory and Endpoint Manager as device info is not passed when using this grant type.</p>
 </blockquote>
-<p><a href="https://learn.microsoft.com/microsoftteams/rooms/rooms-authentication">Authentication in Microsoft Teams Rooms on Windows - Microsoft Teams | Microsoft Learn</a></p>
+<p><a href="https://learn.microsoft.com/microsoftteams/rooms/rooms-authentication?WT.mc_id=M365-MVP-5004663">Authentication in Microsoft Teams Rooms on Windows - Microsoft Teams | Microsoft Learn</a></p>
 <p>So if we read both those pages, it is a little contradictory, right? Is it or is it not supported to use <em>filter for devices</em>?</p>
 <p>So, upon testing, I found out that Microsoft Teams Rooms devices based on windows <strong>do not send the device information on the sign-in event</strong> of the Microsoft Resource Account (Room Mailbox), see here an example:</p>
 <p><img src="/images/MTR_Windows_SignIn.png" class="img-fluid" alt="TMR Windows Sign In event" /></p>
 <p>Decided to give it a try <a href="https://support.microsoft.com/en-us/account-billing/register-your-personal-device-on-your-work-or-school-network-8803dd61-a613-45e3-ae6c-bd1ab25bf8a8">Azure AD Registering the device</a>, also with no luck. Then, I received confirmation from Microsoft that the device needs to be AADJ (Azure AD Joined/Enrolled) to send this information, I still could verify this but I hope I can do it for my 2nd blog post of these series.</p>
 <p>So, that leaves me with the MTRoA devices, the idea, was to create a Conditional Access Policy like this:</p>
+<h1 id="the-conditional-access-policy">The Conditional Access Policy</h1>
 <ul>
 <li><strong>Users</strong>: The specific resource account</li>
-<li><strong>Cloud Apps</strong>: All cloud apps (or at least, Exchange Online, Microsoft Teams, and SharePoint Online as explained here <a href="https://learn.microsoft.com/en-us/microsoftteams/rooms/conditional-access-and-compliance-for-devices">Conditional Access and compliance best practices for Microsoft Teams Rooms - Microsoft Teams | Microsoft Learn</a>)</li>
+<li><strong>Cloud Apps</strong>: All cloud apps (or at least, Exchange Online, Microsoft Teams, and SharePoint Online as explained here <a href="https://learn.microsoft.com/en-us/microsoftteams/rooms/conditional-access-and-compliance-for-devices?WT.mc_id=M365-MVP-5004663">Conditional Access and compliance best practices for Microsoft Teams Rooms - Microsoft Teams | Microsoft Learn</a>)</li>
 <li><strong>Conditions</strong> : <strong>Filter for Devices</strong>: <em>Exclude filtered devices</em>, Configure: Yes, Exclude filtered devices from policy: deviceId Equals e592fe64-fd2b-4ced-ae96-91657183cdb8</li>
 <li><strong>Grant</strong>: Block access</li>
 </ul>
@@ -140,7 +142,8 @@ Published on Thursday, November 24, 2022<br>    </div>
 <p>As said, this unfortunately din’t work with a MTRoW, as-is or Azure AD Registered, but what about Microsoft Teams Rooms on Android?</p>
 <p>These devices showed as Azure AD Registered by default and upon testing, they send the device information upon sign-in.</p>
 <p><img src="/images/MTR_Android_SignIn.png" class="img-fluid" alt="TMR Android Sign In event" /></p>
-<p>So, we could use CAPs with Android-based MTR devices without any other intervention (like AADJ/Enrolling, see <a href="https://techcommunity.microsoft.com/t5/intune-customer-success/enrolling-microsoft-teams-rooms-on-windows-devices-with/ba-p/3246986">https://techcommunity.microsoft.com/t5/intune-customer-success/enrolling-microsoft-teams-rooms-on-windows-devices-with/ba-p/3246986</a> )</p>
+<p>So, we could use CAPs with Android-based MTR devices without any other intervention (like AADJ/Enrolling, see <a href="https://techcommunity.microsoft.com/t5/intune-customer-success/enrolling-microsoft-teams-rooms-on-windows-devices-with/ba-p/3246986?WT.mc_id=M365-MVP-5004663">Enrolling Microsoft Teams Rooms on Windows devices with Microsoft Endpoint Manager</a>) in case you can't use Endpoint Manager/Intune for any reason.</p>
+<h1 id="the-end">The end?</h1>
 <p>Hope these findings are useful and saves time for someone, as this took me a good couple of days to find out and test.</p>
 <p>I expect to continue sharing my findings with the community in a 2nd part of this blog post.</p>
 
