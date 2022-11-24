@@ -4,8 +4,43 @@
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
 	<rights>2022</rights>
-	<updated>2022-10-19T12:29:41Z</updated>
+	<updated>2022-11-24T21:34:07Z</updated>
 	<subtitle>Get-ITips</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/tmr-conditional-access" />
+		<id>https://get-itips.capazero.net/posts/tmr-conditional-access</id>
+		<title>Using Conditional Access Policies with Microsoft Teams Rooms devices - Part 1</title>
+		<updated>2022-11-24T00:00:00Z</updated>
+		<content>&lt;p&gt;#Introduction&lt;/p&gt;
+&lt;p&gt;Upon customer request, I needed to investigate how to restrict the resource account used by a Microsoft Teams Rooms device, the goal was to prevent this account from logging in from other devices than the MTR device, I think that is not so crazy request, right?&lt;/p&gt;
+&lt;p&gt;In this blog post, that I hope it becomes a blog series, I want to share my findings about this, and also thank &lt;a href="https://twitter.com/randychapman"&gt;Randy Chapman&lt;/a&gt;, &lt;a href="https://twitter.com/LCansby"&gt;Linus Cansby&lt;/a&gt;, &lt;a href="https://twitter.com/thegrahamwalsh"&gt;Graham Walsh&lt;/a&gt; for providing some more information.&lt;/p&gt;
+&lt;p&gt;According to Microsoft, &lt;em&gt;Filter for devices&lt;/em&gt;, which is a &lt;em&gt;Conditional Access Policy&lt;/em&gt; condition, is &lt;strong&gt;supported&lt;/strong&gt; in Microsoft Teams Rooms on Android and on Windows. See here &lt;a href="https://learn.microsoft.com/microsoftteams/rooms/supported-ca-and-compliance-policies?tabs=mtr-w"&gt;Supported Conditional Access and Intune device compliance policies for Microsoft Teams Rooms and Teams Android Devices&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;However, we also found this statement&lt;/p&gt;
+&lt;blockquote class="blockquote"&gt;
+&lt;p&gt;You can't use a resource account to apply device-level conditional access policies in Azure Active Directory and Endpoint Manager as device info is not passed when using this grant type.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="https://learn.microsoft.com/microsoftteams/rooms/rooms-authentication"&gt;Authentication in Microsoft Teams Rooms on Windows - Microsoft Teams | Microsoft Learn&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;So if we read both those pages, it is a little contradictory, right? Is it or is it not supported to use &lt;em&gt;filter for devices&lt;/em&gt;?&lt;/p&gt;
+&lt;p&gt;So, upon testing, I found out that Microsoft Teams Rooms devices based on windows &lt;strong&gt;do not send the device information on the sign-in event&lt;/strong&gt; of the Microsoft Resource Account (Room Mailbox), see here an example:&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/MTR_Windows_SignIn.png" class="img-fluid" alt="TMR Windows Sign In event" /&gt;&lt;/p&gt;
+&lt;p&gt;Decided to give it a try &lt;a href="https://support.microsoft.com/en-us/account-billing/register-your-personal-device-on-your-work-or-school-network-8803dd61-a613-45e3-ae6c-bd1ab25bf8a8"&gt;Azure AD Registering the device&lt;/a&gt;, also with no luck. Then, I received confirmation from Microsoft that the device needs to be AADJ (Azure AD Joined/Enrolled) to send this information, I still could verify this but I hope I can do it for my 2nd blog post of these series.&lt;/p&gt;
+&lt;p&gt;So, that leaves me with the MTRoA devices, the idea, was to create a Conditional Access Policy like this:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Users&lt;/strong&gt;: The specific resource account&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cloud Apps&lt;/strong&gt;: All cloud apps (or at least, Exchange Online, Microsoft Teams, and SharePoint Online as explained here &lt;a href="https://learn.microsoft.com/en-us/microsoftteams/rooms/conditional-access-and-compliance-for-devices"&gt;Conditional Access and compliance best practices for Microsoft Teams Rooms - Microsoft Teams | Microsoft Learn&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Conditions&lt;/strong&gt; : &lt;strong&gt;Filter for Devices&lt;/strong&gt;: &lt;em&gt;Exclude filtered devices&lt;/em&gt;, Configure: Yes, Exclude filtered devices from policy: deviceId Equals e592fe64-fd2b-4ced-ae96-91657183cdb8&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Grant&lt;/strong&gt;: Block access&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The policy should be read like this: &lt;em&gt;Block resource account from logging in from any device but the ones that match the condition of deviceId&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;As said, this unfortunately din’t work with a MTRoW, as-is or Azure AD Registered, but what about Microsoft Teams Rooms on Android?&lt;/p&gt;
+&lt;p&gt;These devices showed as Azure AD Registered by default and upon testing, they send the device information upon sign-in.&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/MTR_Android_SignIn.png" class="img-fluid" alt="TMR Android Sign In event" /&gt;&lt;/p&gt;
+&lt;p&gt;So, we could use CAPs with Android-based MTR devices without any other intervention (like AADJ/Enrolling, see &lt;a href="https://techcommunity.microsoft.com/t5/intune-customer-success/enrolling-microsoft-teams-rooms-on-windows-devices-with/ba-p/3246986"&gt;https://techcommunity.microsoft.com/t5/intune-customer-success/enrolling-microsoft-teams-rooms-on-windows-devices-with/ba-p/3246986&lt;/a&gt; )&lt;/p&gt;
+&lt;p&gt;Hope these findings are useful and saves time for someone, as this took me a good couple of days to find out and test.&lt;/p&gt;
+&lt;p&gt;I expect to continue sharing my findings with the community in a 2nd part of this blog post.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;#Introduction&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/Add-TagsToUsers" />
 		<id>https://get-itips.capazero.net/posts/Add-TagsToUsers</id>
@@ -1379,30 +1414,5 @@ Somehow, do not know how, an IP Address associated to one of my Virtual Machines
 &lt;/ul&gt;
 </content>
 		<summary>&lt;p&gt;Some days had passed since the public Microsoft announcement about this HAFNIUM exploit and as I have been asked to step to help several customers I would like to list all the resources I used to work on this matter, I will try to update this list with new content as it is being generated.&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.capazero.net/posts/how-to-online-proctoring" />
-		<id>https://get-itips.capazero.net/posts/how-to-online-proctoring</id>
-		<title>How to take an Online Proctored exam and not go crazy trying</title>
-		<updated>2021-02-26T00:00:00Z</updated>
-		<content>&lt;p&gt;&lt;img src="/images/how_to_take_online.png" class="img-fluid" alt="introimage" /&gt;&lt;/p&gt;
-&lt;p&gt;I have been taking exams on Testing Centers all my life, the Online Proctoring was always an option but I preferred to be on site for several reasons, for example, if the Internet access failed, if the computer failed or anything else, it wouldn't be my fault (or didn't want to worry about that, I only wanted to focus on the exam).&lt;/p&gt;
-&lt;p&gt;But... &lt;strong&gt;boom!&lt;/strong&gt; the pandemic came and things changed and now Online Proctoring is THE option to take exams.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Hopefully, you have a room at your home where you usually work.&lt;/li&gt;
-&lt;li&gt;Remove everything from that room that you do not need for your exam, it's easier to say what you need to keep: &lt;strong&gt;a computer, a webcam, a maybe a glass of water&lt;/strong&gt; if you need (not any liquid, a transparent one, like water, yes I am talking serious here according to &lt;a href="https://twitter.com/MarkVale83"&gt;Mark Vale&lt;/a&gt; experience) and &lt;strong&gt;your ID&lt;/strong&gt;.&lt;/li&gt;
-&lt;li&gt;Try to &lt;strong&gt;remove any non-necessary cables&lt;/strong&gt; from the room and the computer/laptop.&lt;/li&gt;
-&lt;li&gt;Empty drawers from your desk.&lt;/li&gt;
-&lt;li&gt;Try to use &lt;strong&gt;an external Webcam&lt;/strong&gt;, the reason I am telling you this is because the person that will evaluate if you are allowed to take the exam will probably ask you to show your environment, and with a fixed laptop webcam is complicated to move it around.&lt;/li&gt;
-&lt;li&gt;If your room is one of these modern desks/home offices filled with multi-displays, multi-microphones, multi-everything, it would be better to find &lt;strong&gt;another room&lt;/strong&gt; in your house to take the exam.&lt;/li&gt;
-&lt;li&gt;If you live with someone else, warn them that you are taking an exam and to &lt;strong&gt;keep it quiet&lt;/strong&gt;, no external noises are to be allowed.&lt;/li&gt;
-&lt;li&gt;Before start, you will be asked to &lt;strong&gt;take some pictures&lt;/strong&gt; using your mobile phone uploading them to a site, be aware that &lt;strong&gt;the site sometimes crashes&lt;/strong&gt; while you are trying to upload the pictures.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Arrive as early as you can&lt;/strong&gt; (the maximum time you can is 30 minutes before) to take into account any trouble that you could face.&lt;/li&gt;
-&lt;li&gt;Proctor will reach you probably &lt;strong&gt;by chat&lt;/strong&gt;, if he/she starts asking questions, do not forget that the Exam Agreement is probably showing on the screen... &lt;strong&gt;with a timeout!&lt;/strong&gt; if you do not agree to it &lt;strong&gt;the exam will be canceled&lt;/strong&gt; (that is what happened to me while I was trying to show my environment to the Proctor)
--If you get past all this screening process, you can now &lt;strong&gt;focus only on the exam...&lt;/strong&gt; and also on not to leave your webcam range of capture, that is also a rule that they impose.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;This blog post is based on a terrible first experience trying to take an exam, your experience could differ, but in the end, what I wanted to do is try to improve the first experience of others.&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;&lt;img src="/images/how_to_take_online.png" class="img-fluid" alt="introimage"&gt;&lt;/p&gt;</summary>
 	</entry>
 </feed>

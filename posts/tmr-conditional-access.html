@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Andr&#xE9;s Gorzelany - 365</title>
+        <title>Andr&#xE9;s Gorzelany - Using Conditional Access Policies with Microsoft Teams Rooms devices - Part 1</title>
         <meta name="description" content="Get-ITips" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Andr&#xE9;s Gorzelany - 365" />
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Using Conditional Access Policies with Microsoft Teams Rooms devices - Part 1" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://get-itips.capazero.net/tags/365" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/tmr-conditional-access" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -95,9 +95,17 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>365</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>Using Conditional Access Policies with Microsoft Teams Rooms devices - Part 1</h1>
+    <div class="meta">        
+Published on Thursday, November 24, 2022<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -106,54 +114,61 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-sm-8 right-border col-sm-height">
-                    <div class="post-list">
-            <a href="/posts/m365entdemo-customizer">
-                <h3 class="post-title">M365 Enterprise Demo Customizer</h3>
-            </a>
-            <p class="post-meta">Posted on Monday, July 26, 2021</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/useful-community-tools">
-                <h3 class="post-title">Useful community tools to administer Microsoft 365</h3>
-            </a>
-            <p class="post-meta">Posted on Monday, June 28, 2021</p>      
-        </div>   
+                                        
+
+<p>#Introduction</p>
+<p>Upon customer request, I needed to investigate how to restrict the resource account used by a Microsoft Teams Rooms device, the goal was to prevent this account from logging in from other devices than the MTR device, I think that is not so crazy request, right?</p>
+<p>In this blog post, that I hope it becomes a blog series, I want to share my findings about this, and also thank <a href="https://twitter.com/randychapman">Randy Chapman</a>, <a href="https://twitter.com/LCansby">Linus Cansby</a>, <a href="https://twitter.com/thegrahamwalsh">Graham Walsh</a> for providing some more information.</p>
+<p>According to Microsoft, <em>Filter for devices</em>, which is a <em>Conditional Access Policy</em> condition, is <strong>supported</strong> in Microsoft Teams Rooms on Android and on Windows. See here <a href="https://learn.microsoft.com/microsoftteams/rooms/supported-ca-and-compliance-policies?tabs=mtr-w">Supported Conditional Access and Intune device compliance policies for Microsoft Teams Rooms and Teams Android Devices</a></p>
+<p>However, we also found this statement</p>
+<blockquote class="blockquote">
+<p>You can't use a resource account to apply device-level conditional access policies in Azure Active Directory and Endpoint Manager as device info is not passed when using this grant type.</p>
+</blockquote>
+<p><a href="https://learn.microsoft.com/microsoftteams/rooms/rooms-authentication">Authentication in Microsoft Teams Rooms on Windows - Microsoft Teams | Microsoft Learn</a></p>
+<p>So if we read both those pages, it is a little contradictory, right? Is it or is it not supported to use <em>filter for devices</em>?</p>
+<p>So, upon testing, I found out that Microsoft Teams Rooms devices based on windows <strong>do not send the device information on the sign-in event</strong> of the Microsoft Resource Account (Room Mailbox), see here an example:</p>
+<p><img src="/images/MTR_Windows_SignIn.png" class="img-fluid" alt="TMR Windows Sign In event" /></p>
+<p>Decided to give it a try <a href="https://support.microsoft.com/en-us/account-billing/register-your-personal-device-on-your-work-or-school-network-8803dd61-a613-45e3-ae6c-bd1ab25bf8a8">Azure AD Registering the device</a>, also with no luck. Then, I received confirmation from Microsoft that the device needs to be AADJ (Azure AD Joined/Enrolled) to send this information, I still could verify this but I hope I can do it for my 2nd blog post of these series.</p>
+<p>So, that leaves me with the MTRoA devices, the idea, was to create a Conditional Access Policy like this:</p>
+<ul>
+<li><strong>Users</strong>: The specific resource account</li>
+<li><strong>Cloud Apps</strong>: All cloud apps (or at least, Exchange Online, Microsoft Teams, and SharePoint Online as explained here <a href="https://learn.microsoft.com/en-us/microsoftteams/rooms/conditional-access-and-compliance-for-devices">Conditional Access and compliance best practices for Microsoft Teams Rooms - Microsoft Teams | Microsoft Learn</a>)</li>
+<li><strong>Conditions</strong> : <strong>Filter for Devices</strong>: <em>Exclude filtered devices</em>, Configure: Yes, Exclude filtered devices from policy: deviceId Equals e592fe64-fd2b-4ced-ae96-91657183cdb8</li>
+<li><strong>Grant</strong>: Block access</li>
+</ul>
+<p>The policy should be read like this: <em>Block resource account from logging in from any device but the ones that match the condition of deviceId</em></p>
+<p>As said, this unfortunately din’t work with a MTRoW, as-is or Azure AD Registered, but what about Microsoft Teams Rooms on Android?</p>
+<p>These devices showed as Azure AD Registered by default and upon testing, they send the device information upon sign-in.</p>
+<p><img src="/images/MTR_Android_SignIn.png" class="img-fluid" alt="TMR Android Sign In event" /></p>
+<p>So, we could use CAPs with Android-based MTR devices without any other intervention (like AADJ/Enrolling, see <a href="https://techcommunity.microsoft.com/t5/intune-customer-success/enrolling-microsoft-teams-rooms-on-windows-devices-with/ba-p/3246986">https://techcommunity.microsoft.com/t5/intune-customer-success/enrolling-microsoft-teams-rooms-on-windows-devices-with/ba-p/3246986</a> )</p>
+<p>Hope these findings are useful and saves time for someone, as this took me a good couple of days to find out and test.</p>
+<p>I expect to continue sharing my findings with the community in a 2nd part of this blog post.</p>
 
 
-            <nav>
-                <ul class="pager">
-                    <li class="previous">                
-                    </li>
-                    <li class="next">
-                    </li>
-                </ul>
-            </nav>
-            <hr class="visible-xs-block" />
-        </div>
-		
-        <div class="col-sm-4 col-sm-height">
-                <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams (16)</a>
-                <a role="button" href="/tags/ExchangeServer" class="btn btn-default btn-xs">ExchangeServer (7)</a>
-                <a role="button" href="/tags/Sharepoint" class="btn btn-default btn-xs">Sharepoint (5)</a>
-                <a role="button" href="/tags/TeamFoundationServer" class="btn btn-default btn-xs">TeamFoundationServer (4)</a>
-                <a role="button" href="/tags/Azure" class="btn btn-default btn-xs">Azure (2)</a>
-                <a role="button" href="/tags/365" class="btn btn-primary btn-xs">365 (2)</a>
-                <a role="button" href="/tags/Skype4B" class="btn btn-default btn-xs">Skype4B (2)</a>
-                <a role="button" href="/tags/Ignite" class="btn btn-default btn-xs">Ignite (2)</a>
-                <a role="button" href="/tags/Planner" class="btn btn-default btn-xs">Planner (1)</a>
-                <a role="button" href="/tags/Windows" class="btn btn-default btn-xs">Windows (1)</a>
-                <a role="button" href="/tags/Exams" class="btn btn-default btn-xs">Exams (1)</a>
-                <a role="button" href="/tags/Misc" class="btn btn-default btn-xs">Misc (1)</a>
-                <a role="button" href="/tags/GitHub" class="btn btn-default btn-xs">GitHub (1)</a>
-                <a role="button" href="/tags/General" class="btn btn-default btn-xs">General (1)</a>
-                <a role="button" href="/tags/SSL" class="btn btn-default btn-xs">SSL (1)</a>
-                <a role="button" href="/tags/Powershell" class="btn btn-default btn-xs">Powershell (1)</a>
-        </div>
-    </div>
-</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'tmr-conditional-access';
+    var disqus_title = 'Using Conditional Access Policies with Microsoft Teams Rooms devices - Part 1';
+    var disqus_url = 'https://get-itips.capazero.net/posts/tmr-conditional-access';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
                                 </div>
                         </div>
                 </div>
