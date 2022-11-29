@@ -109,7 +109,7 @@ Add-PnPDataRowsToSiteTemplate -Path $template -List $list
 Unhide the List with [Set-PnpList](https://pnp.github.io/powershell/cmdlets/Set-PnPList.html?q=set-pnplist)
 
 ```powershell
-Set-PnpList -Hidden $false
+Set-PnpList -Identity 65c504c1-4344-4816-85a9-a6c2e31ed180 -Hidden:$false
 ```
 As we will probably need to review it on the site.
 
@@ -151,7 +151,7 @@ with
 
 Save this .xml file as migratedTeamWiki.xml or something like that, browse to the destination site and delete the empty list (be sure not to be on the source site!)
 
-Grab the PnP connection against the destination Sharepoint Site and import it into the site
+Grab the PnP connection against the destination Sharepoint Site and import it into the site with [Invoke-PnPSiteTemplate](https://pnp.github.io/powershell/cmdlets/Invoke-PnPSiteTemplate.html)
 
 ```
 Invoke-PnPSiteTemplate -Path C:\temp\Wiki\migratedTeamWiki2.xml
