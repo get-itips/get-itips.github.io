@@ -30,6 +30,8 @@ https://contoso.sharepoint.com/sites/TeamName/Lists/19pYZDaUICINpaAq7iFZpRNyuEGe
 
 (The list gets its name from the Team Channel id)
 
+![SourceSite Contents](/images/SourceSiteContents.png) 
+
 Teams will also save this information about the tab and we can query it using Graph API:
 
 HTTP Request
@@ -40,22 +42,25 @@ https://graph.microsoft.com/v1.0/teams/2c009003-bf45-47ab-ac9d-fe4f3f3967f5/chan
 
 ```json
 {
-    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#teams('2c009003-bf45-47ab-ac9d-fe4f3f3967f5')/channels('19%3AKb8nmcctoGWrOYfiB-Cf7wVgX8Lnk0UL8BH-WB6s7hQ1%40thread.tacv2')/tabs",
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#teams('d925b426-bcff-4d41-8e40-dda0bd157044')/channels('19%3AXV4JrShhjXTNB_EVNNZyoBiMRQkXcWFECKy_aFmZ1Qs1%40thread.tacv2')/tabs",
     "@odata.count": 1,
     "value": [
         {
-            "id": "6dd527de-ee8e-4f65-a389-ca8920adf3e0",
+            "id": "e06b5ed7-404b-4a9e-b9d8-608d3b456bd5",
             "displayName": "Wiki",
-            "webUrl": "https://teams.microsoft.com/l/channel/19%3aKb8nmcctoGWrOYfiB-Cf7wVgX8Lnk0UL8BH-WB6s7hQ1%40thread.tacv2/tab%3a%3a6dd527de-ee8e-4f65-a389-ca8920adf3e0?label=Wiki&groupId=2c009003-bf45-47ab-ac9d-fe4f3f3967f5&tenantId=3da121de-c5d8-452f-b8a4-4679df1d0f76",
+            "webUrl": "https://teams.microsoft.com/l/channel/19%3aXV4JrShhjXTNB_EVNNZyoBiMRQkXcWFECKy_aFmZ1Qs1%40thread.tacv2/tab%3a%3ae06b5ed7-404b-4a9e-b9d8-608d3b456bd5?label=Wiki&groupId=d925b426-bcff-4d41-8e40-dda0bd157044&tenantId=239cf0aa-5769-4830-bda9-8eb6f978424e",
             "configuration": {
                 "entityId": null,
                 "contentUrl": null,
                 "removeUrl": null,
                 "websiteUrl": null,
-                "hasContent": false,
+                "hasContent": true,
                 "wikiTabId@odata.type": "#Int64",
-                "wikiTabId": 1,
-                "dateAdded": "2022-11-25T15:58:06.789Z"
+                "wikiTabId": 2,
+                "dateAdded": "2022-11-30T12:21:37.605Z",
+                "isPrivateMeetingWiki": false,
+                "meetingNotes": false,
+                "scenarioName": "wiki_init_context"
             }
         }
     ]
@@ -93,23 +98,21 @@ Get the List name by calling [Get-PnpList](https://pnp.github.io/powershell/cmdl
 ```powershell
 Get-PnpList
 ```
-The one we are looking for is named something like this "19:26VHuEKoG5fV1UyOFtybCpQaJilwc7efl1erwiMDhCE1@thread.tacv2_wiki"
+The one we are looking for is named something like this "19:XV4JrShhjXTNB_EVNNZyoBiMRQkXcWFECKy_aFmZ1Qs1@thread.tacv2_wiki"
 
 Get the template of the list and also add the data to it, customize the $list variable and if you want the $template location.
 
 ```powershell
 $template = ".\sourceTeamWiki.xml"
-$list = "19:26VHuEKoG5fV1UyOFtybCpQaJilwc7efl1erwiMDhCE1@thread.tacv2_wiki"
-
+$list = "19:XV4JrShhjXTNB_EVNNZyoBiMRQkXcWFECKy_aFmZ1Qs1@thread.tacv2_wiki"
 Get-PnPSiteTemplate -Out $template -ListsToExtract $list -Handlers Lists
-
 Add-PnPDataRowsToSiteTemplate -Path $template -List $list
 ```
 
 Unhide the List with [Set-PnpList](https://pnp.github.io/powershell/cmdlets/Set-PnPList.html?q=set-pnplist)
 
 ```powershell
-Set-PnpList -Identity 65c504c1-4344-4816-85a9-a6c2e31ed180 -Hidden:$false
+Set-PnpList -Identity bdd7b031-57f6-47fd-9922-67cc1c68cb6e -Hidden:$false
 ```
 As we will probably need to review it on the site.
 
@@ -117,10 +120,8 @@ Now, let's do the same with the destination List, so we will have two xml files 
 
 ```powershell
 $template = ".\destinationTeamWiki.xml"
-$list = "19:Kb8nmcctoGWrOYfiB-Cf7wVgX8Lnk0UL8BH-WB6s7hQ1@thread.tacv2_wiki"
-
+$list = "19:7BvdpssdDqtYTSLvKDRRUlF-RKLX5XUMnfSvinc4lFA1@thread.tacv2_wiki"
 Get-PnPSiteTemplate -Out $template -ListsToExtract $list -Handlers Lists
-
 Add-PnPDataRowsToSiteTemplate -Path $template -List $list
 ```
 
@@ -129,24 +130,24 @@ Open both .xml files, compare the structure and get familiar with how things are
 On the source .xml file, we need to replace any occurrence of the list guid of the source with the guid of the destination (in the 2nd xml file), for example:
 
 ```
-19:26VHuEKoG5fV1UyOFtybCpQaJilwc7efl1erwiMDhCE1@thread.tacv2_wiki
+19:XV4JrShhjXTNB_EVNNZyoBiMRQkXcWFECKy_aFmZ1Qs1@thread.tacv2_wiki
 ```
 with
 
 ```
-19:Kb8nmcctoGWrOYfiB-Cf7wVgX8Lnk0UL8BH-WB6s7hQ1@thread.tacv2_wiki
+19:7BvdpssdDqtYTSLvKDRRUlF-RKLX5XUMnfSvinc4lFA1@thread.tacv2_wiki
 ```
 
 and
 
 ```
-1926VHuEKoG5fV1UyOFtybCpQaJilwc7efl1erwiMDhCE1thre
+19XV4JrShhjXTNB_EVNNZyoBiMRQkXcWFECKy_aFmZ1Qs1thre
 ```
 
 with
 
 ```
-19Kb8nmcctoGWrOYfiBCf7wVgX8Lnk0UL8BHWB6s7hQ1thread
+197BvdpssdDqtYTSLvKDRRUlFRKLX5XUMnfSvinc4lFA1threa
 ```
 
 Save this .xml file as migratedTeamWiki.xml or something like that, browse to the destination site and delete the empty list (be sure not to be on the source site!)
@@ -154,7 +155,7 @@ Save this .xml file as migratedTeamWiki.xml or something like that, browse to th
 Grab the PnP connection against the destination Sharepoint Site and import it into the site with [Invoke-PnPSiteTemplate](https://pnp.github.io/powershell/cmdlets/Invoke-PnPSiteTemplate.html)
 
 ```
-Invoke-PnPSiteTemplate -Path C:\temp\Wiki\migratedTeamWiki2.xml
+Invoke-PnPSiteTemplate -Path C:\temp\Wiki\migratedTeamWiki.xml
 ```
 
 This should leave you with a list of the same name on the destination site.
@@ -168,7 +169,7 @@ Open the Team's destination team and clic on the Wiki tab, it should load the mi
 If we dig deeper activating the browser's developer tools, we can see that, when the wiki loads, it is using this request
 
 ```http
-https://contoso.sharepoint.com/sites/DestinationTeam/_api/web/lists/getbytitle('19:Kb8nmcctoGWrOYfiB-Cf7wVgX8Lnk0UL8BH-WB6s7hQ1@thread.tacv2_wiki')/items?$filter=(Id eq '10' or (wikiCanvasId eq '10' and wikiDeleted eq 'false'))&$top=5000
+https://contoso.sharepoint.com/sites/DestinationTeam/_api/web/lists/getbytitle('19:7BvdpssdDqtYTSLvKDRRUlF-RKLX5XUMnfSvinc4lFA1@thread.tacv2_wiki')/items?$filter=(Id eq '10' or (wikiCanvasId eq '10' and wikiDeleted eq 'false'))&$top=5000
 ```
 
 (The HTTP url is already decoded)
@@ -178,7 +179,9 @@ If we look closer, it queries the Wiki list and filters by
 - wikiCanvasId eq 10
 - wikiDeleted eq false
 
-What I don't understand is how the wiki **will still load when the Id does not eq what Teams is expecting**, this Id corresponds to the wikiTabId I mentioned earlier, and unfortunately, there is no supported way of updating it:
+(It will differ in your case)
+
+What I don't understand is how the wiki **will still load when the Id does not eq what Teams is expecting**, this Id corresponds to the wikiTabId I mentioned earlier, and unfortunately, there is [no supported way of updating it](https://learn.microsoft.com/en-us/graph/teams-configuring-builtin-tabs#wiki-tabs):
 
 HTTP Request:
 
@@ -215,7 +218,12 @@ For more information about that Graph API Call see [here](https://learn.microsof
 
 So Teams will keep looking for whatever **wikiTabId** has in its own configuration, and also, unfortunately, Microsoft does not provide much information about this, as the effort and recommendations now seem to be **to move on to OneNote**.
 
+# Extra
+If you want to dig deeper into this, browse to the List in the source and destination site and create a SharePoint List view adding this columns:
+
+![Custom List View](/images/CustomListView.png) 
+
 # Final thoughts
 
-If you have to do this, you can't migrate content manually, I think you can follow this procedure but, test, test and test, until you get the desired results, and if you find an error or improvement to this guide, please, share it with me so I can update the post and share with the community.
+If you have to do this because maybe you can't migrate content manually, I think you can follow this procedure but, test, test and test, until you get the desired results, and if you find an error or improvement to this guide, please, share it with me so I can update the post and share with the community.
 
