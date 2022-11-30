@@ -16,6 +16,8 @@ my findings with the community, **this is provided as-is, with no guarantee what
 
 # The Wiki tab
 
+![Source Wiki](/images/SourceWiki.png) 
+
 When a Teams Wiki tab is added to a Channel, the following is created on the SharePoint site belonging to the Team:
 
 - A SharePoint Document library named _Teams Wiki Data_
@@ -161,6 +163,8 @@ Invoke-PnPSiteTemplate -Path C:\temp\Wiki\migratedTeamWiki.xml
 This should leave you with a list of the same name on the destination site.
 
 Browse to both source and the destination's site _Teams Wiki Data_ Document Library, download and copy all the mht files from the source _Teams Wiki Data_ to the destination's _Teams Wiki Data_.
+
+![TeamsWikiData Contents](/images/TeamsWikiData.png) 
 
 Open the Team's destination team and clic on the Wiki tab, it should load the migrated Wiki, if everything was done correctly, if something looks odd, review the steps taken.
 
