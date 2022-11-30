@@ -1,0 +1,387 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+
+        <title>Andr&#xE9;s Gorzelany - Teams Wiki internals and possible migration</title>
+        <meta name="description" content="Get-ITips" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+
+        <link type="application/rss+xml" rel="alternate" title="Andr&#xE9;s Gorzelany" href="/feed.rss" />
+                <link type="application/atom+xml" rel="alternate" title="Andr&#xE9;s Gorzelany" href="/feed.atom" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+        <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/assets/css/highlight.css" rel="stylesheet">
+        <link href="/assets/css/clean-blog.css" rel="stylesheet" />
+        <link href="/assets/css/master.css" rel="stylesheet" />
+        <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+        <link href="/assets/css/override.css" rel="stylesheet" />
+
+
+        <meta name="application-name" content="Andr&#xE9;s Gorzelany" />
+        <meta name="msapplication-tooltip" content="Andr&#xE9;s Gorzelany" />
+        <meta name="msapplication-starturl" content="/" />
+
+        <meta property="og:title" content="Andr&#xE9;s Gorzelany - Teams Wiki internals and possible migration" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://get-itips.capazero.net/posts/migrating-teams-wiki" />
+        <!-- TODO: More social graph meta tags -->
+
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>     
+        <script src="/assets/js/highlight.pack.js"></script>   
+        <script src="/assets/js/clean-blog.js"></script>
+        <script src="/assets/js/d3.v3.min.js"></script>
+        <script src="/assets/js/trianglify.min.js"></script>
+        <script src="/assets/js/Please-compressed.js"></script>
+        <script src="/assets/js/background-check.min.js"></script>
+                
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+                <script src="/assets/js/html5shiv.js"></script>
+                <script src="/assets/js/respond.min.js"></script>
+        <![endif]-->
+        
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M2L12JFRKM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M2L12JFRKM');
+</script>
+
+        </head>
+        <body>
+                
+                <!-- Navigation -->
+                <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+                        <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header page-scroll">
+                                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        </button>
+                                        <a class="navbar-brand" href="/">Andr&#xE9;s Gorzelany</a>
+                                </div>
+                        
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="navbar-collapse">
+                                        <ul class="nav navbar-nav navbar-right">
+                                                        <li><a href="/posts">Archive</a></li>
+        <li><a href="/tags">Tags</a></li>
+        <li><a href="/about">About Me</a></li>
+ 
+                                        </ul>
+                                </div>
+                                <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container -->
+                </nav>
+                
+                <!-- Page Header -->
+                <header class="intro-header" id="intro-header">
+                        <div class="container">
+                                <div class="row">
+                                        <div class="col-md-12">
+
+    
+<div class="post-heading">
+    <h1>Teams Wiki internals and possible migration</h1>
+    <div class="meta">        
+Published on Wednesday, November 30, 2022<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/tags/Teams" class="btn btn-default btn-xs">Teams</a>
+        </div>     
+</div>
+                                        </div>
+                                </div>
+                        </div>
+                </header>
+                
+                <!-- Main Content -->
+                <div class="container">
+                        <div class="row">
+                                <div id="content" class="col-md-12">
+                                        
+
+<h1 id="introduction">Introduction</h1>
+<p>I knew this was a long-time request by the community and that there isn't an out-of-the-box method to do this, I was asked
+if I could find a way to migrate a Wiki tab from one channel in one team to another channel in another team.</p>
+<p>I found this Tech Community post, I tried to use it but SharePoint Designer was not an option, but it helped me understand a few things, so thanks to the
+person behind it <a href="https://techcommunity.microsoft.com/t5/microsoft-teams/how-to-copy-teams-wiki-pages-answered/m-p/2785567.">https://techcommunity.microsoft.com/t5/microsoft-teams/how-to-copy-teams-wiki-pages-answered/m-p/2785567.</a></p>
+<p>I spent several days figuring it out how Teams handles wiki tabs, from creation, to updating and to removal, so I decided to share
+my findings with the community, <strong>this is provided as-is, with no guarantee whatsoever, as you will see it is a very craft-made process</strong>.</p>
+<h1 id="the-wiki-tab">The Wiki tab</h1>
+<p><img src="/images/SourceWiki.png" class="img-fluid" alt="Source Wiki" /></p>
+<p>When a Teams Wiki tab is added to a Channel, the following is created on the SharePoint site belonging to the Team:</p>
+<ul>
+<li>A SharePoint Document library named <em>Teams Wiki Data</em></li>
+</ul>
+<p><a href="https://contoso.sharepoint.com/sites/TeamName/Teams%20Wiki%20Data/Forms/AllItems.aspx">https://contoso.sharepoint.com/sites/TeamName/Teams%20Wiki%20Data/Forms/AllItems.aspx</a></p>
+<p>This document library contains .mht files generated by the Wiki tab when someone edits the wiki, it will also contain the images inserted.</p>
+<ul>
+<li>A SharePoint List, like this, (but it is hidden by default)</li>
+</ul>
+<p><a href="https://contoso.sharepoint.com/sites/TeamName/Lists/19pYZDaUICINpaAq7iFZpRNyuEGeXK8gqb5yUC3ja4oc1threa">https://contoso.sharepoint.com/sites/TeamName/Lists/19pYZDaUICINpaAq7iFZpRNyuEGeXK8gqb5yUC3ja4oc1threa</a></p>
+<p>(The list gets its name from the Team Channel id)</p>
+<p><img src="/images/SourceSiteContents.png" class="img-fluid" alt="SourceSite Contents" /></p>
+<p>Teams will also save this information about the tab and we can query it using Graph API:</p>
+<p>HTTP Request</p>
+<pre><code class="language-http">https://graph.microsoft.com/v1.0/teams/2c009003-bf45-47ab-ac9d-fe4f3f3967f5/channels/19:Kb8nmcctoGWrOYfiB-Cf7wVgX8Lnk0UL8BH-WB6s7hQ1&#64;thread.tacv2/tabs
+</code></pre>
+<pre><code class="language-json">{
+    &quot;&#64;odata.context&quot;: &quot;https://graph.microsoft.com/v1.0/$metadata#teams('d925b426-bcff-4d41-8e40-dda0bd157044')/channels('19%3AXV4JrShhjXTNB_EVNNZyoBiMRQkXcWFECKy_aFmZ1Qs1%40thread.tacv2')/tabs&quot;,
+    &quot;&#64;odata.count&quot;: 1,
+    &quot;value&quot;: [
+        {
+            &quot;id&quot;: &quot;e06b5ed7-404b-4a9e-b9d8-608d3b456bd5&quot;,
+            &quot;displayName&quot;: &quot;Wiki&quot;,
+            &quot;webUrl&quot;: &quot;https://teams.microsoft.com/l/channel/19%3aXV4JrShhjXTNB_EVNNZyoBiMRQkXcWFECKy_aFmZ1Qs1%40thread.tacv2/tab%3a%3ae06b5ed7-404b-4a9e-b9d8-608d3b456bd5?label=Wiki&amp;groupId=d925b426-bcff-4d41-8e40-dda0bd157044&amp;tenantId=239cf0aa-5769-4830-bda9-8eb6f978424e&quot;,
+            &quot;configuration&quot;: {
+                &quot;entityId&quot;: null,
+                &quot;contentUrl&quot;: null,
+                &quot;removeUrl&quot;: null,
+                &quot;websiteUrl&quot;: null,
+                &quot;hasContent&quot;: true,
+                &quot;wikiTabId&#64;odata.type&quot;: &quot;#Int64&quot;,
+                &quot;wikiTabId&quot;: 2,
+                &quot;dateAdded&quot;: &quot;2022-11-30T12:21:37.605Z&quot;,
+                &quot;isPrivateMeetingWiki&quot;: false,
+                &quot;meetingNotes&quot;: false,
+                &quot;scenarioName&quot;: &quot;wiki_init_context&quot;
+            }
+        }
+    ]
+}
+</code></pre>
+<p>See the property named wikiTabId? that's an important one and it is used by Teams to identify a specific Teams Wiki tab within
+the channel, as you might know, we can have more than one Wiki per channel, and if we create 3 Wiki tabs, we should have
+wikiTabId 1, 2 and 3, those numbers are assigned incrementally by Teams, this wikiTabId is important because, it is referenced in the
+list I mentioned is created in the site, but we'll return to this later.</p>
+<h1 id="requirements">Requirements</h1>
+<p>Install the latest PnP PowerShell module version, you can check here <a href="https://msshells.net,">https://msshells.net,</a> we will use it for several things.
+I won't go into the details on how to use PnP PowerShell, there are <a href="https://pnp.github.io/powershell/">good resources</a> for that.</p>
+<h1 id="the-scenario">The scenario</h1>
+<ul>
+<li>Two Team's teams, let's call them SourceTeam and DestinationTeam</li>
+<li>One wiki per team</li>
+</ul>
+<h1 id="procedure">Procedure</h1>
+<p>The DestinationTeam has to have at least an empty Wiki, so it creates the <em>Teams Wiki Data</em> DL for us and also the SharePoint list,
+let's call these placeholder DL and List. So create an empty Wiki tab on DestinationTeam using the regular procedure.</p>
+<p>Then, use PnP PowerShell to connect to the source site:</p>
+<pre><code class="language-powershell">connect-pnponline -Interactive -Url https://contoso.sharepoint.com/sites/SourceTeam
+</code></pre>
+<p>Get the List name by calling <a href="https://pnp.github.io/powershell/cmdlets/Get-PnPList.html?q=get-pnplist">Get-PnpList</a></p>
+<pre><code class="language-powershell">Get-PnpList
+</code></pre>
+<p>The one we are looking for is named something like this &quot;19:XV4JrShhjXTNB_EVNNZyoBiMRQkXcWFECKy_aFmZ1Qs1&#64;thread.tacv2_wiki&quot;</p>
+<p>Get the template of the list and also add the data to it, customize the $list variable and if you want the $template location.</p>
+<pre><code class="language-powershell">$template = &quot;.\sourceTeamWiki.xml&quot;
+$list = &quot;19:XV4JrShhjXTNB_EVNNZyoBiMRQkXcWFECKy_aFmZ1Qs1&#64;thread.tacv2_wiki&quot;
+Get-PnPSiteTemplate -Out $template -ListsToExtract $list -Handlers Lists
+Add-PnPDataRowsToSiteTemplate -Path $template -List $list
+</code></pre>
+<p>Unhide the List with <a href="https://pnp.github.io/powershell/cmdlets/Set-PnPList.html?q=set-pnplist">Set-PnpList</a></p>
+<pre><code class="language-powershell">Set-PnpList -Identity bdd7b031-57f6-47fd-9922-67cc1c68cb6e -Hidden:$false
+</code></pre>
+<p>As we will probably need to review it on the site.</p>
+<p>Now, let's do the same with the destination List, so we will have two xml files to compare.</p>
+<pre><code class="language-powershell">$template = &quot;.\destinationTeamWiki.xml&quot;
+$list = &quot;19:7BvdpssdDqtYTSLvKDRRUlF-RKLX5XUMnfSvinc4lFA1&#64;thread.tacv2_wiki&quot;
+Get-PnPSiteTemplate -Out $template -ListsToExtract $list -Handlers Lists
+Add-PnPDataRowsToSiteTemplate -Path $template -List $list
+</code></pre>
+<p>Open both .xml files, compare the structure and get familiar with how things are organized there.</p>
+<p>On the source .xml file, we need to replace any occurrence of the list guid of the source with the guid of the destination (in the 2nd xml file), for example:</p>
+<pre><code>19:XV4JrShhjXTNB_EVNNZyoBiMRQkXcWFECKy_aFmZ1Qs1&#64;thread.tacv2_wiki
+</code></pre>
+<p>with</p>
+<pre><code>19:7BvdpssdDqtYTSLvKDRRUlF-RKLX5XUMnfSvinc4lFA1&#64;thread.tacv2_wiki
+</code></pre>
+<p>and</p>
+<pre><code>19XV4JrShhjXTNB_EVNNZyoBiMRQkXcWFECKy_aFmZ1Qs1thre
+</code></pre>
+<p>with</p>
+<pre><code>197BvdpssdDqtYTSLvKDRRUlFRKLX5XUMnfSvinc4lFA1threa
+</code></pre>
+<p>Save this .xml file as migratedTeamWiki.xml or something like that, browse to the destination site and delete the empty list (be sure not to be on the source site!)</p>
+<p>Grab the PnP connection against the destination Sharepoint Site and import it into the site with <a href="https://pnp.github.io/powershell/cmdlets/Invoke-PnPSiteTemplate.html">Invoke-PnPSiteTemplate</a></p>
+<pre><code>Invoke-PnPSiteTemplate -Path C:\temp\Wiki\migratedTeamWiki.xml
+</code></pre>
+<p>This should leave you with a list of the same name on the destination site.</p>
+<p>Browse to both source and the destination's site <em>Teams Wiki Data</em> Document Library, download and copy all the mht files from the source <em>Teams Wiki Data</em> to the destination's <em>Teams Wiki Data</em>.</p>
+<p><img src="/images/TeamsWikiData.png" class="img-fluid" alt="TeamsWikiData Contents" /></p>
+<p>Open the Team's destination team and clic on the Wiki tab, it should load the migrated Wiki, if everything was done correctly, if something looks odd, review the steps taken.</p>
+<h1 id="developer-tools">Developer tools</h1>
+<p>If we dig deeper activating the browser's developer tools, we can see that, when the wiki loads, it is using this request</p>
+<pre><code class="language-http">https://contoso.sharepoint.com/sites/DestinationTeam/_api/web/lists/getbytitle('19:7BvdpssdDqtYTSLvKDRRUlF-RKLX5XUMnfSvinc4lFA1&#64;thread.tacv2_wiki')/items?$filter=(Id eq '10' or (wikiCanvasId eq '10' and wikiDeleted eq 'false'))&amp;$top=5000
+</code></pre>
+<p>(The HTTP url is already decoded)</p>
+<p>If we look closer, it queries the Wiki list and filters by</p>
+<ul>
+<li>Id eq 10</li>
+<li>wikiCanvasId eq 10</li>
+<li>wikiDeleted eq false</li>
+</ul>
+<p>(It will differ in your case)</p>
+<p>What I don't understand is how the wiki <strong>will still load when the Id does not eq what Teams is expecting</strong>, this Id corresponds to the wikiTabId I mentioned earlier, and unfortunately, there is <a href="https://learn.microsoft.com/en-us/graph/teams-configuring-builtin-tabs#wiki-tabs">no supported way of updating it</a>:</p>
+<p>HTTP Request:</p>
+<pre><code class="language-http">https://graph.microsoft.com/v1.0/teams/2c009003-bf45-47ab-ac9d-fe4f3f3967f5/channels/19:Kb8nmcctoGWrOYfiB-Cf7wVgX8Lnk0UL8BH-WB6s7hQ1&#64;thread.tacv2/tabs/6dd527de-ee8e-4f65-a389-ca8920adf3e0
+</code></pre>
+<pre><code class="language-json">{
+    &quot;configuration&quot;: {
+        &quot;wikiTabId&quot;: 1
+    }
+}
+</code></pre>
+<pre><code class="language-json">{
+    &quot;error&quot;: {
+        &quot;code&quot;: &quot;BadRequest&quot;,
+        &quot;message&quot;: &quot;Setting the tab configuration for app 'com.microsoft.teamspace.tab.wiki' is not supported.&quot;,
+        &quot;innerError&quot;: {
+            &quot;message&quot;: &quot;Setting the tab configuration for app 'com.microsoft.teamspace.tab.wiki' is not supported.&quot;,
+            &quot;code&quot;: &quot;InvalidRequest&quot;,
+            &quot;innerError&quot;: {},
+            &quot;date&quot;: &quot;2022-11-25T20:19:19&quot;,
+            &quot;request-id&quot;: &quot;da8fd32f-f0e4-4f11-b7f3-bee20ddb2b30&quot;,
+            &quot;client-request-id&quot;: &quot;58eef061-4999-feda-86d6-44105932a1c5&quot;
+        }
+    }
+}
+</code></pre>
+<p>For more information about that Graph API Call see <a href="https://learn.microsoft.com/en-us/graph/api/channel-patch-tabs?view=graph-rest-1.0?WT.mc_id=M365-MVP-5004663">here</a>.</p>
+<p>So Teams will keep looking for whatever <strong>wikiTabId</strong> has in its own configuration, and also, unfortunately, Microsoft does not provide much information about this, as the effort and recommendations now seem to be <strong>to move on to OneNote</strong>.</p>
+<h1 id="extra">Extra</h1>
+<p>If you want to dig deeper into this, browse to the List in the source and destination site and create a SharePoint List view adding this columns:</p>
+<p><img src="/images/CustomListView.png" class="img-fluid" alt="Custom List View" /></p>
+<h1 id="final-thoughts">Final thoughts</h1>
+<p>If you have to do this because maybe you can't migrate content manually, I think you can follow this procedure but, test, test and test, until you get the desired results, and if you find an error or improvement to this guide, please, share it with me so I can update the post and share with the community.</p>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'get-itips';
+    var disqus_identifier = 'migrating-teams-wiki';
+    var disqus_title = 'Teams Wiki internals and possible migration';
+    var disqus_url = 'https://get-itips.capazero.net/posts/migrating-teams-wiki';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                                </div>
+                        </div>
+                </div>
+                
+                <hr>
+                
+                <!-- Footer -->
+                <footer>
+                        <div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+
+            <ul class="list-inline">
+                <li>
+                    <a href="https://twitter.com/andresgorzelany" target="_blank" title="Twitter Profile">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/get-itips" target="_blank" title="Github Profile">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/andresgorzelany/" target="_blank" title="LinkedIn Profile">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+
+            <p class="copyright text-muted">
+                    <a href="/feed.rss" class="btn-rss">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                        </span> RSS Feed
+                    </a>
+                                    <a href="/feed.atom" class="btn-rss">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                        </span> Atom Feed
+                    </a>
+                <br />
+                Copyright © 2022 by Andres Gorzelany
+                <br />
+                <strong><a href="https://wyam.io" target="_blank">Generated by Wyam</a></strong>
+            </p>
+        </div>
+    </div>
+</div>
+
+                </footer> 
+
+                
+                <script>hljs.initHighlightingOnLoad();</script>
+
+                        <script type="text/javascript">                
+                                // Header background                        
+                                var colors = Please.make_color({
+                                        colors_returned: 3,
+                                        saturation: .6
+                                });
+                                var t = new Trianglify({
+                                        x_gradient: colors,
+                                        y_gradient: ["#FFFFFF"]
+                                });
+                                var header = document.getElementById("intro-header");
+                                var pattern = t.generate(header.clientWidth, header.clientHeight);
+                                header.setAttribute('style', 'background-image: ' + pattern.dataUrl);                        
+                        </script>
+
+                <script>
+                        BackgroundCheck.init({
+                                targets: '.intro-header,.navbar',
+                                images: '.intro-header'
+                        });
+                </script>
+        </body>
+</html>
+
