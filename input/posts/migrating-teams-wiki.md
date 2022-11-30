@@ -156,7 +156,7 @@ Save this .xml file as migratedTeamWiki.xml or something like that, browse to th
 
 Grab the PnP connection against the destination Sharepoint Site and import it into the site with [Invoke-PnPSiteTemplate](https://pnp.github.io/powershell/cmdlets/Invoke-PnPSiteTemplate.html)
 
-```
+```powershell
 Invoke-PnPSiteTemplate -Path C:\temp\Wiki\migratedTeamWiki.xml
 ```
 
@@ -220,7 +220,7 @@ https://graph.microsoft.com/v1.0/teams/2c009003-bf45-47ab-ac9d-fe4f3f3967f5/chan
 
 For more information about that Graph API Call see [here](https://learn.microsoft.com/en-us/graph/api/channel-patch-tabs?view=graph-rest-1.0?WT.mc_id=M365-MVP-5004663).
 
-So Teams will keep looking for whatever **wikiTabId** has in its own configuration, and also, unfortunately, Microsoft does not provide much information about this, as the effort and recommendations now seem to be **to move on to OneNote**.
+So Teams will keep looking for whatever **wikiTabId** has in its own configuration, and also, unfortunately, Microsoft does not provide much information about this, as the effort and recommendations now seem to be **to move on to OneNote**, and this might be the small detail that makes this whole process still not perfect (?).
 
 # Extra
 If you want to dig deeper into this, browse to the List in the source and destination site and create a SharePoint List view adding this columns:
