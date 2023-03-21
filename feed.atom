@@ -3,9 +3,30 @@
 	<link rel="self" href="https://get-itips.capazero.net/" />
 	<id>https://get-itips.capazero.net/</id>
 	<title>Andrés Gorzelany</title>
-	<rights>2022</rights>
-	<updated>2022-11-30T19:18:29Z</updated>
+	<rights>2023</rights>
+	<updated>2023-03-21T15:24:31Z</updated>
 	<subtitle>Get-ITips</subtitle>
+	<entry>
+		<link href="https://get-itips.capazero.net/posts/convert-teams-group-chat-to-team" />
+		<id>https://get-itips.capazero.net/posts/convert-teams-group-chat-to-team</id>
+		<title>Convert Microsoft Teams group chat to team</title>
+		<updated>2023-03-20T00:00:00Z</updated>
+		<content>&lt;h1 id="introduction"&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Microsoft Teams Group Chat members can grow, sometimes, a conversation that is happening in a Group Chat would be better and deserve its own Microsoft Teams team, let's say
+we have a Group Chat with 25 members, what it takes to get the list of members is not straigthforward. So, with a little PowerShell magic, we can &amp;quot;convert&amp;quot; a group chat into a team.&lt;/p&gt;
+&lt;p&gt;Actually, what the script does is creating a team with the same membership as the group chat, the group chat will stay as is and you will have to redirect the users to the
+new team. It will ask you a couple of things and then run the required commands.&lt;/p&gt;
+&lt;h1 id="requirements"&gt;Requirements&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Latest stable Microsoft Graph PowerShell module&lt;/li&gt;
+&lt;li&gt;Latest stable Microsoft Teams module&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="the-script"&gt;The script&lt;/h1&gt;
+&lt;p&gt;You can find it &lt;a href="https://github.com/get-itips/MiscScripts/blob/main/Teams/CreateTeamFromGroupChat.ps1"&gt;here&lt;/a&gt; and I expect to update it with new features, contributions are welcomed.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;Microsoft Teams Group Chat members can grow, sometimes, a conversation that is happening in a Group Chat would be better and deserve its own Microsoft Teams team, let's say
+we have a Group Chat with 25 members, what it takes to get the list of members is not straigthforward. So, with a little PowerShell magic, we can "convert" a group chat into a team.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://get-itips.capazero.net/posts/migrating-teams-wiki" />
 		<id>https://get-itips.capazero.net/posts/migrating-teams-wiki</id>
@@ -1519,23 +1540,5 @@ If you have any other method, other than the described in this blog post to obta
 		<summary>&lt;p&gt;&lt;strong&gt;October 2022 Update&lt;/strong&gt;
 The Teams PowerShell module has been updated a lot since I made this post, 4.7.1-preview version of the module finally adds support for Token-Based Authentication.
 The &lt;a href="https://learn.microsoft.com/en-us/powershell/module/teams/connect-microsoftteams?view=teams-ps?WT.mc_id=M365-MVP-5004663"&gt;Connect-MicrosoftTeams&lt;/a&gt; article has been updated to list the required permissions, but still lists the delegated ones, so a new article has been introduced for &lt;a href="https://learn.microsoft.com/en-us/MicrosoftTeams/teams-powershell-application-authentication?view=teams-ps?WT.mc_id=M365-MVP-5004663"&gt;Application-based authentication&lt;/a&gt;.&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://get-itips.capazero.net/posts/cannot-update-from-static-dynamic" />
-		<id>https://get-itips.capazero.net/posts/cannot-update-from-static-dynamic</id>
-		<title>Public IP address is in use by ipconfig and cannot be updated from static to dynamic.</title>
-		<updated>2021-05-05T00:00:00Z</updated>
-		<content>&lt;p&gt;Hello, maybe my first blog post specifically about Azure, do not know if this is the best way to fix this error however I couldn't find many results on Internet.
-Somehow, do not know how, an IP Address associated to one of my Virtual Machines in Azure was configured as static (I do not remember doing that, maybe when I was playing with the DNS name associated I made the mistake), so when I tried to change it back to dynamic I received:&lt;/p&gt;
-&lt;blockquote class="blockquote"&gt;
-&lt;p&gt;Public IP address /subscriptions/bd0d2034-4212-436e-9516-xxxxxx/resourceGroups/onpremlab/providers/Microsoft.Network/publicIPAddresses/onpremlabvm01-ip is in use by ipconfig /subscriptions/bd0d2034-4212-436e-9516-xxxxxx/resourceGroups/onpremlab/providers/Microsoft.Network/networkInterfaces/onpremlabvm01189/ipConfigurations/ipconfig1 and cannot be updated from static to dynamic.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;As everything is an object in Azure, &amp;quot;ipconfig1&amp;quot; was the IP Configuration object belonging to the Network Interface of that VM.&lt;/p&gt;
-&lt;p&gt;So what I did was to open the Network interface by going to the Network Interfaces blade in Azure, located the one of that VM and clicked on IP Configurations and obviously saw the static IP Address of the external interface listed there under &amp;quot;Public IP Address&amp;quot;, clicked on it and you can either click &amp;quot;Disassociate&amp;quot;, save the changes or create a new public IP address from this panel.&lt;/p&gt;
-&lt;p&gt;If you click disassociate, you need to then go to Public IP addresses blade, locate it and change it to dynamic, now you should be able to do it. Remember to then, go back to the IP Configuration and re-associate the Public IP address object to the IP Configuration.&lt;/p&gt;
-&lt;p&gt;Please let me know if you have a better solution! :)&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;Hello, maybe my first blog post specifically about Azure, do not know if this is the best way to fix this error however I couldn't find many results on Internet.
-Somehow, do not know how, an IP Address associated to one of my Virtual Machines in Azure was configured as static (I do not remember doing that, maybe when I was playing with the DNS name associated I made the mistake), so when I tried to change it back to dynamic I received:&lt;/p&gt;</summary>
 	</entry>
 </feed>
