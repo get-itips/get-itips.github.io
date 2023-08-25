@@ -5,8 +5,29 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2023</copyright>
-		<pubDate>Tue, 21 Mar 2023 15:33:38 GMT</pubDate>
-		<lastBuildDate>Tue, 21 Mar 2023 15:33:38 GMT</lastBuildDate>
+		<pubDate>Fri, 25 Aug 2023 18:24:51 GMT</pubDate>
+		<lastBuildDate>Fri, 25 Aug 2023 18:24:51 GMT</lastBuildDate>
+		<item>
+			<title>Collaborative Notes in Microsoft Teams – The good, the bad and the ugly</title>
+			<link>https://get-itips.capazero.net/posts/collaborative-notes-review</link>
+			<description>&lt;p&gt;&lt;img src="/images/collabmeetingnotes.png" class="img-fluid" alt="introimage"&gt;&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/collaborative-notes-review</guid>
+			<pubDate>Fri, 25 Aug 2023 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;&lt;img src="/images/collabmeetingnotes.png" class="img-fluid" alt="introimage" /&gt;&lt;/p&gt;
+&lt;p&gt;I’ve been using Teams Collaborative Notes for a while now and decided to write a blog post with my opinion of the good, the bad, and the ugly of this feature. Let me know if you agree or have a different opinion. 😉&lt;/p&gt;
+&lt;h1 id="the-good"&gt;The good &lt;/h1&gt;
+&lt;p&gt;It’s a loop component, which means it’s collaborative and synced in real-time and can be shared in Teams chat, Outlook emails, Whiteboards, and other places. Don’t know what a Loop Component is? Read here Overview of Loop components in the Microsoft 365 ecosystem | Microsoft Learn want to read the Collaborative Notes announcement? Read here Now in public preview: Collaborative notes in Microsoft Teams Meetings - Microsoft Community Hub &lt;/p&gt;
+&lt;p&gt;It’s easy to access while in a meeting, just by clicking Notes on a Teams Meeting, it’s there and everyone can collaborate on the same notes at real-time, which means it is better than OneNote, at least in my opinion, as it takes fewer steps to take notes and find the correct page/section. &lt;/p&gt;
+&lt;p&gt;It creates tasks automatically if you want, no need to go to Planner, you just enter new tasks and the assignment in the Follow-up tasks section. &lt;/p&gt;
+&lt;h1 id="the-bad"&gt;The bad &lt;/h1&gt;
+&lt;p&gt;Recurring meetings and Collaborative notes create some confusion, let’s say John creates a recurring meeting with 10+ people and forgets to create the Collaborative notes for an occurrence, as an attendee, you need to chase the meeting organizer to create the Collaborative notes in advance of the meeting, Adam wants to add some topics to be discussed in the meeting, but he can’t because the loop component was not created by the Organizer. There is a workaround, Adam can start the meeting anytime, which will enable the Notes button, and because of that, will be able to create the Collaborative Notes. (There is a caveat in the following section), but everyone invited will also see someone started the meeting in advance of the scheduled time, more confusion. &lt;/p&gt;
+&lt;p&gt;Also on recurring meetings, if you expand the details of an occurrence in Teams, there is a banner on top of the loop component warning you that you are viewing the meeting notes for that occurrence, however, is that visible enough? &lt;/p&gt;
+&lt;h1 id="the-ugly"&gt;The Ugly &lt;/h1&gt;
+&lt;p&gt;The .loop file or component will be created in the OneDrive of the person who created the Collaborative Notes for the meeting, being the organizer or the first person that clicked on Notes, imagine a recurring meeting that spans for a year, with different moderators that add topics to be discussed, you will have this .loop files spread into different personal OneDrive's, each one for every occurrence of a meeting, what if someone leaves the company and the OneDrive site is finally deleted? What if the .loop file is deleted by the creator? (I tested this, an ugly You don’t have access to this file message will be shown in the meeting details). This in the end adds more IT work to train users or act upon these situations. Somehow, I think it would be better organized if this file were created always in the same location, the OneDrive of the organizer. &lt;/p&gt;
+&lt;h1 id="conclusion"&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;Collaborative Notes in Teams Meetings are a powerful tool, Customers asked me and I said, I prefer it over OneNote or another solution, however, they require training for your users not to mess up with meeting notes that ultimately create tickets in the support systems, and I also think they can be improved, I'm pretty sure that will happen once Microsoft listens to the feedback by users.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Convert Microsoft Teams group chat to team</title>
 			<link>https://get-itips.capazero.net/posts/convert-teams-group-chat-to-team</link>
@@ -1400,146 +1421,6 @@ Timestamp: 2021-06-29 17:38:00Z
 &lt;li&gt;&lt;a href="https://mha.azurewebsites.net/"&gt;Message Header Analyzer&lt;/a&gt; This is very useful for EXO administrators, essentially, paste the mail message header of a Microsoft 365 e-mail, and this tool will present it in a much more friendly way the information contained in it.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Do you have other that isn't listed here? Share it with me please. Thank you!&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Microsoft Teams PowerShell and token-based auth</title>
-			<link>https://get-itips.capazero.net/posts/teams-powershell-token-auth</link>
-			<description>&lt;p&gt;&lt;strong&gt;October 2022 Update&lt;/strong&gt;
-The Teams PowerShell module has been updated a lot since I made this post, 4.7.1-preview version of the module finally adds support for Token-Based Authentication.
-The &lt;a href="https://learn.microsoft.com/en-us/powershell/module/teams/connect-microsoftteams?view=teams-ps?WT.mc_id=M365-MVP-5004663"&gt;Connect-MicrosoftTeams&lt;/a&gt; article has been updated to list the required permissions, but still lists the delegated ones, so a new article has been introduced for &lt;a href="https://learn.microsoft.com/en-us/MicrosoftTeams/teams-powershell-application-authentication?view=teams-ps?WT.mc_id=M365-MVP-5004663"&gt;Application-based authentication&lt;/a&gt;.&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/teams-powershell-token-auth</guid>
-			<pubDate>Wed, 09 Jun 2021 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;&lt;strong&gt;October 2022 Update&lt;/strong&gt;
-The Teams PowerShell module has been updated a lot since I made this post, 4.7.1-preview version of the module finally adds support for Token-Based Authentication.
-The &lt;a href="https://learn.microsoft.com/en-us/powershell/module/teams/connect-microsoftteams?view=teams-ps?WT.mc_id=M365-MVP-5004663"&gt;Connect-MicrosoftTeams&lt;/a&gt; article has been updated to list the required permissions, but still lists the delegated ones, so a new article has been introduced for &lt;a href="https://learn.microsoft.com/en-us/MicrosoftTeams/teams-powershell-application-authentication?view=teams-ps?WT.mc_id=M365-MVP-5004663"&gt;Application-based authentication&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;You should follow those guidelines now to setup Certificate-based Authentication as this post is now outdated.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Early in May 2022&lt;/strong&gt;, a new entry was added to the &lt;a href="https://docs.microsoft.com/microsoftteams/teams-powershell-release-notes"&gt;Official Docs article&lt;/a&gt; for the Microsoft Teams PowerShell module Release notes, we could read:&lt;/p&gt;
-&lt;blockquote class="blockquote"&gt;
-&lt;ul&gt;
-&lt;li&gt;Updates for AccessToken login with Connect-MicrosoftTeams&lt;/li&gt;
-&lt;li&gt;Unified token array instead of resource specific access token parameters&lt;/li&gt;
-&lt;li&gt;Removed all AADGraph references as AADGraph is nearing End of Life&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;The entry was mentioning a 3.0.0 version number however was later changed to 2.3.2-preview, is this version finally fixing the issues trying to use other methods of connection other than interactive login? Let's remember that, even though in &amp;lt;2.3.2 we could connect using access tokens and Certificate-based authentication, if we tried to use any &lt;em&gt;-Cs&lt;/em&gt; cmdlet they failed with a &lt;code&gt;GetSteppablePipeline&lt;/code&gt; error.&lt;/p&gt;
-&lt;p&gt;But wait! not only that, &lt;code&gt;-AccountId&lt;/code&gt; parameter wasn't usable too, if we try to use it we will get: &lt;em&gt;connect-microsoftteams : Integrated Windows Auth is not supported for managed users.&lt;/em&gt;&lt;/p&gt;
-&lt;h2 id="connect-microsoftteams"&gt;Connect-MicrosoftTeams&lt;/h2&gt;
-&lt;p&gt;Let's focus on this cmdlet, &lt;code&gt;-AadAccessToken&lt;/code&gt; is gone, now we have &lt;code&gt;-AccessTokens&lt;/code&gt;, and according to documentation, this parameter is an string array consisting of &lt;code&gt;&amp;#64;($graphtoken, $teamstoken)&lt;/code&gt;, but how do we request them?&lt;/p&gt;
-&lt;p&gt;I am not a Graph expert, I leave that to my good friend &lt;a href="https://twitter.com/AlexHolmeset"&gt;Alex Holmeset&lt;/a&gt;, what follows is what I did based on what I could find in official documentation and Tech Community forums.&lt;/p&gt;
-&lt;p&gt;First, I created an application in the Azure AD Portal, for more information, see &lt;a href="https://docs.microsoft.com/graph/auth-register-app-v2"&gt;Register an application with the Microsoft identity platform&lt;/a&gt;, assigned permissions (more on that later), created a client secret and &lt;a href="https://docs.microsoft.com/azure/active-directory/develop/v2-permissions-and-consent"&gt;granted consent&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;From that step, we will need to collect:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The Application (client) ID (a GUID from the Overview page in the Application menu blade)&lt;/li&gt;
-&lt;li&gt;The Directory (tenant) name (something.onmicrosoft.com)&lt;/li&gt;
-&lt;li&gt;The client secret (you should have copied it when you created it)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;AzureAD V2 PowerShell alternative to get the Application (client) ID and Directory (tenant) name:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-Powershell"&gt;$application=&amp;quot;NameThatYouGaveToTheApp&amp;quot;
-Connect-AzureAD
-Get-AzureADApplication -Filter &amp;quot;DisplayName eq '$application'&amp;quot;  | ft AppId
-Get-AzureADTenantDetail
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="api-permissions"&gt;API Permissions&lt;/h3&gt;
-&lt;p&gt;According to documentation you only need these:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;For Microsoft Graph API - Delegated permissions
-&lt;ul&gt;
-&lt;li&gt;&amp;quot;AppCatalog.ReadWrite.All&amp;quot;, &amp;quot;Group.ReadWrite.All&amp;quot;, &amp;quot;User.Read.All&amp;quot;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;For Skype and Teams Tenant Admin API
-&lt;ul&gt;
-&lt;li&gt;&amp;quot;Add all listed&amp;quot;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;However, only setting those permissions will not be enough as the connect cmdlet will not warn you, but you will get a &lt;em&gt;Authorization_RequestDenied&lt;/em&gt; when running any cmdlet, so I ended up also adding these (trial and error and reviewing the permissions documented in &lt;a href="https://docs.microsoft.com/graph/api/resources/teams-api-overview?view=graph-rest-1.0"&gt;Use the Microsoft Graph API to work with Microsoft Teams&lt;/a&gt;:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;For Microsoft Graph API - Application permissions
-&lt;ul&gt;
-&lt;li&gt;&amp;quot;Directory.ReadWrite.All&amp;quot;, &amp;quot;Directory.Read.All&amp;quot;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="getting-the-tokens"&gt;Getting the Tokens&lt;/h3&gt;
-&lt;p&gt;Once you get all of that I described earlier, it's time to get the tokens, as I said, I am not a Graph expert, so it was a lot of trial and error, the official documentation for &lt;a href="https://docs.microsoft.com/powershell/module/teams/connect-microsoftteams?view=teams-ps"&gt;Connect-MicrosoftTeams&lt;/a&gt; said&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-Powershell"&gt;$graphtoken = #Get MSGraph Token for following for resource  &amp;quot;https://graph.microsoft.com&amp;quot; and scopes &amp;quot;AppCatalog.ReadWrite.All&amp;quot;, &amp;quot;Group.ReadWrite.All&amp;quot;, &amp;quot;User.Read.All&amp;quot;;
-$teamstoken = #Get Teams resource token for resource id &amp;quot;48ac35b8-9aa8-4d74-927d-1f4a14a0b239&amp;quot; and scope &amp;quot;user_impersonation&amp;quot;;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And this &lt;a href="https://techcommunity.microsoft.com/t5/teams-developer/authenticating-with-an-access-token-connect-microsoftteams/m-p/2233794/page/2"&gt;Tech Community thread&lt;/a&gt; also helped.&lt;/p&gt;
-&lt;p&gt;For Graph token:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-Powershell"&gt;$clientId = &amp;quot;6a7b5598-clientid-a1be-503ee9eda982&amp;quot;  
-$clientSecret = &amp;quot;olbc9secretfmWRMC55-.Qet&amp;quot;  
-$tenantName = &amp;quot;tenantname.onmicrosoft.com&amp;quot;  
-$resource = &amp;quot;https://graph.microsoft.com/&amp;quot;  
-$tokenBody = &amp;#64;{  
-   Grant_Type    = &amp;quot;client_credentials&amp;quot;  
-   Scope         = &amp;quot;https://graph.microsoft.com/.default&amp;quot;  
-   Client_Id     = $clientId  
-   Client_Secret = $clientSecret  
-}   
-$graphTokenResponse = Invoke-RestMethod -Uri &amp;quot;https://login.microsoftonline.com/$tenantName/oauth2/v2.0/token&amp;quot; -Method POST -Body $tokenBody
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For Teams token:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-Powershell"&gt;$clientId = &amp;quot;6a7b5598-clientid-a1be-503ee9eda982&amp;quot;  
-$clientSecret = &amp;quot;olbc9secretfmWRMC55-.Qet&amp;quot; 
-$tenantName = &amp;quot;tenantname.onmicrosoft.com&amp;quot;   
-$resource = &amp;quot;https://api.interfaces.records.teams.microsoft.com&amp;quot;  
-$tokenBody = &amp;#64;{  
-   Grant_Type    = &amp;quot;client_credentials&amp;quot;  
-   Scope         = &amp;quot;48ac35b8-9aa8-4d74-927d-1f4a14a0b239/.default&amp;quot;  
-   Client_Id     = $clientId  
-   Client_Secret = $clientSecret
-  
-}   
-$TeamsTokenResponse = Invoke-RestMethod -Uri &amp;quot;https://login.microsoftonline.com/$tenantName/oauth2/v2.0/token&amp;quot; -Method POST -Body $tokenBody
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;So now we have the tokens in two variables, &lt;code&gt;$graphTokenResponse.access_token&lt;/code&gt; and &lt;code&gt;$TeamsTokenResponse.access_token&lt;/code&gt;, if you parse the tokens in &lt;a href="https://jwt.ms/"&gt;https://jwt.ms/&lt;/a&gt; you should see something like this for Graph token:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-json"&gt;  &amp;quot;roles&amp;quot;: [
-    &amp;quot;Directory.ReadWrite.All&amp;quot;,
-    &amp;quot;Directory.Read.All&amp;quot;
-  ],
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;and this for the Teams token:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-json"&gt;  &amp;quot;roles&amp;quot;: [
-    &amp;quot;application_access_custom_sba_appliance&amp;quot;,
-    &amp;quot;application_access&amp;quot;
-  ],
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id="ok-lets-connect-now"&gt;Ok, let's connect now&lt;/h3&gt;
-&lt;p&gt;The cmdlet should be used like this&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-Powershell"&gt;Connect-MicrosoftTeams -AccessTokens &amp;#64;($graphTokenResponse.access_token,$TeamsTokenResponse.access_token) -AccountId meganb&amp;#64;tenantname.onmicrosoft.com
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If everything went well, you should be able to run any native Teams cmdlet.&lt;/p&gt;
-&lt;h3 id="cs-cmdlets"&gt;-Cs* cmdlets&lt;/h3&gt;
-&lt;p&gt;Unfortunately, any -Cs* cmdlets still result in an error:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-Powershell"&gt;Get-CsOnlineSession : Connecting to remote server api.interfaces.records.teams.microsoft.com failed with the following
-error message : The WinRM client cannot process the request. The authentication mechanism requested by the client is
-not supported by the server or unencrypted traffic is disabled in the service configuration. Verify the unencrypted
-traffic setting in the service configuration or specify one of the authentication mechanisms supported by the server.
-To use Kerberos, specify the computer name as the remote destination. Also verify that the client computer and the
-destination computer are joined to a domain. To use Basic, specify the computer name as the remote destination,
-specify Basic authentication and provide user name and password. Possible authentication mechanisms reported by
-server: For more information, see the about_Remote_Troubleshooting Help topic.
-At C:\Program Files\WindowsPowerShell\Modules\MicrosoftTeams\2.3.2\net472\SfBORemotePowershellModule.psm1:63 char:22
-+     $remoteSession = &amp;amp; (Get-CsOnlineSessionCommand)
-+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (:) [Get-CsOnlineSession], PSRemotingTransportException
-    + FullyQualifiedErrorId : PSRemotingTransportException,Microsoft.Teams.ConfigApi.Cmdlets.GetCsOnlineSession
-
-Invoke-Command : Cannot validate argument on parameter 'Session'. The argument is null or empty. Provide an argument
-that is not null or empty, and then try the command again.
-At C:\Program Files\WindowsPowerShell\Modules\MicrosoftTeams\2.3.2\net472\SfBORemotePowershellModule.psm1:9490 char:38
-+ ...    -Session (Get-PSImplicitRemotingSession -CommandName 'Get-CsOnline ...
-+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : InvalidData: (:) [Invoke-Command], ParentContainsErrorRecordException
-    + FullyQualifiedErrorId : ParameterArgumentValidationError,Microsoft.PowerShell.Commands.InvokeCommandCommand
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="conclussion"&gt;Conclussion&lt;/h2&gt;
-&lt;p&gt;The changes are welcomed, however I really hope the issue with -Cs* cmdlets is fixed once this release gets General Availability condition, any non-interactive method is very useful for unattended scripting scenarios and it has been long requested by the community.
-If you have any other method, other than the described in this blog post to obtain the tokens or if you could make -Cs* cmdlets work please leave me a comment!&lt;/p&gt;
-&lt;p&gt;For instructions on how to install this specific version, you can visit &lt;a href="https://msshells.net/"&gt;&amp;gt;_☁ MSShells.net&lt;/a&gt;.&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>
