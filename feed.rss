@@ -5,8 +5,8 @@
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
 		<copyright>2023</copyright>
-		<pubDate>Fri, 25 Aug 2023 18:28:57 GMT</pubDate>
-		<lastBuildDate>Fri, 25 Aug 2023 18:28:57 GMT</lastBuildDate>
+		<pubDate>Tue, 29 Aug 2023 22:00:18 GMT</pubDate>
+		<lastBuildDate>Tue, 29 Aug 2023 22:00:18 GMT</lastBuildDate>
 		<item>
 			<title>Collaborative Notes in Microsoft Teams – The good, the bad and the ugly</title>
 			<link>https://get-itips.capazero.net/posts/collaborative-notes-review</link>
@@ -16,7 +16,7 @@
 			<content:encoded>&lt;p&gt;&lt;img src="/images/collabmeetingnotes.png" class="img-fluid" alt="introimage" /&gt;&lt;/p&gt;
 &lt;p&gt;I’ve been using Teams Collaborative Notes for a while now and decided to write a blog post with my opinion of the good, the bad, and the ugly of this feature. Let me know if you agree or have a different opinion. 😉&lt;/p&gt;
 &lt;h1 id="the-good"&gt;The good &lt;/h1&gt;
-&lt;p&gt;It’s a loop component, which means it’s collaborative and synced in real-time and can be shared in Teams chat, Outlook emails, Whiteboards, and other places. Don’t know what a Loop Component is? Read here Overview of Loop components in the Microsoft 365 ecosystem | Microsoft Learn want to read the Collaborative Notes announcement? Read here Now in public preview: Collaborative notes in Microsoft Teams Meetings - Microsoft Community Hub &lt;/p&gt;
+&lt;p&gt;It’s a loop component, which means it’s collaborative and synced in real-time and can be shared in Teams chat, Outlook emails, Whiteboards, and other places. Don’t know what a Loop Component is? Read here &lt;a href="https://learn.microsoft.com/microsoft-365/loop/loop-components-teams?view=o365-worldwide?WT.mc_id=M365-MVP-5004663"&gt;Overview of Loop components in the Microsoft 365 ecosystem | Microsoft Learn&lt;/a&gt; want to read the Collaborative Notes announcement? Read here &lt;a href="https://techcommunity.microsoft.com/t5/microsoft-teams-public-preview/now-in-public-preview-amp-targeted-release-collaborative-meeting/m-p/3848392"&gt;Now in public preview: Collaborative notes in Microsoft Teams Meetings - Microsoft Community Hub&lt;/a&gt; &lt;/p&gt;
 &lt;p&gt;It’s easy to access while in a meeting, just by clicking Notes on a Teams Meeting, it’s there and everyone can collaborate on the same notes at real-time, which means it is better than OneNote, at least in my opinion, as it takes fewer steps to take notes and find the correct page/section. &lt;/p&gt;
 &lt;p&gt;It creates tasks automatically if you want, no need to go to Planner, you just enter new tasks and the assignment in the Follow-up tasks section. &lt;/p&gt;
 &lt;h1 id="the-bad"&gt;The bad &lt;/h1&gt;
