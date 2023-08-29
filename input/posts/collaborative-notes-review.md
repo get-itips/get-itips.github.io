@@ -9,7 +9,7 @@ I’ve been using Teams Collaborative Notes for a while now and decided to write
 
 # The good 
 
-It’s a loop component, which means it’s collaborative and synced in real-time and can be shared in Teams chat, Outlook emails, Whiteboards, and other places. Don’t know what a Loop Component is? Read here Overview of Loop components in the Microsoft 365 ecosystem | Microsoft Learn want to read the Collaborative Notes announcement? Read here Now in public preview: Collaborative notes in Microsoft Teams Meetings - Microsoft Community Hub 
+It’s a loop component, which means it’s collaborative and synced in real-time and can be shared in Teams chat, Outlook emails, Whiteboards, and other places. Don’t know what a Loop Component is? Read here [Overview of Loop components in the Microsoft 365 ecosystem | Microsoft Learn](https://learn.microsoft.com/microsoft-365/loop/loop-components-teams?view=o365-worldwide?WT.mc_id=M365-MVP-5004663) want to read the Collaborative Notes announcement? Read here [Now in public preview: Collaborative notes in Microsoft Teams Meetings - Microsoft Community Hub](https://techcommunity.microsoft.com/t5/microsoft-teams-public-preview/now-in-public-preview-amp-targeted-release-collaborative-meeting/m-p/3848392) 
 
 It’s easy to access while in a meeting, just by clicking Notes on a Teams Meeting, it’s there and everyone can collaborate on the same notes at real-time, which means it is better than OneNote, at least in my opinion, as it takes fewer steps to take notes and find the correct page/section. 
 
