@@ -6,11 +6,11 @@ Tags: Teams
 # Some history
 Sometime last year (2023), Microsoft removed a very nice feature to upload images in announcement posts. 
 
-[Image showing how to upload an announcement post] 
+![Add background image](/images/Add_Background_Image.png)
 
 If you have never used this feature, it allowed you to use an image in announcement posts, the announcement post then looked customized and nice. 
 
-[Image showing an announcement post with an image] 
+![Image added](/images/Add_Background_Image_2.png)
 
 # Confusing Message Center posts
 
