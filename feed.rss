@@ -4,9 +4,71 @@
 		<title>Andrés Gorzelany</title>
 		<link>https://get-itips.capazero.net/</link>
 		<description>Get-ITips</description>
-		<copyright>2023</copyright>
-		<pubDate>Tue, 29 Aug 2023 22:03:50 GMT</pubDate>
-		<lastBuildDate>Tue, 29 Aug 2023 22:03:50 GMT</lastBuildDate>
+		<copyright>2024</copyright>
+		<pubDate>Thu, 11 Jan 2024 14:04:14 GMT</pubDate>
+		<lastBuildDate>Thu, 11 Jan 2024 14:04:14 GMT</lastBuildDate>
+		<item>
+			<title>Images in announcement posts in the New Teams</title>
+			<link>https://get-itips.capazero.net/posts/images-announcements-new-teams</link>
+			<description>&lt;p&gt;Sometime last year (2023), Microsoft removed a very nice feature to upload images in announcement posts.&lt;/p&gt;</description>
+			<guid>https://get-itips.capazero.net/posts/images-announcements-new-teams</guid>
+			<pubDate>Thu, 11 Jan 2024 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="some-history"&gt;Some history&lt;/h1&gt;
+&lt;p&gt;Sometime last year (2023), Microsoft removed a very nice feature to upload images in announcement posts.&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/Add_Background_Image.png" class="img-fluid" alt="Add background image" /&gt;&lt;/p&gt;
+&lt;p&gt;If you have never used this feature, it allowed you to use an image in announcement posts, the announcement post then looked customized and nice.&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/Add_Background_Image_2.png" class="img-fluid" alt="Image added" /&gt;&lt;/p&gt;
+&lt;h1 id="confusing-message-center-posts"&gt;Confusing Message Center posts&lt;/h1&gt;
+&lt;h2 id="mc680348-microsoft-designer"&gt;MC680348 - Microsoft Designer?&lt;/h2&gt;
+&lt;p&gt;A Message Center post related to the return of this feature was published on October 10, 2023, let’s analyze what it says&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Custom Backgrounds for Announcement Posts in Channels&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Message Summary&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Microsoft Teams users will soon be able to create custom backgrounds for their Announcement posts with the generative AI power of Microsoft Designer. This release of Custom Backgrounds for Announcement Posts will be rolling out across Microsoft Teams Desktop and Web for Channels 2.0 in English – US markets only.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Stop&lt;/strong&gt; – some things to comment there&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;“...with the generative AI power of Microsoft Designer”&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Ok, so now we need to accept the assistance of Artificial Intelligence to upload create an image?&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;“...in English – US Markets Only”&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Ok, other markets will have to wait it seems.&lt;/p&gt;
+&lt;p&gt;Let’s continue&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;This message is associated with Microsoft 365 Roadmap ID 123501:&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Teams users will be able to create engaging custom backgrounds for channel announcements in just a few clicks. Powered by Microsoft Designer, use generative AI to create expressive images.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Ok pretty similar to what the MC says, let’s continue&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Before, in Channels 1.0, users struggled to &amp;quot;find the right picture,&amp;quot; to &amp;quot;find images that work correctly with banner sizing, so it takes ages,&amp;quot; etc.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This seems to be opinions Microsoft has collected, continuing&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Now, whether users have their own image or an idea in mind, or absolutely nothing at all, they can create rich, engaging backgrounds for their announcement posts through the generative AI power of Microsoft Designer. A few clicks is all it takes--let the imagination run wild!&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Ok, Microsoft Designer is mentioned again, what is that? According to Microsoft: &lt;em&gt;“A graphic design app that helps you create professional quality social media posts, invitations, digital postcards, graphics, and more.” It uses AI and it is currently in preview, at the bottom and in a small size font it says it will require a paid subscription once it reaches GA.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Let’s continue&lt;/p&gt;
+&lt;p&gt;The Designer Mini Dialog is where all the magic happens. You can write a description, upload an image, or click one of the examples we have provided for you to start.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;“Upload an image”&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Ok it seems the feature we miss is buried there.&lt;/p&gt;
+&lt;p&gt;Let's continue&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;While we work on making a policy setting available to tenants, this feature will be enabled by default (except in EDU). If there are concerns, please contact support.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;“Enabled by default”&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Enabled by default and the policy setting to control this will not arrive at the same time as the feature is released? &lt;strong&gt;NO BUENO&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;We can't wait to see what announcement backgrounds you and your team come up with.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Erh... this isn’t the best sentence to sell this feature to data privacy concerned companies, isn’t it?&lt;/p&gt;
+&lt;h2 id="mc687791-teams-premium"&gt;MC687791 - Teams Premium?&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Another&lt;/strong&gt; Message Center post related to the return of this feature was published on November 6, 2023, and updated on December 14, 2023, let’s analyze the differences:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Microsoft Teams users will soon be able to create custom backgrounds for their Announcement posts with the generative AI power of Microsoft Designer. As part of the advanced Teams Premium capabilities, users will have access to DALL-E, a text to image generator, which they can use for their backgrounds. This release of Custom Backgrounds for Announcement Posts will be rolling out across Microsoft Teams Desktop and Web for Channels 2.0 in English – US markets only.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;“As part of the advanced Teams Premium capabilities, users will have access to DALL-E”&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Ok so very similar to the previous MC post but this one will use DALL-E and require Teams Premium, let’s continue.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note: Non-US tenants may notice a temporary loss in the ability to upload an image. For tenants who do not have access to Designer, the ability to upload image will be made available again in early 2024, while the team works on Designer support for more languages.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;“For tenants who do not have access to Designer, the ability to upload image will be made available again in early 2024”&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Ok some hope that we will get the upload image feature again without requiring Designer and Teams Premium?&lt;/p&gt;
+&lt;p&gt;What follows is remarkably like the previous MC post.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The information provided in these two MC posts does not answer if we are getting back a feature that we had without requiring extra licenses or extra tools or AI (a lot of companies are still concerned about AI and data privacy), except for the sentence that hints we could have it back in early 2024.&lt;/em&gt;&lt;/p&gt;
+&lt;h1 id="final-thoughts"&gt;Final thoughts&lt;/h1&gt;
+&lt;p&gt;Based on the provided information, it seems there will be two different flavors of the feature:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;One will not require Teams Premium but still use AI&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;One will require Teams Premium and use DALL-E&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I think they overly complicated something that was simple and easy to use, just to include another app? Another license? AI?
+Let’s see if they update these Message Center post improving the clarity of the message and providing more details.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Collaborative Notes in Microsoft Teams – The good, the bad and the ugly</title>
 			<link>https://get-itips.capazero.net/posts/collaborative-notes-review</link>
@@ -1398,29 +1460,6 @@ Timestamp: 2021-06-29 17:38:00Z
 &lt;p&gt;This worked great, adding a web site to a Teams channel.&lt;/p&gt;
 &lt;h1 id="conclussions"&gt;Conclussions&lt;/h1&gt;
 &lt;p&gt;PnP Teams cmdlets didn't change so much since Part I of these series, it would be interesting to see more cmdlets and more parameters in next releases however it is fantastic to have a community alternative to the official Teams module, the same way we have an alternative to the official SharePoint Online module.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Useful community tools to administer Microsoft 365</title>
-			<link>https://get-itips.capazero.net/posts/useful-community-tools</link>
-			<description>&lt;p&gt;This post is intended to list all the sites/tools I use to administer Microsoft 365. I hope you find them useful:&lt;/p&gt;</description>
-			<guid>https://get-itips.capazero.net/posts/useful-community-tools</guid>
-			<pubDate>Mon, 28 Jun 2021 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;This post is intended to list all the sites/tools I use to administer Microsoft 365. I hope you find them useful:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://msportals.io/"&gt;MSPortals&lt;/a&gt; by Adam Fowler, it's a great site that summarizes all the different official portals created by Microsoft to administer all the Microsoft 365 solutions, it even has a search function.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://changewindows.org/"&gt;ChangeWindows&lt;/a&gt;, a very complete site that keeps track of all the releases of Windows.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.whatismytenantid.com/"&gt;What is my Tenant ID?&lt;/a&gt;, actually, a Microsoft Partner is behind this site, it is very useful to find your (or others) tenant ID.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://m365maps.com/"&gt;M365 Maps&lt;/a&gt;, a very useful site to understand what is really included in each Microsoft 365 license offering.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://MSShells.net"&gt;MSShells&lt;/a&gt;, this site belongs to me and as I open-sourced it, it receives contributions from the community, keeps tracks of the different versions of the official modules to administer Microsoft 365 and Azure.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="bonus-track"&gt;Bonus Track:&lt;/h3&gt;
-&lt;p&gt;Not really community tools as they are provided by Microsoft or Microsoft employees, however, they are useful and not so well documented:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://o365atp.com/"&gt;ATP Safe Links decoder&lt;/a&gt; every link that goes thru ATP is rewritten and encoded so it can be analyzed before the user is presented with the destination and real website, this handy tool can decode the ATP link so we can see the real website behind it.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://mha.azurewebsites.net/"&gt;Message Header Analyzer&lt;/a&gt; This is very useful for EXO administrators, essentially, paste the mail message header of a Microsoft 365 e-mail, and this tool will present it in a much more friendly way the information contained in it.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Do you have other that isn't listed here? Share it with me please. Thank you!&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>
